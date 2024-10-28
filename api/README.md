@@ -20,6 +20,8 @@
 - It allows the reuse of connections and provides scalability.
 - It is useful in a concurrent environments.
 - It is used in **PostgreSQLConnectionPool** and **MongoDBClient**
+- **For PostgreSQL:** When a connection is needed, a connection can be obtained by using the `connection = pool.getconn()` method (to release them back, just use `pool.putconn(connection)`).
+- **For MongoDB:** The pool of connections is initialized by `client = MongoClient()`. MongoClient will automatically manage the connections. To close the pool, use `client.close()`.
 
 ### Active Record Pattern
 
