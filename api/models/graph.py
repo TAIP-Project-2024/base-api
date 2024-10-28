@@ -4,6 +4,8 @@ from abc import abstractmethod
     This class is a decorator over a framework
     specific object representing a graph.
     
+    This is also an adapter between multiple frameworks.
+    
 """
 class Graph:
 
