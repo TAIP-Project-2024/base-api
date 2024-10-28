@@ -1,18 +1,17 @@
-import psycopg2
-from psycopg2 import sql
+from pymongo import MongoClient
 from db_template import DbTemplate
 
 """
     Concrete implementation of DbTemplateRepository:
-        PostgreSQL Repository
+        MongoDB Repository
 """
 
-class Postgres(DbTemplate):
-    def __init__(self, db_config):
+class MongoDB(DbTemplate):
+    def __init__(self, connection_string, db_name, collection_name):
         # TODO: connection
-        self.connection = psycopg2.connect(**db_config)
-        self.connection.autocommit = True
-        self.cursor = self.connection.cursor()
+        self.client = MongoClient(connection_string)
+        self.db = self.client[db_name]
+        self.collection = self.db[collection_name]
 
     def create(self, data):
         # TODO
@@ -31,5 +30,4 @@ class Postgres(DbTemplate):
         pass
 
     def close(self):
-        self.cursor.close()
-        self.connection.close()
+        self.client.close()
