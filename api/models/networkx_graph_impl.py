@@ -2,7 +2,7 @@ import networkx as nx
 
 from api.models.graph import Graph
 from api.models.graph_drawing import GraphDrawing
-from api.models.simple_nx_drawing import SimpleNxDrawing
+from api.services.layouts.simple_nx_drawing import SimpleNxDrawing
 
 """
     Example of a concrete implementation for a graph framework object
