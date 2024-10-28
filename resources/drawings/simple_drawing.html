@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 500px;
+                 height: 500px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"Description": "h1", "Node Component Identifier": "Component 1", "Node Degree": 4, "Node In Degree": 0, "Node Multiplicity": 1, "Node Name": "h1", "Node Out Degree": 4, "color": "#97c2fc", "id": "n1", "label": "n1", "name": "Black Panther", "shape": "dot", "size": 10, "title": "Black Panther", "type": "hero", "x": 59.6663, "y": -304.236, "z": 0.0}, {"Description": "m6", "Node Component Identifier": "Component 1", "Node Degree": 11, "Node In Degree": 11, "Node Multiplicity": 1, "Node Name": "m6", "Node Out Degree": 0, "color": "#97c2fc", "id": "n34", "label": "n34", "name": "Captain America: Civil War", "shape": "dot", "size": 10, "title": "Captain America: Civil War", "type": "movie", "x": 44.1784, "y": -301.673, "z": 0.0}, {"Description": "m5", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 1, "Node Multiplicity": 1, "Node Name": "m5", "Node Out Degree": 0, "color": "#97c2fc", "id": "n33", "label": "n33", "name": "Black Panther", "shape": "dot", "size": 10, "title": "Black Panther", "type": "movie", "x": 60.468, "y": -297.982, "z": 0.0}, {"Description": "m4", "Node Component Identifier": "Component 1", "Node Degree": 2, "Node In Degree": 2, "Node Multiplicity": 1, "Node Name": "m4", "Node Out Degree": 0, "color": "#97c2fc", "id": "n32", "label": "n32", "name": "Avengers: Infinity War", "shape": "dot", "size": 10, "title": "Avengers: Infinity War", "type": "movie", "x": 58.8608, "y": -312.109, "z": 0.0}, {"Description": "m2", "Node Component Identifier": "Component 1", "Node Degree": 14, "Node In Degree": 14, "Node Multiplicity": 1, "Node Name": "m2", "Node Out Degree": 0, "color": "#97c2fc", "id": "n30", "label": "n30", "name": "Avengers: Endgame", "shape": "dot", "size": 10, "title": "Avengers: Endgame", "type": "movie", "x": 75.3054, "y": -305.592, "z": 0.0}, {"Description": "h2", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 0, "Node Multiplicity": 1, "Node Name": "h2", "Node Out Degree": 1, "color": "#97c2fc", "id": "n2", "label": "n2", "name": "Black Widow", "shape": "dot", "size": 10, "title": "Black Widow", "type": "hero", "x": 45.7919, "y": -307.965, "z": 0.0}, {"Description": "h3", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 0, "Node Multiplicity": 1, "Node Name": "h3", "Node Out Degree": 1, "color": "#97c2fc", "id": "n3", "label": "n3", "name": "Captain America", "shape": "dot", "size": 10, "title": "Captain America", "type": "hero", "x": 48.6161, "y": -296.821, "z": 0.0}, {"Description": "h4", "Node Component Identifier": "Component 1", "Node Degree": 2, "Node In Degree": 0, "Node Multiplicity": 1, "Node Name": "h4", "Node Out Degree": 2, "color": "#97c2fc", "id": "n4", "label": "n4", "name": "Captain Marvel", "shape": "dot", "size": 10, "title": "Captain Marvel", "type": "hero", "x": 84.2906, "y": -310.224, "z": 0.0}, {"Description": "m9", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 1, "Node Multiplicity": 1, "Node Name": "m9", "Node Out Degree": 0, "color": "#97c2fc", "id": "n37", "label": "n37", "name": "Captain Marvel", "shape": "dot", "size": 10, "title": "Captain Marvel", "type": "movie", "x": 91.5897, "y": -312.542, "z": 0.0}, {"Description": "h5", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 0, "Node Multiplicity": 1, "Node Name": "h5", "Node Out Degree": 1, "color": "#97c2fc", "id": "n5", "label": "n5", "name": "Doctor Strange", "shape": "dot", "size": 10, "title": "Doctor Strange", "type": "hero", "x": 75.4398, "y": -300.797, "z": 0.0}, {"Description": "h6", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 0, "Node Multiplicity": 1, "Node Name": "h6", "Node Out Degree": 1, "color": "#97c2fc", "id": "n6", "label": "n6", "name": "Drax the Destroyer", "shape": "dot", "size": 10, "title": "Drax the Destroyer", "type": "hero", "x": 80.773, "y": -301.858, "z": 0.0}, {"Description": "h7", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 0, "Node Multiplicity": 1, "Node Name": "h7", "Node Out Degree": 1, "color": "#97c2fc", "id": "n7", "label": "n7", "name": "Falcon", "shape": "dot", "size": 10, "title": "Falcon", "type": "hero", "x": 38.1053, "y": -301.147, "z": 0.0}, {"Description": "h8", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 0, "Node Multiplicity": 1, "Node Name": "h8", "Node Out Degree": 1, "color": "#97c2fc", "id": "n8", "label": "n8", "name": "Gamora", "shape": "dot", "size": 10, "title": "Gamora", "type": "hero", "x": 69.4192, "y": -303.879, "z": 0.0}, {"Description": "h9", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 0, "Node Multiplicity": 1, "Node Name": "h9", "Node Out Degree": 1, "color": "#97c2fc", "id": "n9", "label": "n9", "name": "Groot", "shape": "dot", "size": 10, "title": "Groot", "type": "hero", "x": 73.357, "y": -313.511, "z": 0.0}, {"Description": "h10", "Node Component Identifier": "Component 1", "Node Degree": 2, "Node In Degree": 0, "Node Multiplicity": 1, "Node Name": "h10", "Node Out Degree": 2, "color": "#97c2fc", "id": "n10", "label": "n10", "name": "Hawkeye", "shape": "dot", "size": 10, "title": "Hawkeye", "type": "hero", "x": 44.9133, "y": -291.451, "z": 0.0}, {"Description": "m21", "Node Component Identifier": "Component 1", "Node Degree": 2, "Node In Degree": 2, "Node Multiplicity": 1, "Node Name": "m21", "Node Out Degree": 0, "color": "#97c2fc", "id": "n49", "label": "n49", "name": "Thor", "shape": "dot", "size": 10, "title": "Thor", "type": "movie", "x": 44.7079, "y": -282.687, "z": 0.0}, {"Description": "h11", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 0, "Node Multiplicity": 1, "Node Name": "h11", "Node Out Degree": 1, "color": "#97c2fc", "id": "n11", "label": "n11", "name": "Hulk", "shape": "dot", "size": 10, "title": "Hulk", "type": "hero", "x": 70.1485, "y": -309.437, "z": 0.0}, {"Description": "h12", "Node Component Identifier": "Component 1", "Node Degree": 3, "Node In Degree": 0, "Node Multiplicity": 1, "Node Name": "h12", "Node Out Degree": 3, "color": "#97c2fc", "id": "n12", "label": "n12", "name": "Iron Man", "shape": "dot", "size": 10, "title": "Iron Man", "type": "hero", "x": 39.4515, "y": -307.52, "z": 0.0}, {"Description": "m20", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 1, "Node Multiplicity": 1, "Node Name": "m20", "Node Out Degree": 0, "color": "#97c2fc", "id": "n48", "label": "n48", "name": "The Incredible Hulk", "shape": "dot", "size": 10, "title": "The Incredible Hulk", "type": "movie", "x": 41.13, "y": -314.358, "z": 0.0}, {"Description": "m19", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 1, "Node Multiplicity": 1, "Node Name": "m19", "Node Out Degree": 0, "color": "#97c2fc", "id": "n47", "label": "n47", "name": "The Avengers", "shape": "dot", "size": 10, "title": "The Avengers", "type": "movie", "x": 32.3375, "y": -307.426, "z": 0.0}, {"Description": "h13", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 0, "Node Multiplicity": 1, "Node Name": "h13", "Node Out Degree": 1, "color": "#97c2fc", "id": "n13", "label": "n13", "name": "Loki", "shape": "dot", "size": 10, "title": "Loki", "type": "hero", "x": 80.4444, "y": -306.991, "z": 0.0}, {"Description": "h14", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 0, "Node Multiplicity": 1, "Node Name": "h14", "Node Out Degree": 1, "color": "#97c2fc", "id": "n14", "label": "n14", "name": "Mantis", "shape": "dot", "size": 10, "title": "Mantis", "type": "hero", "x": 78.1386, "y": -297.027, "z": 0.0}, {"Description": "h15", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 0, "Node Multiplicity": 1, "Node Name": "h15", "Node Out Degree": 1, "color": "#97c2fc", "id": "n15", "label": "n15", "name": "Nebula", "shape": "dot", "size": 10, "title": "Nebula", "type": "hero", "x": 77.8669, "y": -311.399, "z": 0.0}, {"Description": "h16", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 0, "Node Multiplicity": 1, "Node Name": "h16", "Node Out Degree": 1, "color": "#97c2fc", "id": "n16", "label": "n16", "name": "Nick Fury", "shape": "dot", "size": 10, "title": "Nick Fury", "type": "hero", "x": 58.2551, "y": -319.031, "z": 0.0}, {"Description": "h17", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 0, "Node Multiplicity": 1, "Node Name": "h17", "Node Out Degree": 1, "color": "#97c2fc", "id": "n17", "label": "n17", "name": "Odin", "shape": "dot", "size": 10, "title": "Odin", "type": "hero", "x": 43.7439, "y": -275.532, "z": 0.0}, {"Description": "h18", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 0, "Node Multiplicity": 1, "Node Name": "h18", "Node Out Degree": 1, "color": "#97c2fc", "id": "n18", "label": "n18", "name": "Quicksilver", "shape": "dot", "size": 10, "title": "Quicksilver", "type": "hero", "x": 20.7244, "y": -318.064, "z": 0.0}, {"Description": "m8", "Node Component Identifier": "Component 1", "Node Degree": 2, "Node In Degree": 2, "Node Multiplicity": 1, "Node Name": "m8", "Node Out Degree": 0, "color": "#97c2fc", "id": "n36", "label": "n36", "name": "Captain America: The Winter Soldier", "shape": "dot", "size": 10, "title": "Captain America: The Winter Soldier", "type": "movie", "x": 27.0496, "y": -314.276, "z": 0.0}, {"Description": "h19", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 0, "Node Multiplicity": 1, "Node Name": "h19", "Node Out Degree": 1, "color": "#97c2fc", "id": "n19", "label": "n19", "name": "Rocket Raccoon", "shape": "dot", "size": 10, "title": "Rocket Raccoon", "type": "hero", "x": 71.2948, "y": -298.427, "z": 0.0}, {"Description": "h20", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 0, "Node Multiplicity": 1, "Node Name": "h20", "Node Out Degree": 1, "color": "#97c2fc", "id": "n20", "label": "n20", "name": "Scarlet Witch", "shape": "dot", "size": 10, "title": "Scarlet Witch", "type": "hero", "x": 42.159, "y": -296.604, "z": 0.0}, {"Description": "h21", "Node Component Identifier": "Component 1", "Node Degree": 3, "Node In Degree": 0, "Node Multiplicity": 1, "Node Name": "h21", "Node Out Degree": 3, "color": "#97c2fc", "id": "n21", "label": "n21", "name": "Spider-Man", "shape": "dot", "size": 10, "title": "Spider-Man", "type": "hero", "x": 38.3542, "y": -292.784, "z": 0.0}, {"Description": "m18", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 1, "Node Multiplicity": 1, "Node Name": "m18", "Node Out Degree": 0, "color": "#97c2fc", "id": "n46", "label": "n46", "name": "Spider-Man: Homecoming", "shape": "dot", "size": 10, "title": "Spider-Man: Homecoming", "type": "movie", "x": 37.6017, "y": -285.431, "z": 0.0}, {"Description": "m17", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 1, "Node Multiplicity": 1, "Node Name": "m17", "Node Out Degree": 0, "color": "#97c2fc", "id": "n45", "label": "n45", "name": "Spider-Man: Far From Home", "shape": "dot", "size": 10, "title": "Spider-Man: Far From Home", "type": "movie", "x": 32.5529, "y": -287.613, "z": 0.0}, {"Description": "h22", "Node Component Identifier": "Component 1", "Node Degree": 4, "Node In Degree": 0, "Node Multiplicity": 1, "Node Name": "h22", "Node Out Degree": 4, "color": "#97c2fc", "id": "n22", "label": "n22", "name": "Star-Lord", "shape": "dot", "size": 10, "title": "Star-Lord", "type": "hero", "x": 81.0459, "y": -315.846, "z": 0.0}, {"Description": "m11", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 1, "Node Multiplicity": 1, "Node Name": "m11", "Node Out Degree": 0, "color": "#97c2fc", "id": "n39", "label": "n39", "name": "Guardians of the Galaxy", "shape": "dot", "size": 10, "title": "Guardians of the Galaxy", "type": "movie", "x": 88.1579, "y": -318.647, "z": 0.0}, {"Description": "m12", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 1, "Node Multiplicity": 1, "Node Name": "m12", "Node Out Degree": 0, "color": "#97c2fc", "id": "n40", "label": "n40", "name": "Guardians of the Galaxy Vol. 2", "shape": "dot", "size": 10, "title": "Guardians of the Galaxy Vol. 2", "type": "movie", "x": 85.0119, "y": -322.922, "z": 0.0}, {"Description": "m13", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 1, "Node Multiplicity": 1, "Node Name": "m13", "Node Out Degree": 0, "color": "#97c2fc", "id": "n41", "label": "n41", "name": "Guardians of the Galaxy Vol. 3", "shape": "dot", "size": 10, "title": "Guardians of the Galaxy Vol. 3", "type": "movie", "x": 79.5677, "y": -323.043, "z": 0.0}, {"Description": "h23", "Node Component Identifier": "Component 1", "Node Degree": 4, "Node In Degree": 0, "Node Multiplicity": 1, "Node Name": "h23", "Node Out Degree": 4, "color": "#97c2fc", "id": "n23", "label": "n23", "name": "Thor", "shape": "dot", "size": 10, "title": "Thor", "type": "hero", "x": 84.4066, "y": -297.834, "z": 0.0}, {"Description": "m23", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 1, "Node Multiplicity": 1, "Node Name": "m23", "Node Out Degree": 0, "color": "#97c2fc", "id": "n51", "label": "n51", "name": "Thor: The Dark World", "shape": "dot", "size": 10, "title": "Thor: The Dark World", "type": "movie", "x": 92.0453, "y": -297.587, "z": 0.0}, {"Description": "m10", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 1, "Node Multiplicity": 1, "Node Name": "m10", "Node Out Degree": 0, "color": "#97c2fc", "id": "n38", "label": "n38", "name": "Doctor Strange", "shape": "dot", "size": 10, "title": "Doctor Strange", "type": "movie", "x": 85.47, "y": -290.454, "z": 0.0}, {"Description": "m22", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 1, "Node Multiplicity": 1, "Node Name": "m22", "Node Out Degree": 0, "color": "#97c2fc", "id": "n50", "label": "n50", "name": "Thor: Ragnarok", "shape": "dot", "size": 10, "title": "Thor: Ragnarok", "type": "movie", "x": 90.5844, "y": -292.413, "z": 0.0}, {"Description": "h24", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 0, "Node Multiplicity": 1, "Node Name": "h24", "Node Out Degree": 1, "color": "#97c2fc", "id": "n24", "label": "n24", "name": "Vision", "shape": "dot", "size": 10, "title": "Vision", "type": "hero", "x": 49.9369, "y": -303.205, "z": 0.0}, {"Description": "h25", "Node Component Identifier": "Component 1", "Node Degree": 5, "Node In Degree": 0, "Node Multiplicity": 1, "Node Name": "h25", "Node Out Degree": 5, "color": "#97c2fc", "id": "n25", "label": "n25", "name": "War Machine", "shape": "dot", "size": 10, "title": "War Machine", "type": "hero", "x": 32.1167, "y": -299.122, "z": 0.0}, {"Description": "m14", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 1, "Node Multiplicity": 1, "Node Name": "m14", "Node Out Degree": 0, "color": "#97c2fc", "id": "n42", "label": "n42", "name": "Iron Man", "shape": "dot", "size": 10, "title": "Iron Man", "type": "movie", "x": 29.2558, "y": -293.037, "z": 0.0}, {"Description": "m15", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 1, "Node Multiplicity": 1, "Node Name": "m15", "Node Out Degree": 0, "color": "#97c2fc", "id": "n43", "label": "n43", "name": "Iron Man 2", "shape": "dot", "size": 10, "title": "Iron Man 2", "type": "movie", "x": 26.5494, "y": -303.735, "z": 0.0}, {"Description": "m16", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 1, "Node Multiplicity": 1, "Node Name": "m16", "Node Out Degree": 0, "color": "#97c2fc", "id": "n44", "label": "n44", "name": "Iron Man 3", "shape": "dot", "size": 10, "title": "Iron Man 3", "type": "movie", "x": 24.5932, "y": -294.739, "z": 0.0}, {"Description": "m3", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 1, "Node Multiplicity": 1, "Node Name": "m3", "Node Out Degree": 0, "color": "#97c2fc", "id": "n31", "label": "n31", "name": "Avengers: Age of Ultron", "shape": "dot", "size": 10, "title": "Avengers: Age of Ultron", "type": "movie", "x": 23.7495, "y": -299.584, "z": 0.0}, {"Description": "h26", "Node Component Identifier": "Component 1", "Node Degree": 2, "Node In Degree": 0, "Node Multiplicity": 1, "Node Name": "h26", "Node Out Degree": 2, "color": "#97c2fc", "id": "n26", "label": "n26", "name": "Wasp", "shape": "dot", "size": 10, "title": "Wasp", "type": "hero", "x": 85.3949, "y": -304.757, "z": 0.0}, {"Description": "m1", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 1, "Node Multiplicity": 1, "Node Name": "m1", "Node Out Degree": 0, "color": "#97c2fc", "id": "n29", "label": "n29", "name": "Ant-Man and the Wasp", "shape": "dot", "size": 10, "title": "Ant-Man and the Wasp", "type": "movie", "x": 93.0383, "y": -304.887, "z": 0.0}, {"Description": "h27", "Node Component Identifier": "Component 1", "Node Degree": 4, "Node In Degree": 0, "Node Multiplicity": 1, "Node Name": "h27", "Node Out Degree": 4, "color": "#97c2fc", "id": "n27", "label": "n27", "name": "Winter Soldier", "shape": "dot", "size": 10, "title": "Winter Soldier", "type": "hero", "x": 35.9701, "y": -311.139, "z": 0.0}, {"Description": "m7", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 1, "Node Multiplicity": 1, "Node Name": "m7", "Node Out Degree": 0, "color": "#97c2fc", "id": "n35", "label": "n35", "name": "Captain America: The First Avenger", "shape": "dot", "size": 10, "title": "Captain America: The First Avenger", "type": "movie", "x": 31.3764, "y": -317.199, "z": 0.0}, {"Description": "m0", "Node Component Identifier": "Component 1", "Node Degree": 1, "Node In Degree": 1, "Node Multiplicity": 1, "Node Name": "m0", "Node Out Degree": 0, "color": "#97c2fc", "id": "n28", "label": "n28", "name": "Ant-Man", "shape": "dot", "size": 10, "title": "Ant-Man", "type": "movie", "x": 36.3217, "y": -318.851, "z": 0.0}]);
+                  edges = new vis.DataSet([{"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n1", "id": "e0", "to": "n34", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n1", "id": "e1", "to": "n33", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n1", "id": "e2", "to": "n32", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n1", "id": "e3", "to": "n30", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n2", "id": "e4", "to": "n34", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n3", "id": "e5", "to": "n34", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n4", "id": "e6", "to": "n37", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n4", "id": "e7", "to": "n30", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n5", "id": "e8", "to": "n30", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n6", "id": "e9", "to": "n30", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n7", "id": "e10", "to": "n34", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n8", "id": "e11", "to": "n30", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n9", "id": "e12", "to": "n30", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n10", "id": "e13", "to": "n49", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n10", "id": "e14", "to": "n34", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n11", "id": "e15", "to": "n30", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n12", "id": "e16", "to": "n48", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n12", "id": "e17", "to": "n47", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n12", "id": "e18", "to": "n34", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n13", "id": "e19", "to": "n30", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n14", "id": "e20", "to": "n30", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n15", "id": "e21", "to": "n30", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n16", "id": "e22", "to": "n32", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n17", "id": "e23", "to": "n49", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n18", "id": "e24", "to": "n36", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n19", "id": "e25", "to": "n30", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n20", "id": "e26", "to": "n34", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n21", "id": "e27", "to": "n34", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n21", "id": "e28", "to": "n46", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n21", "id": "e29", "to": "n45", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n22", "id": "e30", "to": "n39", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n22", "id": "e31", "to": "n40", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n22", "id": "e32", "to": "n30", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n22", "id": "e33", "to": "n41", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n23", "id": "e34", "to": "n51", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n23", "id": "e35", "to": "n38", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n23", "id": "e36", "to": "n50", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n23", "id": "e37", "to": "n30", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n24", "id": "e38", "to": "n34", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n25", "id": "e39", "to": "n42", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n25", "id": "e40", "to": "n43", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n25", "id": "e41", "to": "n44", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n25", "id": "e42", "to": "n31", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n25", "id": "e43", "to": "n34", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n26", "id": "e44", "to": "n29", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n26", "id": "e45", "to": "n30", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n27", "id": "e46", "to": "n35", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n27", "id": "e47", "to": "n36", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n27", "id": "e48", "to": "n28", "width": 1}, {"Edge Component Identifier": "Component 1", "Edge Multiplicity": 1, "from": "n27", "id": "e49", "to": "n34", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
