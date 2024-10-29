@@ -1,17 +1,22 @@
-# logger.py
-
 class Logger:
-    """Handles logging within the application. Implements the Singleton pattern
-    to ensure only one logger instance is used."""
+    """
+    Logger implements the Singleton Pattern to ensure only one instance of the logger exists.
+    This central logger will handle all logging operations across the application.
+    """
 
-    _instance = None  # Singleton instance
+    _instance = None
 
     def __new__(cls):
-        """Creates a new instance of Logger if it doesn't exist; otherwise returns the existing instance."""
         if cls._instance is None:
             cls._instance = super(Logger, cls).__new__(cls)
+            # Initialize logging settings here if needed
         return cls._instance
 
-    def log(self, message: str):
-        """Logs a message to the console or a file."""
-        print(f"LOG: {message}")  # Replace with file logging if needed
+    def log(self, message, level="INFO"):
+        """
+        Logs a message at the specified level.
+
+        :param message: The message to log
+        :param level: The logging level (e.g., INFO, WARNING, ERROR)
+        """
+        print(f"[{level}] {message}")

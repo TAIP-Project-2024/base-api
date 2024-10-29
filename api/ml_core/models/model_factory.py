@@ -1,25 +1,20 @@
-# model_factory.py
+from ..models import SentimentModel, TopicModel, CommunityDetectionModel
+
 
 class ModelFactory:
-    """Implements the Factory Pattern to create and return model instances based on input specifications."""
-
     @staticmethod
-    def get_model(model_type: str):
+    def create_model(model_type):
         """
-        Returns an instance of the requested model type.
+        Creates and returns a model based on the specified type using the Abstract Factory Pattern.
 
-        Args:
-            model_type (str): Type of model ('CNN' or 'BERT').
-
-        Returns:
-            An instance of CNNModel or BERTSentimentAnalyzer based on model_type.
+        :param model_type: Type of model to create (e.g., 'sentiment', 'topic', 'community')
+        :return: An instance of the specified model
         """
-        if model_type == "CNN":
-            return CNNModel()
-        elif model_type == "BERT":
-            return BERTSentimentAnalyzer()
+        if model_type == 'sentiment':
+            return SentimentModel()
+        elif model_type == 'topic':
+            return TopicModel()
+        elif model_type == 'community':
+            return CommunityDetectionModel()
         else:
-            raise ValueError("Invalid model type provided.")
-
-# Factory Pattern Example (Minimal Implementation)
-# Example call: ModelFactory.get_model("CNN")
+            raise ValueError("Unknown model type: {}".format(model_type))
