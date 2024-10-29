@@ -3,6 +3,10 @@ from typing import TypeVar, Generic
 TValue = TypeVar('TValue')
 
 class Result(Generic[TValue]):
+    """
+        Result will be used as method return type for services and repositories.
+    """
+
     value: TValue
     error: str
     is_success: bool
