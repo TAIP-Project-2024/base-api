@@ -5,6 +5,6 @@ class MetadataService:
 
     def generate_metadata(self, data):
         """
-        maybe generate some xml storing sentiment analysis results.
+        maybe generate some xml storing sentiment sentiment_analysis results.
         """
         pass

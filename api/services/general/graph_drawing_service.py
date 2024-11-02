@@ -1,6 +1,3 @@
-from api.models.graph_drawing import GraphDrawing
-
-
 class VisualizationService:
     def __init__(self):
         pass

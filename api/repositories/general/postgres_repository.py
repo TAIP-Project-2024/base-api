@@ -1,6 +1,5 @@
 import psycopg2
-from psycopg2 import sql
-from db_template import DbTemplate
+from api.repositories.general.db_template import DbTemplate
 
 """
     Concrete implementation of DbTemplateRepository:

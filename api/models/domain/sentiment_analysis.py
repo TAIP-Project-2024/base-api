@@ -7,7 +7,7 @@ class SentimentAnalysis:
         self.timestamp = None
 
     def analyze(self, data):
-        """Simulate sentiment analysis and set the result."""
+        """Simulate sentiment sentiment_analysis and set the result."""
         self.sentiment_score = random.uniform(-1, 1)
         self.timestamp = datetime.now()
         return self.to_dict()

@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-from db_template import DbTemplate
+from api.repositories.general.db_template import DbTemplate
 
 """
     Concrete implementation of DbTemplateRepository:

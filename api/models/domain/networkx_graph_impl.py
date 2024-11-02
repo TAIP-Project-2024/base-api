@@ -1,7 +1,7 @@
 import networkx as nx
 
-from api.models.graph import Graph
-from api.models.graph_drawing import GraphDrawing
+from api.models.domain.graph import Graph
+from api.models.domain.graph_drawing import GraphDrawing
 from api.services.layouts.simple_nx_drawing import SimpleNxDrawing
 
 """
@@ -18,7 +18,7 @@ class NetworkxGraphImpl(Graph):
 
 
 #demo, can run
-g = NetworkxGraphImpl("../../resources/graphs/marvel.graphml")
+g = NetworkxGraphImpl("../../../resources/graphs/marvel.graphml")
 d = GraphDrawing(g)
 d.draw(SimpleNxDrawing())
 # open the html generated in resources/drawings.

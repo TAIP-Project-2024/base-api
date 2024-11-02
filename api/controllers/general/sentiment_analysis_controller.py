@@ -12,7 +12,7 @@ class SentimentAnalysisController:
         data = self.fetch_social_media_data()
         processed_data = self.preprocess_data(data)
 
-        # Apply sentiment analysis using Factory Pattern
+        # Apply sentiment sentiment_analysis using Factory Pattern
         sentiment_analyzer = AnalysisFactory.create_analysis_component("sentiment_analysis")
         sentiment_result = sentiment_analyzer.analyze(processed_data)
 
