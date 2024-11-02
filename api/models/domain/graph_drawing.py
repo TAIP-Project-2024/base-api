@@ -2,6 +2,8 @@
     An object representing a layout (nodes, edges, and a unique
     displacement).
 """
+
+
 class GraphDrawing:
     def __init__(self, graph):
         """
