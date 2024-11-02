@@ -7,6 +7,8 @@ from api.services.layouts.simple_nx_drawing import SimpleNxDrawing
 """
     Example of a concrete implementation for a graph framework object
 """
+
+
 class NetworkxGraphImpl(Graph):
 
     def __init__(self, file):
@@ -14,7 +16,6 @@ class NetworkxGraphImpl(Graph):
 
     def save(self, file):
         nx.write_graphml(self.graph, file)
-
 
 
 #demo, can run

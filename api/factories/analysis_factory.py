@@ -2,6 +2,7 @@ from models.sentiment_analysis import SentimentAnalysis
 from models.community_detection import CommunityDetection
 from models.graph_representation import GraphRepresentation
 
+
 class AnalysisFactory:
     @staticmethod
     def create_analysis_component(component_type):

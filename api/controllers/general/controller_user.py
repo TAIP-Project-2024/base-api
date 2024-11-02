@@ -4,6 +4,7 @@ from models.users import User
 from datetime import datetime
 import bcrypt
 
+
 class ControllerUser:
     def __init__(self, user, view, repository):
         # Dependency Injection Pattern: The ControllerUser class depends on User, ViewLogin, and PostgresRepository,
