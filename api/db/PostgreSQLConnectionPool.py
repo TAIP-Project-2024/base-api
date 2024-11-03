@@ -2,6 +2,7 @@ import psycopg2
 from psycopg2 import pool
 from django.conf import settings
 
+
 class PostgreSQLConnectionPool:
     _instance = None
 
@@ -26,4 +27,3 @@ class PostgreSQLConnectionPool:
     def close_all(self):
         # Close all connections of the pool
         self._pool.closeall()
-
