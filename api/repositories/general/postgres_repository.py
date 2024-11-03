@@ -6,6 +6,7 @@ from api.repositories.general.db_template import DbTemplate
         PostgreSQL Repository
 """
 
+
 class Postgres(DbTemplate):
     def __init__(self, db_config):
         # TODO: connection
