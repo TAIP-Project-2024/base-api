@@ -3,8 +3,10 @@ class MetadataService:
     def __init__(self):
         pass
 
-    def generate_metadata(self, data):
+    @staticmethod
+    def generate_metadata_for_post(author, post, reactions):
         """
-        maybe generate some xml storing sentiment sentiment_analysis results.
+        maybe generate some json storing sentiment analysis results.
         """
-        pass
+        metadata = {"author": author, "post": post, "reactions": reactions}
+        return metadata
