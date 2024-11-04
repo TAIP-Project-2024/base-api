@@ -8,9 +8,10 @@ class GraphDrawingService:
     def generate_drawing(self, layout, graph):
         """
         Will try to apply the layout algorithm for the graph
-        Will return None if it fails.
+        Will return false if it fails.
         """
-        # graph_drawing = GraphDrawing(graph).draw(layout)
-        # return graph_drawing
         graph_drawing = GraphDrawing(graph)
         return graph_drawing.draw_as(layout)
+
+
+
