@@ -9,8 +9,8 @@ class GraphService:
     def save_graph(self, graph):
         pass
 
-    def load_graph(self, graph):
+    def delete_graph(self, graph):
         pass
 
-    def delete_graph(self, graph):
+    def find_graph(self, id):
         pass

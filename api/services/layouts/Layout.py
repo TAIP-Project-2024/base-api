@@ -1,7 +1,7 @@
 from abc import abstractmethod
 
 
-class GraphLayout:
+class Layout:
     @abstractmethod
     def apply(self, graph):
         """
@@ -10,4 +10,4 @@ class GraphLayout:
         @param graph: graph of type models.Graph to be drawn
         @return: a drawing of type models.GraphDrawing
         """
-        pass
+        return None

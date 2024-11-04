@@ -1,12 +1,15 @@
 from abc import abstractmethod
+import uuid
 
 """
     This class is a decorator over a framework
     specific object representing a graph.
-    
+
     This is also an adapter between multiple frameworks.
-    
+
 """
+
+
 class Graph:
 
     @abstractmethod
@@ -17,6 +20,7 @@ class Graph:
         @param file: path to a file of .graphml format.
 
         """
+        self.id = uuid.uuid4()
         pass
 
     @abstractmethod
@@ -28,5 +32,3 @@ class Graph:
         @param file: path to a file of .graphml format.
         """
         pass
-
-
