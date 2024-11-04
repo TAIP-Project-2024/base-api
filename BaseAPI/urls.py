@@ -18,8 +18,9 @@ from django.contrib import admin
 from django.urls import path
 
 from api.controllers.general.test_controller import TestController
+from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('test/', TestController.as_view(), name='test'), 
+    path('api/v1/identity/', include('accounts.urls')),
 ]

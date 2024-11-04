@@ -12,7 +12,7 @@ class GraphDrawing:
         self.graph = graph
         self.graph_drawing = None
 
-    def draw(self, layout):
+    def draw_as(self, layout):
         """
         A method implementing visitor design pattern for
         graph drawing using various layouts.
