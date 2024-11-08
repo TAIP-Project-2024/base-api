@@ -10,4 +10,28 @@
 
 
 class SentimentScore:
-    pass
+    def __init__(self, polarity: float=0.0, score: float=0.0):
+        self.polarity = polarity
+        self.score = score
+
+    def get_sentiment(self):
+        if self.polarity > 0:
+            return 'Positive'
+        elif self.polarity < 0:
+            return 'Negative'
+        else:
+            return 'Neutral'
+
+    def get_detailed_sentiment(self):
+        if self.polarity > 0:
+            if self.score > 0.5:
+                return 'Very Positive'
+            else:
+                return 'Slightly Positive'
+        elif self.polarity < 0:
+            if self.score < -0.5:
+                return 'Very Negative'
+            else:
+                return 'Slightly Negative'
+        else:
+            return 'Neutral'

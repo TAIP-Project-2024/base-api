@@ -7,9 +7,9 @@
 # Original author: enbysenpai
 # 
 #######################################################
-from Package1.SentimentModel import SentimentModel
-from Package1.SentimentScore import SentimentScore
-from Package1.LanguageSupport import LanguageSupport
+from api.mdd.mdd2.SentimentModel import SentimentModel
+from api.mdd.mdd2.SentimentScore import SentimentScore
+from api.mdd.mdd2.LanguageSupport import LanguageSupport
 
 class SentimentAnalyzer:
     m_SentimentModel= SentimentModel()
@@ -18,11 +18,11 @@ class SentimentAnalyzer:
 
     m_LanguageSupport= LanguageSupport()
 
-    def classifySentiment() -> void:
+    def classifySentiment(self):
         pass
 
-    def detectEmotion() -> void:
+    def detectEmotion(self):
         pass
 
-    def performSentimentAnalysis() -> void:
+    def performSentimentAnalysis(self):
         pass

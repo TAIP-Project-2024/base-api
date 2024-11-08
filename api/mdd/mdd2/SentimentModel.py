@@ -10,8 +10,8 @@
 
 
 class SentimentModel:
-    def predictSentiment() -> void:
+    def predictSentiment(self):
         pass
 
-    def trainModel() -> void:
+    def trainModel(self):
         pass

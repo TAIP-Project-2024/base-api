@@ -10,8 +10,8 @@
 
 
 class LanguageSupport:
-    def detectLanguage() -> void:
+    def detectLanguage(self):
         pass
 
-    def translate() -> void:
+    def translate(self):
         pass
