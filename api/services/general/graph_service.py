@@ -1,4 +1,10 @@
+import os
+
 import networkx as nx
+
+from api.repositories.general.graph_repository import GraphRepository
+
+
 class GraphService:
 
     def __init__(self):
@@ -9,6 +15,8 @@ class GraphService:
         Will generate a graph connecting all reactions
         to the original post.
         Will have n+1 nodes, n - #reactions.
+        todo rethink the metadata structure
+        todo change nx.DiGrpah with a NetworkxDiGraphImpl own object
         """
         nodes = metadata['reactions']
         G = nx.DiGraph()
@@ -25,16 +33,31 @@ class GraphService:
         nx.write_graphml(G, "resources/graphs/example.graphml")
         return G
 
-    def save_graph(self, graph):
-        pass
+    def save_graph(self, graph, delete_local):
+        with open(graph.graphml_file, 'rb') as f:
+            id = GraphRepository().add(graph.name, f)
+        graph.id = id
+        if delete_local:
+            os.remove(graph.graphml_file)
+        return id
 
     def delete_graph(self, graph):
-        pass
+        """
+        todo
+        """
 
     def find_graph(self, id):
-        None
+        """"
+        todo
+        """
 
     def compute_color(self, x):
+        """
+        This computes a color based on x
+        x = 1 => green
+        x = 0 => red
+        0 < x < 1 => intermediary
+        """
         x = max(0, min(1, x))
         red = int(255 * (1 - x))
         green = int(255 * x)

@@ -5,12 +5,15 @@
 
 
 class GraphDrawing:
-    def __init__(self, graph):
+    def __init__(self, graph, name = None):
         """
         @param graph: graph of models.Graph type
         """
         self.graph = graph
-        self.graph_drawing = None
+        self.html_file = None
+        self.name = name
+
+
 
     def draw_as(self, layout):
         """
@@ -19,5 +22,5 @@ class GraphDrawing:
         @param layout: layout of the graph
         @return: the respective graph drawing
         """
-        self.graph_drawing = layout.apply(self.graph)
-        return self.graph_drawing
+        self.html_file = layout.apply(self.graph)
+        return self.html_file
