@@ -1,7 +1,7 @@
 class TopicModeler:
     """
     TopicModeler serves as a Facade for various topic modeling methods.
-    Provides a simplified interface for performing topic modeling.
+    Implements the Facade Pattern to provide a unified interface for topic modeling.
     """
 
     def __init__(self):
