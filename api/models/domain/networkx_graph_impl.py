@@ -9,17 +9,18 @@ from api.services.layouts.simple_nx_drawing import SimpleNxDrawing
 """
 
 
-class NetworkxGraphImpl(Graph):
+class NetworkxDiGraphImpl(Graph):
 
-    def __init__(self, file):
-        self.graph = nx.read_graphml(file)
+    def __init__(self, file, name):
+        #id will be set when added to cloud
+        self.id = None
+        self.name = name
+        if file is None:
+            self.graph = nx.DiGraph()
+        else:
+            self.graph = nx.read_graphml(file)
+        self.graphml_file = file
 
     def save(self, file):
         nx.write_graphml(self.graph, file)
 
-
-#demo, can run
-g = NetworkxGraphImpl("../../../resources/graphs/marvel.graphml")
-d = GraphDrawing(g)
-d.draw(SimpleNxDrawing())
-# open the html generated in resources/drawings.
