@@ -128,3 +128,11 @@ STATIC_URL = 'static/'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MONGODB_URI = os.getenv("MONGO_URI")
+MONGODB_DB_NAME = os.getenv("MONGO_DB_NAME")
+
+MONGODB_SETTINGS = {
+    'URI': MONGODB_URI,
+    'DB_NAME': MONGODB_DB_NAME
+}

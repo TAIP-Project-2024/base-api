@@ -1,6 +1,6 @@
 from dotenv import load_dotenv, find_dotenv
 import os
-from pymongo import MongoClient
+from ...db.MongoDBClient import MongoDBClient
 from gridfs import GridFS
 
 # Load environment variables from a .env file
@@ -12,18 +12,14 @@ connection_string = f"mongodb+srv://psca:{password}@cluster0.1nnly.mongodb.net/?
 DATABASE_NAME = "PoliticalSentimentDB"
 COLLECTION_NAME = "Drawings"
 
+
 class DrawingRepository:
 
     def __init__(self):
         # Initialize MongoDB client and set up database, collection, and GridFS
-        self.client = MongoClient(connection_string)
-        self.db = self.client[DATABASE_NAME]
+        self.db = MongoDBClient().get_db()
         self.collection = self.db[COLLECTION_NAME]
         self.fs = GridFS(self.db, collection=COLLECTION_NAME)
-
-    def __del__(self):
-        # Close the MongoDB client connection
-        self.client.close()
 
     def add(self, name, graph_drawing_file_buffer):
         """Add a new drawing to GridFS"""
