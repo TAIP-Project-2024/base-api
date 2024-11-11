@@ -9,13 +9,28 @@
 #######################################################
 from .SentimentAnalyzer import SentimentAnalyzer
 
+import re
+
+
 class LexiconBasedAnalyzer(SentimentAnalyzer):
     def __init__(self):
         super().__init__()
         self.lexicon = {}
 
-    def analyze(self, text):
-        pass
-
     def load_lexicon(self, lexicon_path):
-        pass
+        with open(lexicon_path, 'r') as file:
+            for line in file:
+                word, score = line.strip().split(',')
+                self.lexicon[word.lower()] = float(score)
+
+    def analyze(self, text):
+        words = re.findall(r'\w+', text.lower())
+        sentiment_score = 0
+        count = 0
+
+        for word in words:
+            if word in self.lexicon:
+                sentiment_score += self.lexicon[word]
+                count += 1
+
+        return sentiment_score / count if count > 0 else 0

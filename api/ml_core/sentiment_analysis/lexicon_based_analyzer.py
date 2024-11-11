@@ -1,5 +1,7 @@
 from sentiment_analyzer import SentimentAnalyzer
 
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+
 
 class LexiconBasedAnalyzer(SentimentAnalyzer):
     """
@@ -12,15 +14,7 @@ class LexiconBasedAnalyzer(SentimentAnalyzer):
         Initializes the LexiconBasedAnalyzer with an empty lexicon dictionary.
         """
         super().__init__()
-        self.lexicon = {}  # Dictionary mapping words to sentiment scores
-
-    def load_lexicon(self, lexicon_path):
-        """
-        Loads a lexicon from a specified file, allowing sentiment analysis based on pre-defined word scores.
-
-        :param lexicon_path: Path to the lexicon file containing word sentiment scores
-        """
-        pass
+        self.analyzer = SentimentIntensityAnalyzer()
 
     def analyze(self, text):
         """
@@ -29,5 +23,5 @@ class LexiconBasedAnalyzer(SentimentAnalyzer):
         :param text: Text to analyze
         :return: Sentiment score computed based on lexicon values
         """
-        # Perform sentiment analysis based on the lexicon data
-        pass
+        sentiment_scores = self.analyzer.polarity_scores(text)
+        return sentiment_scores

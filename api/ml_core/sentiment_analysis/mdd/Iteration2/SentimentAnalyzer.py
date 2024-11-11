@@ -13,8 +13,10 @@ class SentimentAnalyzer:
     def __init__(self):
         self.method = None
 
-    def analyze(self, text):
-        pass
-
     def set_method(self, method):
-        pass
+        self.method = method
+
+    def analyze(self, text):
+        if not self.method:
+            raise ValueError("No analysis method set.")
+        return self.method.analyze(text)

@@ -1,5 +1,8 @@
 from sentiment_analyzer import SentimentAnalyzer
 
+from transformers import BertTokenizer, BertModel, pipeline
+import torch
+
 
 class DeepLearningAnalyzer(SentimentAnalyzer):
     """
@@ -13,7 +16,9 @@ class DeepLearningAnalyzer(SentimentAnalyzer):
         Initializes the DeepLearningAnalyzer with a placeholder for a neural network model.
         """
         super().__init__()
-        self.model = None  # Placeholder for the deep learning model
+        self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+        self.model = BertModel.from_pretrained("bert-base-uncased")
+        self.pipe = pipeline("fill-mask", model="google-bert/bert-base-uncased")
 
     def load_model(self, model_path):
         """
@@ -30,5 +35,9 @@ class DeepLearningAnalyzer(SentimentAnalyzer):
         :param text: Input text to analyze
         :return: Sentiment score derived from deep learning analysis
         """
-        # Perform sentiment analysis using the neural model
-        pass
+        # inputs = self.tokenizer(text, return_tensors='pt', truncation=True, max_length=512)
+        # with torch.no_grad():
+        #     outputs = self.model(**inputs)
+        # scores = outputs[0][0].detach().numpy()
+        # return {'positive': scores[1], 'negative': scores[0]}
+        return self.pipe(text)

@@ -9,13 +9,22 @@
 #######################################################
 from .SentimentAnalyzer import SentimentAnalyzer
 
+from transformers import BertTokenizer, BertForSequenceClassification
+import torch
+
+
 class DeepLearningAnalyzer(SentimentAnalyzer):
     def __init__(self):
         super().__init__()
-        self.model = None
-
-    def analyze(self, text):
-        pass
+        self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased-finetuned-sst-2-english')
+        self.model = BertForSequenceClassification.from_pretrained('bert-base-uncased-finetuned-sst-2-english')
 
     def load_model(self, model_path):
         pass
+
+    def analyze(self, text):
+        inputs = self.tokenizer(text, return_tensors='pt', truncation=True, max_length=512)
+        with torch.no_grad():
+            outputs = self.model(**inputs)
+        scores = outputs.logits.softmax(dim=1).tolist()[0]
+        return {'positive': scores[1], 'negative': scores[0]}
