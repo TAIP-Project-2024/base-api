@@ -1,6 +1,7 @@
 import random
 from datetime import datetime
 
+
 class GraphRepresentation:
     def __init__(self):
         self.graph = None

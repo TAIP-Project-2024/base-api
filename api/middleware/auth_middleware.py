@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.utils.deprecation import MiddlewareMixin
 
+
 class AuthMiddleware(MiddlewareMixin):
     """
     Middleware for authentication and authorization.

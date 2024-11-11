@@ -1,6 +1,7 @@
 import random
 from datetime import datetime
 
+
 class SentimentAnalysis:
     def __init__(self):
         self.sentiment_score = None

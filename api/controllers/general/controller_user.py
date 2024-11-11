@@ -1,8 +1,6 @@
-from repositories.postgres_repository import PostgresRepository
-from view.view_login import ViewLogin
-from models.users import User
 from datetime import datetime
 import bcrypt
+
 
 class ControllerUser:
     def __init__(self, user, view, repository):

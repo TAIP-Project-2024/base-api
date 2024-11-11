@@ -1,6 +1,7 @@
-from models.sentiment_analysis import SentimentAnalysis
-from models.community_detection import CommunityDetection
-from models.graph_representation import GraphRepresentation
+from ..models.domain.sentiment_analysis import SentimentAnalysis
+from ..models.domain.community_detection import CommunityDetection
+from ..models.domain.graph_representation import GraphRepresentation
+
 
 class AnalysisFactory:
     @staticmethod

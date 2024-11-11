@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
     Template class for database repositories
 """
 
+
 class DbTemplate(ABC):
     @abstractmethod
     def create(self, data):
