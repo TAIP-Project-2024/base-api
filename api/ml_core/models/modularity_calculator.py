@@ -1,17 +1,21 @@
 class ModularityCalculator:
+    """
+    ModularityCalculator computes the modularity score for a network of communities.
+    Modularity measures the strength of division of a network into communities.
+    """
+
     def __init__(self):
         """
-        Initializes the ModularityCalculator.
-        This class calculates the modularity of a network based on detected communities.
+        Initializes the ModularityCalculator with a default modularity score of zero.
         """
         self.modularity_score = 0.0  # Score of the network's modularity
 
     def calculate_modularity(self, communities, graph):
         """
-        Calculates the modularity of the given communities.
+        Calculates the modularity score based on the communities and graph structure provided.
 
-        :param communities: Detected communities
+        :param communities: List of detected communities within the network
         :param graph: Graph representation of the network
-        :return: Modularity score
+        :return: Computed modularity score
         """
         pass

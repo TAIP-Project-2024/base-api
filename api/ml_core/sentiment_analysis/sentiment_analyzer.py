@@ -1,26 +1,29 @@
 class SentimentAnalyzer:
     """
-    SentimentAnalyzer acts as a Facade for different sentiment analysis methods.
-    Provides a simplified interface for analyzing sentiment.
+    SentimentAnalyzer acts as a Facade, providing a unified interface for various sentiment analysis methods,
+    such as lexicon-based or deep learning-based analysis.
     """
 
     def __init__(self):
-        self.method = None  # Stores the selected analysis method (lexicon or deep learning)
+        """
+        Initializes SentimentAnalyzer with no selected analysis method.
+        """
+        self.method = None  # Stores the chosen analysis method (e.g., LexiconBasedAnalyzer, DeepLearningAnalyzer)
 
     def set_method(self, method):
         """
-        Sets the sentiment analysis method to be used.
+        Sets the analysis method to be used for sentiment analysis.
 
-        :param method: A specific analyzer instance (e.g., LexiconBasedAnalyzer, DeepLearningAnalyzer)
+        :param method: Instance of a specific analyzer (e.g., LexiconBasedAnalyzer, DeepLearningAnalyzer)
         """
         self.method = method
 
     def analyze(self, text):
         """
-        Analyzes the sentiment of the provided text using the selected method.
+        Analyzes the sentiment of the given text using the chosen analysis method.
 
         :param text: Text to analyze
-        :return: Sentiment analysis result
+        :return: Sentiment result provided by the selected analysis method
         """
         if not self.method:
             raise ValueError("No analysis method set.")

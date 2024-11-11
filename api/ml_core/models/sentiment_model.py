@@ -1,17 +1,21 @@
 class SentimentModel:
+    """
+    SentimentModel provides a framework for training and predicting sentiment.
+    This class implements the Decorator Pattern to allow extension with additional
+    functionalities, such as caching or performance logging, without modifying the core model.
+    """
+
     def __init__(self):
         """
-        Initializes the SentimentModel.
-        This class implements the Decorator Pattern to allow additional functionalities,
-        such as caching or performance logging.
+        Initializes the SentimentModel with default parameters.
         """
         self.model_parameters = {}  # Parameters specific to the sentiment model
 
     def train(self, data):
         """
-        Trains the sentiment model on the provided data.
+        Trains the sentiment model on provided data.
 
-        :param data: Training data
+        :param data: Dataset used for training the sentiment model
         """
         pass
 
@@ -19,27 +23,31 @@ class SentimentModel:
         """
         Predicts sentiment for the given input data.
 
-        :param input_data: Data to predict sentiment for
-        :return: Sentiment prediction
+        :param input_data: Data input to analyze sentiment
+        :return: Predicted sentiment based on the model
         """
         pass
 
 
 class CachedSentimentModel(SentimentModel):
+    """
+    CachedSentimentModel extends SentimentModel with caching.
+    Implements the Decorator Pattern to add caching functionality for storing previously computed results.
+    """
+
     def __init__(self):
         """
-        Initializes the CachedSentimentModel, which adds caching functionality
-        to the base SentimentModel using the Decorator Pattern.
+        Initializes CachedSentimentModel with a cache dictionary to store predictions.
         """
         super().__init__()
-        self.cache = {}  # Cache to store predictions
+        self.cache = {}  # Cache to store prediction results
 
     def predict(self, input_data):
         """
-        Overrides the predict method to include caching functionality.
+        Predicts sentiment for the input data, using cached result if available.
 
-        :param input_data: Data to predict sentiment for
-        :return: Sentiment prediction, possibly from cache
+        :param input_data: Data input for sentiment prediction
+        :return: The prediction, retrieved from cache if available
         """
         if input_data in self.cache:
             return self.cache[input_data]
