@@ -1,17 +1,14 @@
-from sentiment_analyzer import SentimentAnalyzer
-
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
 
-class LexiconBasedAnalyzer(SentimentAnalyzer):
+class LexiconBasedAnalyzer:
     """
-    LexiconBasedAnalyzer extends SentimentAnalyzer, providing lexicon-based sentiment analysis.
-    Uses the Decorator Pattern to add lexicon analysis functionality to the base sentiment analyzer.
+    LexiconBasedAnalyzer class is responsible for analyzing the sentiment of text using lexicon-based methods.
     """
 
     def __init__(self):
         """
-        Initializes the LexiconBasedAnalyzer with an empty lexicon dictionary.
+        Initializes the LexiconBasedAnalyzer with a pre-trained VADER sentiment analyzer.
         """
         super().__init__()
         self.analyzer = SentimentIntensityAnalyzer()
