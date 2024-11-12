@@ -12,12 +12,8 @@ analyzer = SentimentAnalyzer()
 text = "The product was amazing and I absolutely loved it!"
 
 # Lexicon-based analysis
-lexicon_analyzer = LexiconBasedAnalyzer()
-analyzer.set_method(lexicon_analyzer)
-print(analyzer.analyze(text)) # compound provides an overall sentiment score from -1 (most negative) to +1 (most positive).
+print(analyzer.lexicon_analyzer(text)) # compound provides an overall sentiment score from -1 (most negative) to +1 (most positive).
 
 
 # Deep learning analysis
-deep_learning_analyzer = DeepLearningAnalyzer()
-analyzer.set_method(deep_learning_analyzer)
-print(analyzer.analyze(text))
+print(analyzer.deep_learning_analyzer(text))
