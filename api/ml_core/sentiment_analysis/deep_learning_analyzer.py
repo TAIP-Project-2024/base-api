@@ -1,32 +1,19 @@
-from sentiment_analyzer import SentimentAnalyzer
-
 from transformers import BertTokenizer, BertModel, pipeline
-import torch
 
 
-class DeepLearningAnalyzer(SentimentAnalyzer):
+class DeepLearningAnalyzer:
     """
-    DeepLearningAnalyzer extends SentimentAnalyzer to include deep learning analysis capabilities.
-    This class uses the Decorator Pattern to add neural network-based sentiment analysis,
-    enhancing the functionality of the base sentiment analyzer.
+    DeepLearningAnalyzer class is responsible for analyzing the sentiment of text using deep learning models.
     """
 
     def __init__(self):
         """
-        Initializes the DeepLearningAnalyzer with a placeholder for a neural network model.
+        Initializes the DeepLearningAnalyzer with a pre-trained BERT model for sentiment analysis.
         """
         super().__init__()
         self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
         self.model = BertModel.from_pretrained("bert-base-uncased")
         self.pipe = pipeline("fill-mask", model="google-bert/bert-base-uncased")
-
-    def load_model(self, model_path):
-        """
-        Loads a pre-trained neural network model for sentiment analysis.
-
-        :param model_path: File path to the pre-trained model
-        """
-        pass
 
     def analyze(self, text):
         """
