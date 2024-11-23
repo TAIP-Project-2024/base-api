@@ -4,19 +4,17 @@ from pymongo import MongoClient
 from gridfs import GridFS
 
 # Load environment variables from a .env file
-load_dotenv(find_dotenv())
-password = os.environ.get("MONGODB_PWD")
-connection_string = f"mongodb+srv://psca:{password}@cluster0.1nnly.mongodb.net/?ssl=true&retryWrites=false"
-
-# Define database and collection names
-DATABASE_NAME = "PoliticalSentimentDB"
+load_dotenv('../../../BaseAPI/.env')
+DATABASE_NAME = os.environ.get("MONGO_DB_NAME")
+MONGO_URI = os.environ.get("MONGO_URI")
 COLLECTION_NAME = "Graphs"
+# Define database and collection names
 
 class GraphRepository:
 
     def __init__(self):
         # Initialize MongoDB client and set up database, collection, and GridFS
-        self.client = MongoClient(connection_string)
+        self.client = MongoClient(MONGO_URI)
         self.db = self.client[DATABASE_NAME]
         self.collection = self.db[COLLECTION_NAME]
         self.fs = GridFS(self.db, collection=COLLECTION_NAME)
@@ -34,7 +32,7 @@ class GraphRepository:
         """Retrieve a graph by its name"""
         file = self.fs.find_one({"filename": name})
         if file:
-            return file.read()
+            return file
         else:
             return None
 
@@ -53,3 +51,10 @@ class GraphRepository:
             self.fs.delete(file._id)
             return True
         return False
+
+
+gr = GraphRepository()
+f = gr.get("ExampleGraph")
+for line in f:
+    print(line)
+gr.__del__()
