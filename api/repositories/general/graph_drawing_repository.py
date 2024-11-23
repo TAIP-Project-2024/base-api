@@ -2,7 +2,7 @@ from dotenv import load_dotenv, find_dotenv
 import os
 from pymongo import MongoClient
 from gridfs import GridFS
-
+from security_aop import logging_and_security
 # Load environment variables from a .env file
 load_dotenv(find_dotenv())
 password = os.environ.get("MONGODB_PWD")
@@ -13,31 +13,31 @@ DATABASE_NAME = "PoliticalSentimentDB"
 COLLECTION_NAME = "Drawings"
 
 class DrawingRepository:
-
     def __init__(self):
-        # Initialize MongoDB client and set up database, collection, and GridFS
+        # Initialize the MongoDB client and set up the database, collection, and GridFS
         self.client = MongoClient(connection_string)
         self.db = self.client[DATABASE_NAME]
-        self.collection = self.db[COLLECTION_NAME]
         self.fs = GridFS(self.db, collection=COLLECTION_NAME)
 
     def __del__(self):
         # Close the MongoDB client connection
         self.client.close()
 
+    @logging_and_security
     def add(self, name, graph_drawing_file_buffer):
         """Add a new drawing to GridFS"""
         file_id = self.fs.put(graph_drawing_file_buffer, filename=name)
         return file_id
 
+    @logging_and_security
     def get(self, name):
         """Retrieve a drawing by its name"""
         file = self.fs.find_one({"filename": name})
         if file:
             return file.read()
-        else:
-            return None
+        return None
 
+    @logging_and_security
     def update(self, name, graph_drawing_file_buffer):
         """Update an existing drawing by its name"""
         file = self.fs.find_one({"filename": name})
@@ -46,6 +46,7 @@ class DrawingRepository:
         file_id = self.fs.put(graph_drawing_file_buffer, filename=name)
         return file_id
 
+    @logging_and_security
     def delete(self, name):
         """Delete a drawing by its name"""
         file = self.fs.find_one({"filename": name})
