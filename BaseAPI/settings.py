@@ -42,11 +42,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'BaseAPI.urls'
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'BaseAPI' / 'propath'],
+        #       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        #just an example of how to use propath for .env, will delete afterwards
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -63,7 +64,7 @@ WSGI_APPLICATION = 'BaseAPI.wsgi.application'
 
 # Database configuration (already customized)
 tmpPostgres = urlparse(os.getenv("DATABASE_URL"))
-
+print(tmpPostgres)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
