@@ -1,3 +1,5 @@
+from io import BytesIO, StringIO
+
 from dotenv import load_dotenv, find_dotenv
 import os
 from pymongo import MongoClient
@@ -6,13 +8,19 @@ from gridfs import GridFS
 load_dotenv('../../../BaseAPI/.env')
 DATABASE_NAME = os.environ.get("MONGO_DB_NAME")
 MONGO_URI = os.environ.get("MONGO_URI")
-COLLECTION_NAME = "Graphs"
+COLLECTION_NAME = "Drawings"
 
 class DrawingRepository:
-
+    """
+    Example usage:
+    with DrawingRepository() as drawing_repository:
+        f = drawing_repository.get("ExampleDrawing")
+        ...
+    Will close the connection automatically
+    """
     def __init__(self):
         # Initialize MongoDB client and set up database, collection, and GridFS
-        self.client = MongoClient(DATABASE_NAME)
+        self.client = MongoClient(MONGO_URI)
         self.db = self.client[DATABASE_NAME]
         self.collection = self.db[COLLECTION_NAME]
         self.fs = GridFS(self.db, collection=COLLECTION_NAME)
@@ -30,7 +38,8 @@ class DrawingRepository:
         """Retrieve a drawing by its name"""
         file = self.fs.find_one({"filename": name})
         if file:
-            return file.read()
+            buffer = StringIO(file.read().decode("utf-8"))
+            return buffer
         else:
             return None
 
@@ -49,3 +58,10 @@ class DrawingRepository:
             self.fs.delete(file._id)
             return True
         return False
+
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.__del__()

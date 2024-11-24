@@ -1,7 +1,12 @@
+from io import StringIO
+
+from dns.rdtypes.IN.IPSECKEY import Gateway
 from dotenv import load_dotenv, find_dotenv
 import os
 from pymongo import MongoClient
 from gridfs import GridFS
+
+from api.models.domain.graph import Graph
 
 # Load environment variables from a .env file
 load_dotenv('../../../BaseAPI/.env')
@@ -11,7 +16,13 @@ COLLECTION_NAME = "Graphs"
 # Define database and collection names
 
 class GraphRepository:
-
+    """
+    Example usage:
+    with GraphRepository() as graph_repository:
+        f = graph_repository.get("ExampleGraph")
+        ...
+    Will close the connection automatically
+    """
     def __init__(self):
         # Initialize MongoDB client and set up database, collection, and GridFS
         self.client = MongoClient(MONGO_URI)
@@ -32,7 +43,8 @@ class GraphRepository:
         """Retrieve a graph by its name"""
         file = self.fs.find_one({"filename": name})
         if file:
-            return file
+            buffer = StringIO(file.read().decode("utf-8"))
+            return buffer
         else:
             return None
 
@@ -52,9 +64,8 @@ class GraphRepository:
             return True
         return False
 
+    def __enter__(self):
+        return self
 
-gr = GraphRepository()
-f = gr.get("ExampleGraph")
-for line in f:
-    print(line)
-gr.__del__()
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.__del__()

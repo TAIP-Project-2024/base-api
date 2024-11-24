@@ -1,14 +1,13 @@
 import os
 
 import networkx as nx
+from IPython.core.hooks import deprecated
 
+from api.models.domain.networkx_graph_impl import NetworkxDiGraphImpl
 from api.repositories.general.graph_repository import GraphRepository
 
 
 class GraphService:
-
-    def __init__(self):
-        pass
 
     def generate_nxgraph_from_metadata(self, metadata):
         """
@@ -34,8 +33,13 @@ class GraphService:
         return G
 
     def save_graph(self, graph, delete_local):
-        with open(graph.graphml_file, 'rb') as f:
-            id = GraphRepository().add(graph.name, f)
+        if not graph.saved_locally:
+            graph.save()
+
+        with open(graph.graphml_file, 'rb') as file_buffer:
+            with GraphRepository() as graph_repo:
+                id = graph_repo.add(graph.name, file_buffer)
+
         graph.id = id
         if delete_local:
             os.remove(graph.graphml_file)
@@ -64,3 +68,7 @@ class GraphService:
         blue = 0
         hex_color = f'#{red:02x}{green:02x}{blue:02x}'
         return hex_color
+
+#
+# marvel_graph = NetworkxDiGraphImpl('marvel')
+# GraphService().save_graph(marvel_graph, False)

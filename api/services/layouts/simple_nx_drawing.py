@@ -1,8 +1,9 @@
-from api.services.layouts.Layout import GraphLayout
 from pyvis.network import Network
 
+from api.services.layouts.Layout import Layout
 
-class SimpleNxDrawing(GraphLayout):
+
+class SimpleNxDrawing(Layout):
 
     def apply(self, graph):
         nt = Network('500px', '500px')

@@ -18,14 +18,21 @@ class GraphDrawingService:
 
     def save_graph_drawing(self, graph_drawing, delete_local=False):
         #retrieve the local file
-        with open(graph_drawing.html_file, "rb") as f:
+        if not graph_drawing.is_drawn:
+            # todo exception
+            return
+
+        with open(graph_drawing.html_file, "rb") as file_buffer:
             #save to cloud
-            DrawingRepository().add(graph_drawing.name, f)
+            with DrawingRepository() as drawing_repository:
+                drawing_repository.add(graph_drawing.name, file_buffer)
         if delete_local:
             os.remove(graph_drawing.html_file)
 
+    def find_drawing_by_name(self, name):
+        with DrawingRepository() as drawing_repository:
+            file = drawing_repository.get(name)
+        return file
+
     # todo delete drawing, etc.
-
-
-
 

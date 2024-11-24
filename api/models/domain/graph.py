@@ -1,3 +1,4 @@
+import os
 from abc import abstractmethod
 import uuid
 
@@ -13,22 +14,19 @@ import uuid
 class Graph:
 
     @abstractmethod
-    def __init__(self, file, name):
+    def __init__(self, name):
         """
         initializes a graph object using a framework's factory method
         e.g. graph = NewtworkX.read_graphml()
-        @param file: path to a file of .graphml format.
-
         """
-        pass
+        self.storage = '../../../' + os.environ.get('LOCAL_GRAPHS_DIR')
+        self.graphml_file = self.storage + name + '.graphml'
 
     @abstractmethod
-    def save_graph(self, file):
+    def save_graph(self):
         """
         save's a graph object using a framework's method
         e.g. graph = NewtworkX.write_graphml()
-
-        @param file: path to a file of .graphml format.
 
         will save locally with the possibility of being
         deleted when saved to cloud.
