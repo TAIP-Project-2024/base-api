@@ -2,6 +2,8 @@ import os
 from abc import abstractmethod
 import uuid
 
+from BaseAPI.settings import BASE_DIR
+
 """
     This class is a decorator over a framework
     specific object representing a graph.
@@ -19,8 +21,8 @@ class Graph:
         initializes a graph object using a framework's factory method
         e.g. graph = NewtworkX.read_graphml()
         """
-        self.storage = '../../../' + os.environ.get('LOCAL_GRAPHS_DIR')
-        self.graphml_file = self.storage + name + '.graphml'
+        self.name = name
+        self.graphml_file = self.resolve_path(self.name)
 
     @abstractmethod
     def save_graph(self):
@@ -32,3 +34,7 @@ class Graph:
         deleted when saved to cloud.
         """
         pass
+
+    @staticmethod
+    def resolve_path(name):
+        return str(BASE_DIR / os.environ.get('LOCAL_GRAPHS_DIR') / (name + '.graphml'))

@@ -31,8 +31,25 @@ class GraphDrawingService:
 
     def find_drawing_by_name(self, name):
         with DrawingRepository() as drawing_repository:
-            file = drawing_repository.get(name)
-        return file
+            file_buffer = drawing_repository.get(name)
+        return file_buffer
 
-    # todo delete drawing, etc.
+    def delete_drawing(self, name):
+        with DrawingRepository() as drawing_repository:
+            return drawing_repository.delete(name)
+
+    def fetch_drawing_locally(self, name):
+        with DrawingRepository() as graph_drawing_repo:
+            file_buffer = graph_drawing_repo.get(name)
+            path = GraphDrawing.resolve_path(name)
+            with open(path, 'wb') as file:
+                # file.write(file_buffer.read())
+                while True:
+                    chunk = file_buffer.read(2048)
+                    if not chunk:
+                        break
+                    file.write(chunk)
+
+# GraphDrawingService().fetch_drawing_locally('circular')
+# GraphDrawingService().save_graph_drawing(GraphDrawing(None, 'forceatlas_barabasi'))
 

@@ -45,7 +45,12 @@ ROOT_URLCONF = 'BaseAPI.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'BaseAPI' / 'propath'],
+        'DIRS':
+            [
+                BASE_DIR / 'BaseAPI' / 'propath',
+                BASE_DIR / 'BaseAPI/',
+                BASE_DIR / 'BaseAPI/resources/',
+             ],
         #       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         #just an example of how to use propath for .env, will delete afterwards
         'APP_DIRS': True,

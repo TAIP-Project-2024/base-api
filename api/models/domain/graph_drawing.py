@@ -4,6 +4,8 @@
 """
 import os
 
+from BaseAPI.settings import BASE_DIR
+
 
 class GraphDrawing:
     def __init__(self, graph, name):
@@ -11,7 +13,7 @@ class GraphDrawing:
         @param graph: graph of models.Graph type
         """
         self.graph = graph
-        self.html_file = '../../../' + os.environ.get('LOCAL_DRAWINGS_DIR') + name + '.html'
+        self.html_file = GraphDrawing.resolve_path(name)
         if not os.path.isfile(self.html_file):
             self.is_drawn = False
         else:
@@ -32,4 +34,9 @@ class GraphDrawing:
             # todo exception
             return None
         layout.apply(self.graph, self.html_file)
+        self.is_drawn = True
         return self.html_file
+
+    @staticmethod
+    def resolve_path(name):
+        return str(BASE_DIR / (os.environ.get('LOCAL_DRAWINGS_DIR') + name + '.html'))

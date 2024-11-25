@@ -1,11 +1,14 @@
 from io import BytesIO, StringIO
-from security_aop import logging_and_security
 from dotenv import load_dotenv, find_dotenv
 import os
 from pymongo import MongoClient
 from gridfs import GridFS
 
-load_dotenv('../../../BaseAPI/.env')
+from api.models.domain.graph_drawing import GraphDrawing
+from api.repositories.general.graph_repository import GraphRepository
+from api.repositories.general.security_aop import logging_and_security
+
+load_dotenv('.env')
 DATABASE_NAME = os.environ.get("MONGO_DB_NAME")
 MONGO_URI = os.environ.get("MONGO_URI")
 COLLECTION_NAME = "Drawings"
@@ -39,7 +42,7 @@ class DrawingRepository:
         """Retrieve a drawing by its name"""
         file = self.fs.find_one({"filename": name})
         if file:
-            buffer = StringIO(file.read().decode("utf-8"))
+            buffer = BytesIO(file.read())
             return buffer
         else:
             return None
@@ -68,3 +71,4 @@ class DrawingRepository:
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.__del__()
+
