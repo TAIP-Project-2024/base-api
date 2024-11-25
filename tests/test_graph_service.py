@@ -26,7 +26,7 @@ class GraphServiceTests(TestCase):
 
     def test_generate_graph(self):
         graph = self.graph_service.generate_nxgraph_from_metadata(self.metadata)
-        self.assertNotEquals(graph, None)
+        self.assertNotEqual(graph, None)
 
 
     def test_number_of_nodes(self):
@@ -35,7 +35,7 @@ class GraphServiceTests(TestCase):
             number_of_nodes = 0
         else:
             number_of_nodes = len(graph.nodes)
-        self.assertEquals(number_of_nodes, self.reactions.__len__() + 1)
+        self.assertEqual(number_of_nodes, self.reactions.__len__() + 1)
 
     def test_find_existing_graph(self):
         g = self.graph_service.find_graph(self.graph.id)

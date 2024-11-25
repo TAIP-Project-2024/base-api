@@ -1,58 +1,61 @@
 <?xml version='1.0' encoding='utf-8'?>
-<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"><key id="d2" for="node" attr.name="title" attr.type="string"/>
-<key id="d1" for="node" attr.name="color" attr.type="string"/>
-<key id="d0" for="node" attr.name="label" attr.type="string"/>
-<graph edgedefault="directed"><node id="0">
-  <data key="d0">Bananas are tasty</data>
-  <data key="d1">blue</data>
-  <data key="d2">mr author</data>
-</node>
-<node id="1">
-  <data key="d0">user1</data>
-  <data key="d2">I like it!</data>
-  <data key="d1">#4cb200</data>
-</node>
-<node id="2">
-  <data key="d0">user2</data>
-  <data key="d2">I like it a bit!</data>
-  <data key="d1">#669900</data>
-</node>
-<node id="3">
-  <data key="d0">user3</data>
-  <data key="d2">I used to like it</data>
-  <data key="d1">#7f7f00</data>
-</node>
-<node id="4">
-  <data key="d0">user4</data>
-  <data key="d2">I hardly like it!</data>
-  <data key="d1">#996600</data>
-</node>
-<node id="5">
-  <data key="d0">user5</data>
-  <data key="d2">I like smth else!</data>
-  <data key="d1">#b24c00</data>
-</node>
-<node id="6">
-  <data key="d0">user6</data>
-  <data key="d2">I don't like it!</data>
-  <data key="d1">#cc3300</data>
-</node>
-<node id="7">
-  <data key="d0">user7</data>
-  <data key="d2">I'm against!</data>
-  <data key="d1">#e51900</data>
-</node>
-<node id="8">
-  <data key="d0">user8</data>
-  <data key="d2">I hate it!</data>
-  <data key="d1">#ff0000</data>
-</node>
-<edge source="1" target="0"/>
-<edge source="2" target="0"/>
-<edge source="3" target="0"/>
-<edge source="4" target="0"/>
-<edge source="5" target="0"/>
-<edge source="6" target="0"/>
-<edge source="7" target="0"/>
-<edge source="8" target="0"/>
-</graph></graphml>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="d2" for="node" attr.name="title" attr.type="string" />
+  <key id="d1" for="node" attr.name="color" attr.type="string" />
+  <key id="d0" for="node" attr.name="label" attr.type="string" />
+  <graph edgedefault="directed">
+    <node id="0">
+      <data key="d0">Bananas are tasty</data>
+      <data key="d1">blue</data>
+      <data key="d2">mr author</data>
+    </node>
+    <node id="1">
+      <data key="d0">user1</data>
+      <data key="d2">I like it!</data>
+      <data key="d1">#4cb200</data>
+    </node>
+    <node id="2">
+      <data key="d0">user2</data>
+      <data key="d2">I like it a bit!</data>
+      <data key="d1">#669900</data>
+    </node>
+    <node id="3">
+      <data key="d0">user3</data>
+      <data key="d2">I used to like it</data>
+      <data key="d1">#7f7f00</data>
+    </node>
+    <node id="4">
+      <data key="d0">user4</data>
+      <data key="d2">I hardly like it!</data>
+      <data key="d1">#996600</data>
+    </node>
+    <node id="5">
+      <data key="d0">user5</data>
+      <data key="d2">I like smth else!</data>
+      <data key="d1">#b24c00</data>
+    </node>
+    <node id="6">
+      <data key="d0">user6</data>
+      <data key="d2">I don't like it!</data>
+      <data key="d1">#cc3300</data>
+    </node>
+    <node id="7">
+      <data key="d0">user7</data>
+      <data key="d2">I'm against!</data>
+      <data key="d1">#e51900</data>
+    </node>
+    <node id="8">
+      <data key="d0">user8</data>
+      <data key="d2">I hate it!</data>
+      <data key="d1">#ff0000</data>
+    </node>
+    <edge source="1" target="0" />
+    <edge source="2" target="0" />
+    <edge source="3" target="0" />
+    <edge source="4" target="0" />
+    <edge source="5" target="0" />
+    <edge source="6" target="0" />
+    <edge source="7" target="0" />
+    <edge source="8" target="0" />
+  </graph>
+</graphml>

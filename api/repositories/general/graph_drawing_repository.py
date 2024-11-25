@@ -1,7 +1,7 @@
 from io import BytesIO, StringIO
 from dotenv import load_dotenv, find_dotenv
 import os
-from pymongo import MongoClient
+from ...db.MongoDBClient import MongoDBClient
 from gridfs import GridFS
 
 from api.models.domain.graph_drawing import GraphDrawing
@@ -12,6 +12,7 @@ load_dotenv('.env')
 DATABASE_NAME = os.environ.get("MONGO_DB_NAME")
 MONGO_URI = os.environ.get("MONGO_URI")
 COLLECTION_NAME = "Drawings"
+
 
 class DrawingRepository:
     """
