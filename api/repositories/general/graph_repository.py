@@ -1,16 +1,16 @@
-from io import StringIO
+from io import StringIO, BytesIO
 
 from dns.rdtypes.IN.IPSECKEY import Gateway
 from dotenv import load_dotenv, find_dotenv
 import os
 from pymongo import MongoClient
 from gridfs import GridFS
-from security_aop import logging_and_security
 
 from api.models.domain.graph import Graph
+from api.repositories.general.security_aop import logging_and_security
 
 # Load environment variables from a .env file
-load_dotenv('../../../BaseAPI/.env')
+load_dotenv('.env')
 DATABASE_NAME = os.environ.get("MONGO_DB_NAME")
 MONGO_URI = os.environ.get("MONGO_URI")
 COLLECTION_NAME = "Graphs"
@@ -45,7 +45,7 @@ class GraphRepository:
         """Retrieve a graph by its name"""
         file = self.fs.find_one({"filename": name})
         if file:
-            buffer = StringIO(file.read().decode("utf-8"))
+            buffer = BytesIO(file.read())
             return buffer
         else:
             return None

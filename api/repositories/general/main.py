@@ -16,7 +16,7 @@ def main():
         print("Graph content preview:", graph_file[:300])
 
     # Update the graph with different content
-    with open("resources/graphs/marvel.graphml", "rb") as file:
+    with open("resources/graphs/marvel2.graphml", "rb") as file:
         graph_repo.update("ExampleGraph", file)
         print("Graph updated.")
 
@@ -30,7 +30,7 @@ def main():
     print("Graph deleted.")
 
     # Example of working with drawings in DrawingRepository
-    with open("resources/drawings/circular.html", "rb") as file:
+    with open("resources/drawings/circular1.html", "rb") as file:
         drawing_id = drawing_repo.add("ExampleDrawing", file)
         print(f"Drawing added with ID: {drawing_id}")
 
