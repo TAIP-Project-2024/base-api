@@ -19,7 +19,7 @@ collection = db[COLLECTION_NAME]
 fs = GridFS(db)
 cwd = os.getcwd()
 print("Current working directory:", cwd)
-with open("../../../resources/graphs/marvel.graphml", "rb") as file:
+with open("../../../resources/graphs/marvel2.graphml", "rb") as file:
     file.readli
     # Store the file in GridFS
     file_id = fs.put(file, filename="marvelGraph")

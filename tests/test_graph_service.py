@@ -11,7 +11,7 @@ from api.services.general.metadata_service import MetadataService
 class GraphServiceTests(TestCase):
     def setUp(self):
         self.graph_service = GraphService()
-        self.graph = Graph("../resources/graphs/marvel.graphml")
+        self.graph = Graph("../resources/graphs/marvel2.graphml")
         self.graph_service.save_graph(self.graph)
         self.reactions = [{"user": "user1", "comment": "I like it!", "sentiment": 0.7},
                      {"user": "user2", "comment": "I like it a bit!", "sentiment": 0.6},
@@ -47,7 +47,7 @@ class GraphServiceTests(TestCase):
         self.assertEqual(g, None)
 
     def test_save_graph(self):
-        g1 = Graph("../resources/graphs/marvel.graphml")
+        g1 = Graph("../resources/graphs/marvel2.graphml")
         self.graph_service.save_graph(g1)
         self.assertEqual(g1, self.graph_service.find_graph(g1.id))
 

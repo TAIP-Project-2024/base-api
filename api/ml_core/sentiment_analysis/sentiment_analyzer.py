@@ -1,27 +1,34 @@
+from lexicon_based_analyzer import LexiconBasedAnalyzer
+from deep_learning_analyzer import DeepLearningAnalyzer
+
+
 class SentimentAnalyzer:
     """
-    SentimentAnalyzer acts as a Facade for different sentiment analysis methods.
-    Provides a simplified interface for analyzing sentiment.
+    SentimentAnalyzer acts as a Facade, providing a unified interface for various sentiment analysis methods,
+    such as lexicon-based or deep learning-based analysis.
     """
 
     def __init__(self):
-        self.method = None  # Stores the selected analysis method (lexicon or deep learning)
-
-    def set_method(self, method):
         """
-        Sets the sentiment analysis method to be used.
-
-        :param method: A specific analyzer instance (e.g., LexiconBasedAnalyzer, DeepLearningAnalyzer)
+        Initializes the SentimentAnalyzer with lexicon-based and deep learning-based analyzers.
         """
-        self.method = method
+        self.lexicon_analyzer = LexiconBasedAnalyzer()
+        self.deep_learning_analyzer = DeepLearningAnalyzer()
 
-    def analyze(self, text):
+    def analyze_with_lexicon(self, text):
         """
-        Analyzes the sentiment of the provided text using the selected method.
+        Analyzes the sentiment of the input text using lexicon-based methods.
 
         :param text: Text to analyze
-        :return: Sentiment analysis result
+        :return: Sentiment score computed based on lexicon values
         """
-        if not self.method:
-            raise ValueError("No analysis method set.")
-        return self.method.analyze(text)
+        return self.lexicon_analyzer.analyze(text)
+
+    def analyze_with_deep_learning(self, text):
+        """
+        Analyzes the sentiment of the given text using deep learning-based methods.
+
+        :param text: Text to analyze
+        :return: Sentiment score derived from deep learning analysis
+        """
+        return self.deep_learning_analyzer.analyze(text)

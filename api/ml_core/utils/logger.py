@@ -1,22 +1,25 @@
 class Logger:
     """
-    Logger implements the Singleton Pattern to ensure only one instance of the logger exists.
-    This central logger will handle all logging operations across the application.
+    Logger provides a single instance for handling all logging operations.
+    Uses the Singleton Pattern to ensure centralized logging across the application.
     """
 
     _instance = None
 
     def __new__(cls):
+        """
+        Ensures only one instance of Logger exists, initializing logging settings as needed.
+        """
         if cls._instance is None:
             cls._instance = super(Logger, cls).__new__(cls)
-            # Initialize logging settings here if needed
+            # Initialize additional logging configurations if needed
         return cls._instance
 
     def log(self, message, level="INFO"):
         """
-        Logs a message at the specified level.
+        Logs a message at a specified logging level.
 
-        :param message: The message to log
-        :param level: The logging level (e.g., INFO, WARNING, ERROR)
+        :param message: Text message to be logged
+        :param level: Logging level (e.g., INFO, WARNING, ERROR)
         """
         print(f"[{level}] {message}")

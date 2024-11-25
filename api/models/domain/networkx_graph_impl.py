@@ -1,4 +1,8 @@
+import os
+from unittest import load_tests
+
 import networkx as nx
+from dotenv import load_dotenv
 
 from api.models.domain.graph import Graph
 from api.models.domain.graph_drawing import GraphDrawing
@@ -8,19 +12,26 @@ from api.services.layouts.simple_nx_drawing import SimpleNxDrawing
     Example of a concrete implementation for a graph framework object
 """
 
-
 class NetworkxDiGraphImpl(Graph):
 
-    def __init__(self, file, name):
+    def __init__(self, name, graph = None):
+        super().__init__(name)
+        if not os.path.isfile(self.graphml_file):
+            self.saved_locally = False
+            if graph is None:
+                self.graph = nx.DiGraph()
+            else:
+                self.graph = graph
+        else:
+            self.graph = nx.read_graphml(self.graphml_file)
+            self.saved_locally = True
+
         #id will be set when added to cloud
         self.id = None
-        self.name = name
-        if file is None:
-            self.graph = nx.DiGraph()
-        else:
-            self.graph = nx.read_graphml(file)
-        self.graphml_file = file
 
-    def save(self, file):
-        nx.write_graphml(self.graph, file)
+    def save(self):
+        nx.write_graphml(self.graph, self.graphml_file)
 
+# g = NetworkxDiGraphImpl('marvel')
+# print(g.saved_locally)
+# print(g.graphml_file)

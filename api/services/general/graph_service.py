@@ -1,14 +1,14 @@
 import os
 
 import networkx as nx
+from IPython.core.hooks import deprecated
 
+from api.models.domain.graph import Graph
+from api.models.domain.networkx_graph_impl import NetworkxDiGraphImpl
 from api.repositories.general.graph_repository import GraphRepository
 
 
 class GraphService:
-
-    def __init__(self):
-        pass
 
     def generate_nxgraph_from_metadata(self, metadata):
         """
@@ -34,22 +34,38 @@ class GraphService:
         return G
 
     def save_graph(self, graph, delete_local):
-        with open(graph.graphml_file, 'rb') as f:
-            id = GraphRepository().add(graph.name, f)
+        if not graph.saved_locally:
+            graph.save()
+
+        with open(graph.graphml_file, 'rb') as file_buffer:
+            with GraphRepository() as graph_repo:
+                id = graph_repo.add(graph.name, file_buffer)
+
         graph.id = id
         if delete_local:
             os.remove(graph.graphml_file)
         return id
 
     def delete_graph(self, graph):
-        """
-        todo
-        """
+        with GraphRepository() as graph_repo:
+            return graph_repo.remove(graph.name)
 
-    def find_graph(self, id):
-        """"
-        todo
-        """
+    def find_graph_buffer_by_name(self, name):
+        with GraphRepository() as graph_repo:
+            return graph_repo.get(name)
+
+    def fetch_graph_locally(self, name):
+        with GraphRepository() as graph_repo:
+            file_buffer = graph_repo.get(name)
+            path = Graph.resolve_path(name)
+            with open(path, 'wb') as file:
+                # file.write(file_buffer.read())
+                while True:
+                    chunk = file_buffer.read(2048)
+                    if not chunk:
+                        break
+                    file.write(chunk)
+
 
     def compute_color(self, x):
         """
@@ -64,3 +80,9 @@ class GraphService:
         blue = 0
         hex_color = f'#{red:02x}{green:02x}{blue:02x}'
         return hex_color
+
+#
+# marvel_graph = NetworkxDiGraphImpl('marvel')
+# GraphService().save_graph(marvel_graph, False)
+
+GraphService().fetch_graph_locally('marvel')

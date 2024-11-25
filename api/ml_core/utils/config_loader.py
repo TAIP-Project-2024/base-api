@@ -3,13 +3,19 @@ import json
 
 class ConfigLoader:
     """
-    ConfigLoader implements the Singleton Pattern to ensure configuration is loaded only once.
-    Configuration is read from a file and can be accessed globally across the application.
+    ConfigLoader uses the Singleton Pattern to ensure that configuration data is loaded only once,
+    making it accessible globally within the application.
     """
 
     _instance = None
 
     def __new__(cls, config_path="config.json"):
+        """
+        Ensures a single instance of ConfigLoader is created and loads configuration from a specified file.
+
+        :param config_path: Path to the JSON configuration file
+        :return: Singleton instance of ConfigLoader
+        """
         if cls._instance is None:
             cls._instance = super(ConfigLoader, cls).__new__(cls)
             cls._instance._load_config(config_path)
@@ -17,7 +23,7 @@ class ConfigLoader:
 
     def _load_config(self, config_path):
         """
-        Loads configuration from the specified JSON file.
+        Loads configuration from the JSON file at the specified path.
 
         :param config_path: Path to the configuration file
         """
@@ -26,10 +32,10 @@ class ConfigLoader:
 
     def get(self, key, default=None):
         """
-        Retrieves a configuration value.
+        Retrieves a configuration value based on a key.
 
-        :param key: The configuration key
-        :param default: The default value if the key is not found
-        :return: The configuration value
+        :param key: Configuration key to look up
+        :param default: Default value if key is not found
+        :return: Configuration value or default if key is missing
         """
         return self.config.get(key, default)
