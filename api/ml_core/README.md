@@ -44,9 +44,9 @@ The `ml_core` package is designed to provide modular and reusable components for
    - `sentiment_analyzer.py`
      - `SentimentAnalyzer` - Implements the **Facade Pattern** to provide a simplified interface for different sentiment analysis methods.
    - `lexicon_based_analyzer.py`
-     - `LexiconBasedAnalyzer` - Extends `SentimentAnalyzer`, using the **Decorator Pattern** to add lexicon-based sentiment analysis features.
+     - `LexiconBasedAnalyzer` - Is responsible for analyzing the sentiment of text using lexicon-based methods.
    - `deep_learning_analyzer.py`
-     - `DeepLearningAnalyzer` - Extends `SentimentAnalyzer`, with the **Decorator Pattern** applied to support neural-based sentiment analysis.
+     - `DeepLearningAnalyzer` - Handles sentiment analysis using deep learning models.
 
 ---
 
