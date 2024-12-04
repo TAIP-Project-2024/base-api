@@ -29,12 +29,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'accounts',
-    'drf_yasg'
+    'drf_yasg',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -53,7 +55,7 @@ TEMPLATES = [
                 BASE_DIR / 'BaseAPI' / 'propath',
                 BASE_DIR / 'BaseAPI/',
                 BASE_DIR / 'BaseAPI/resources/',
-             ],
+            ],
         #       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         #just an example of how to use propath for .env, will delete afterwards
         'APP_DIRS': True,
@@ -142,3 +144,16 @@ MONGODB_SETTINGS = {
     'URI': MONGODB_URI,
     'DB_NAME': MONGODB_DB_NAME
 }
+
+CORS_ORIGIN_ALLOW_ALL = True
+ALLOWED_HOSTS = [
+    "localhost",
+]
+
+CORS_ALLOW_HEADERS = [
+    'content-type',
+    'authorization',
+    'accept',
+    'origin',
+    'x-requested-with',
+]

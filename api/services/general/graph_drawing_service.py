@@ -50,6 +50,6 @@ class GraphDrawingService:
                         break
                     file.write(chunk)
 
-# GraphDrawingService().fetch_drawing_locally('circular')
+# GraphDrawingService().fetch_drawing_locally('reddit')
 # GraphDrawingService().save_graph_drawing(GraphDrawing(None, 'forceatlas_barabasi'))
 
