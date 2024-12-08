@@ -1,12 +1,8 @@
 import os
-from unittest import load_tests
 
 import networkx as nx
-from dotenv import load_dotenv
 
 from api.models.domain.graph import Graph
-from api.models.domain.graph_drawing import GraphDrawing
-from api.services.layouts.simple_nx_drawing import SimpleNxDrawing
 
 """
     Example of 2 concrete implementations for a graph framework object

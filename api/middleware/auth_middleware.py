@@ -1,23 +1,23 @@
+# myapp/middleware.py
+
 from django.http import JsonResponse
-from django.utils.deprecation import MiddlewareMixin
+from django.utils.decorators import method_decorator
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
-class AuthMiddleware(MiddlewareMixin):
-    """
-    Middleware for authentication and authorization.
-    
-    This middleware checks for the presence of a JWT token in the
-    Authorization header. If the token is valid, it allows the request to
-    proceed; otherwise, it returns a 401 Unauthorized response.
-    """
+class AuthMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
 
-    def process_request(self, request):
-        if request.path in ['/login/', '/register/', '/test/']:
-            return None
+    def __call__(self, request):
+        # Attempt to authenticate the user using JWT
+        jwt_auth = JWTAuthentication()
+        try:
+            # Authenticate the user
+            user, _ = jwt_auth.authenticate(request)
+            request.user = user  # Set the user to request object
+        except Exception as e:
+            request.user = None  # No user authenticated
 
-        token = request.META.get('HTTP_AUTHORIZATION')
-
-        if not token:
-            return JsonResponse({"error": "Unauthorized: No token provided"}, status=401)
-
-        return None
+        response = self.get_response(request)
+        return response

@@ -27,11 +27,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',  # Django REST Framework
-    'accounts',        # Aplicația de gestionare a utilizatorilor
+    'rest_framework',
+    'accounts',
+    'drf_yasg',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -50,9 +53,7 @@ TEMPLATES = [
                 BASE_DIR / 'BaseAPI' / 'propath',
                 BASE_DIR / 'BaseAPI/',
                 BASE_DIR / 'BaseAPI/resources/',
-             ],
-        #       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        #just an example of how to use propath for .env, will delete afterwards
+            ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -69,7 +70,7 @@ WSGI_APPLICATION = 'BaseAPI.wsgi.application'
 
 # Database configuration (already customized)
 tmpPostgres = urlparse(os.getenv("DATABASE_URL"))
-print(tmpPostgres)
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -78,6 +79,9 @@ DATABASES = {
         'PASSWORD': tmpPostgres.password,
         'HOST': tmpPostgres.hostname,
         'PORT': 5432,
+        'OPTIONS': {
+            'sslmode': 'require',  # Ensures SSL is used
+        }
     }
 }
 
@@ -87,7 +91,8 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 # REST framework configuration
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication'
     ),
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
@@ -127,3 +132,24 @@ STATIC_URL = 'static/'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MONGODB_URI = os.getenv("MONGO_URI")
+MONGODB_DB_NAME = os.getenv("MONGO_DB_NAME")
+
+MONGODB_SETTINGS = {
+    'URI': MONGODB_URI,
+    'DB_NAME': MONGODB_DB_NAME
+}
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_DEBUG = True
+
+CORS_ALLOW_METHODS = [
+    "GET",
+    "POST",
+    "PUT",
+    "DELETE",
+    "PATCH",
+    "OPTIONS",
+]
+

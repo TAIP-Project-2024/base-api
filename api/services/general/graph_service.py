@@ -82,4 +82,5 @@ class GraphService:
 #
 # marvel_graph = NetworkxDiGraphImpl('marvel')
 # GraphService().save_graph(marvel_graph, False)
+# GraphService().fetch_graph_locally('marvel')
 
