@@ -11,6 +11,7 @@ def hello_world(request):
     """View to return the 'Hello, World!' HTML page."""
     return render(request, 'hello.html')
 
+
 @logging_and_security
 def display_graph(request):
     name = request.GET.get('name')

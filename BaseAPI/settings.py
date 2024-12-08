@@ -34,16 +34,14 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'api.middleware.log_request_middleware.LogRequestMiddleware',
-    'api.middleware.auth_middleware.AuthMiddleware',
 ]
 
 ROOT_URLCONF = 'BaseAPI.urls'
@@ -56,8 +54,6 @@ TEMPLATES = [
                 BASE_DIR / 'BaseAPI/',
                 BASE_DIR / 'BaseAPI/resources/',
             ],
-        #       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        #just an example of how to use propath for .env, will delete afterwards
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,7 +70,7 @@ WSGI_APPLICATION = 'BaseAPI.wsgi.application'
 
 # Database configuration (already customized)
 tmpPostgres = urlparse(os.getenv("DATABASE_URL"))
-print(tmpPostgres)
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -145,15 +141,15 @@ MONGODB_SETTINGS = {
     'DB_NAME': MONGODB_DB_NAME
 }
 
-CORS_ORIGIN_ALLOW_ALL = True
-ALLOWED_HOSTS = [
-    "localhost",
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_DEBUG = True
+
+CORS_ALLOW_METHODS = [
+    "GET",
+    "POST",
+    "PUT",
+    "DELETE",
+    "PATCH",
+    "OPTIONS",
 ]
 
-CORS_ALLOW_HEADERS = [
-    'content-type',
-    'authorization',
-    'accept',
-    'origin',
-    'x-requested-with',
-]
