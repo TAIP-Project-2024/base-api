@@ -18,3 +18,36 @@ class Layout:
         most frameworks can't write to a buffer directly.
         """
         return None
+
+    def load_interactions(self, nt):
+
+        ops = """        "hover": true,"""
+        anchor = """ "dragNodes": true,"""
+        script = \
+            f"""
+        <script type="text/javascript">
+
+        network.on("hoverNode", function (params) {{
+            const nodeId = params.node;
+            defaultSize = data.nodes.get(nodeId)['size'];
+            data.nodes.update({{ id: nodeId, defaultSize: defaultSize, size: defaultSize * 3 }});
+        }});
+        network.on("blurNode", function (params) {{
+            const nodeId = params.node;
+            size = data.nodes.get(nodeId)['size'];
+            data.nodes.update({{ id: nodeId, size: size / 3 }});
+        }});
+        network.on("selectNode", function (params) {{
+            if (params.nodes.length > 0) {{
+                const nodeId = params.nodes[0]; // Get the clicked node's ID
+                const node = data.nodes.get(nodeId); 
+                if (node.url) {{
+                    window.open(node.url, "_blank");
+                }}
+            }}
+        }});
+        </script>
+        """
+        nt.html = nt.generate_html()
+        nt.html = nt.html.replace(anchor, anchor + '\n' + ops + '\n')
+        nt.html = nt.html.replace("</body>", script + '\n' + "</body>")

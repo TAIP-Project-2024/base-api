@@ -25,7 +25,7 @@ class Graph:
         self.graphml_file = self.resolve_path(self.name)
 
     @abstractmethod
-    def save_graph(self):
+    def save(self):
         """
         save's a graph object using a framework's method
         e.g. graph = NewtworkX.write_graphml()
@@ -35,6 +35,9 @@ class Graph:
         """
         pass
 
+    @abstractmethod
+    def clear_graph(self):
+        pass
     @staticmethod
     def resolve_path(name):
         return str(BASE_DIR / os.environ.get('LOCAL_GRAPHS_DIR') / (name + '.graphml'))
