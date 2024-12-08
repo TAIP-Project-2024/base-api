@@ -20,6 +20,7 @@ class GraphDrawingService:
         #retrieve the local file
         if not graph_drawing.is_drawn:
             # todo exception
+            print('not drawn')
             return
 
         with open(graph_drawing.html_file, "rb") as file_buffer:
@@ -52,4 +53,3 @@ class GraphDrawingService:
 
 # GraphDrawingService().fetch_drawing_locally('reddit')
 # GraphDrawingService().save_graph_drawing(GraphDrawing(None, 'forceatlas_barabasi'))
-

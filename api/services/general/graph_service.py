@@ -1,10 +1,8 @@
 import os
 
 import networkx as nx
-from IPython.core.hooks import deprecated
 
 from api.models.domain.graph import Graph
-from api.models.domain.networkx_graph_impl import NetworkxDiGraphImpl
 from api.repositories.general.graph_repository import GraphRepository
 
 
@@ -84,5 +82,5 @@ class GraphService:
 #
 # marvel_graph = NetworkxDiGraphImpl('marvel')
 # GraphService().save_graph(marvel_graph, False)
-
 # GraphService().fetch_graph_locally('marvel')
+
