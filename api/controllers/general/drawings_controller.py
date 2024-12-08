@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from api.services.general.graph_drawing_service import GraphDrawingService
 
 
-class GraphsController(APIView):
+class DrawingsController(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request):
