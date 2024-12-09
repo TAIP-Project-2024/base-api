@@ -7,7 +7,7 @@ from api.repositories.general.security_aop import logging_and_security
 
 
 class TestController(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     @swagger_auto_schema(
         security=[{'Bearer': []}]

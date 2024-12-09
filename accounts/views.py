@@ -27,8 +27,8 @@ class CustomLoginView(TokenObtainPairView):
 
 
 class UserDetailView(generics.RetrieveAPIView):
-    serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
+    serializer_class = UserSerializer
 
     def get_object(self):
         return self.request.user
