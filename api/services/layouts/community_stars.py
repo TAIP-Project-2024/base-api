@@ -11,7 +11,8 @@ from api.services.layouts.Layout import Layout
 
 class CommunityStars(Layout):
     def __init__(self, topic, physics = False, height = 1000, width = 1000, community_weight = 1,
-                 node_size = 10, hub_node_size = 10, topic_node_size = 30, topic_hub_weight = 3):
+                 node_size = 10, hub_node_size = 10, topic_node_size = 30, topic_hub_weight = 3, n = 1000,
+                 bgcolor = 'white'):
         """
         community_summaries: a list of titles indexed by the community index
         topic_hub_weight: weight of the edge connecting them
@@ -19,7 +20,7 @@ class CommunityStars(Layout):
         ...
 
         This layout needs a graph that already has the communities and colors
-        ass annotations
+        as annotations
         """
         self.topic = topic
         self.physics = physics
@@ -30,6 +31,8 @@ class CommunityStars(Layout):
         self.hub_node_size = hub_node_size
         self.topic_node_size = topic_node_size
         self.topic_hub_weight = topic_hub_weight
+        self.n = n
+        self.bgcolor = bgcolor
 
     def describe_communities(self, graph):
         graph = graph.graph
@@ -52,7 +55,7 @@ class CommunityStars(Layout):
 
         #disconnect all graphs
         graph = graph.graph
-        nt = Network(self.height, self.width)
+        nt = Network(self.height, self.width, bgcolor=self.bgcolor)
         graph.remove_edges_from(list(graph.edges))
         hub_nodes = {}
         hub_index = -1
@@ -65,11 +68,13 @@ class CommunityStars(Layout):
                 hub = hub_index
                 hub_index -= 1
                 hub_nodes[comm] = hub
-                graph.add_node(hub, community = comm, hub_node = True, label = community_summaries[comm])
+                graph.add_node(hub, community = comm, hub_node = True, label = community_summaries[comm],
+                               font = {'color': '#FF10F0'})
             graph.add_edge(hub, node, weight = self.community_weight)
         nx.set_node_attributes(graph, self.node_size, 'size')
 
-        graph.add_node(hub_index, size = self.topic_node_size, color = 'green', label = self.topic)
+        graph.add_node(hub_index, size = self.topic_node_size, color = 'green', label = self.topic,
+                       font = {'color':  '#ff4d4d'})
 
         graph.add_weighted_edges_from([(hub_index, i, self.topic_hub_weight) for i in hub_nodes.values()])
 
@@ -77,8 +82,8 @@ class CommunityStars(Layout):
 
 
         for node in graph.nodes(data=True):
-            node[1]["x"] = pos[node[0]][0]*1000
-            node[1]["y"] = pos[node[0]][1]*1000
+            node[1]["x"] = pos[node[0]][0]*self.n
+            node[1]["y"] = pos[node[0]][1]*self.n
         nx.set_edge_attributes(graph, 0, "weight")
         try:
             nt.from_nx(graph)
@@ -93,7 +98,11 @@ class CommunityStars(Layout):
 
 
 cs = CommunityStars(
-    topic = "TOPIC PLACEHOLDER"
+    topic = "TOPIC PLACEHOLDER",
+    width = '100vw',
+    height = '100vh',
+    bgcolor = 'black',
+    n = 800
 )
 gd = GraphDrawing(NetworkxGraphImpl('cool_graph'), 'communities_stars')
 gd.draw_as(cs)
