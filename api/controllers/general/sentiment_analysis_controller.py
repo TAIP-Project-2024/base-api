@@ -1,6 +1,5 @@
 from ...factories.analysis_factory import AnalysisFactory
 from ...models.domain.analysis_results import AnalysisResults
-from ...repositories.general.mongo_repository import MongoRepository
 
 
 class SentimentAnalysisController:
