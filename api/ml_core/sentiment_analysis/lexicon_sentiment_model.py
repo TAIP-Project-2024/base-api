@@ -1,14 +1,16 @@
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
+from sentiment_model_interface import SentimentModelInterface
 
-class LexiconBasedAnalyzer:
+
+class LexiconSentimentModel(SentimentModelInterface):
     """
-    LexiconBasedAnalyzer class is responsible for analyzing the sentiment of text using lexicon-based methods.
+    LexiconSentimentModel class is responsible for analyzing the sentiment of text using lexicon-based methods.
     """
 
     def __init__(self):
         """
-        Initializes the LexiconBasedAnalyzer with a pre-trained VADER sentiment analyzer.
+        Initializes the LexiconSentimentModel with a pre-trained VADER sentiment analyzer.
         """
         super().__init__()
         self.analyzer = SentimentIntensityAnalyzer()

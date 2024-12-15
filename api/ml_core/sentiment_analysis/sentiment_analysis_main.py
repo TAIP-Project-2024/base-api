@@ -1,4 +1,4 @@
-from sentiment_analyzer import SentimentAnalyzer
+from api.ml_core.models.model_factory import ModelFactory
 
 import nltk
 
@@ -6,11 +6,15 @@ import nltk
 nltk.download('vader_lexicon')
 
 # Example usage
-analyzer = SentimentAnalyzer()
-text = "The product was amazing and I absolutely loved it!"
+texts = ["He went to the park and had a great time!",
+         "She failed her exam and felt miserable.",
+         "I am going outside."]
 
 # Lexicon-based analysis
-print(analyzer.lexicon_analyzer(text)) # compound provides an overall sentiment score from -1 (most negative) to +1 (most positive).
+lexicon_model = ModelFactory.create_model('sentiment', 'lexicon')
+print(lexicon_model.analyze(texts[0])) # compound provides an overall sentiment score from -1 (most negative) to +1 (most positive).
 
 # Deep learning analysis
-print(analyzer.deep_learning_analyzer(text))
+bert_model = ModelFactory.create_model('sentiment', 'bert')
+for text in texts:
+    print(bert_model.analyze(text))
