@@ -4,7 +4,7 @@ class SentimentModelInterface:
     different sentiment analysis models.
 
     """
-    def analyze(self, text) -> float:
+    def analyze(self, text):
         """
         Analyzes the sentiment of the input text using a specific sentiment analysis model.
 

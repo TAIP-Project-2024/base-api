@@ -60,4 +60,4 @@ class BertSentimentModel(SentimentModelInterface):
               f"Continuous Score: {sentiment_score:.2f} (0=negative, 1=neutral, 2=positive)")
 
         # Return the continuous sentiment score with 4 decimal places
-        return round(sentiment_score, 4)
+        return np.round(sentiment_score, 4).item(), self.config.id2label[predicted_label]
