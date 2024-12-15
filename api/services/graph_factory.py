@@ -29,7 +29,7 @@ class GraphFactory:
         return graph
 
     @staticmethod
-    def topics_similarity_based_graph(name, topics, similarities, t = 0):
+    def topics_similarity_based_graph(name, posts, similarities, t = 0):
         """
         Args:
             name: name for the graph
@@ -37,17 +37,22 @@ class GraphFactory:
             t: similarity threshold
             returns a list of lists of indices representing communities,
         """
-        n = len(similarities[0])
+        n = len(posts)
         hairball = nx.Graph()
 
-        edges_tuples = [
-            (i, j, similarities[i][j])
-            for i in range(n)
-            for j in range(i+1, n)
-            if similarities[i][j] > t
-        ]
+        edges_tuples = []
+        for line in similarities.items():
+            for value in line[1]:
+                try:
+                    if similarities[line[0]][value] > t:
+                            edges_tuples.append((line[0], value, similarities[line[0]][value]))
+                except KeyError as ke:
+                    print(1)
+                    print(ke)
+                    continue
+
         hairball.add_weighted_edges_from(edges_tuples)
-        nx.set_node_attributes(hairball, topics)
+        nx.set_node_attributes(hairball, posts)
         partitions = nx.community.louvain_communities(hairball)
 
         if len(partitions) > 10:
@@ -63,14 +68,22 @@ class GraphFactory:
         return graph
 
 
-similarities = random_matrix = [
-    [random.randint(1, 10)
-     for _ in range(100)]
-    for _ in range(100)]
+node_ids = ['mtr', 'hpa', 'vip', 'uem', 'pbf', 'rwc', 'dtk', 'hdw', 'wuw', 'aem',
+             'ecm', 'rhv', 'pbs', 'bwa', 'yel', 'pwf', 'nbm', 'uxd', 'wis', 'zmv',
+             'otw', 'puk', 'sjr', 'lvh', 'vwv', 'jkt', 'flu', 'ghi', 'qui', 'wwn',
+             'tpb', 'irt', 'oge', 'amd', 'vfr', 'txz', 'ahc', 'cyt', 'fwl', 'pkr',
+             'ivk', 'dfj', 'jnk', 'cxw', 'mqm', 'wqr', 'sqp', 'iwb', 'gqz', 'vso',
+             'zyo', 'cao', 'xal', 'kgk', 'mua', 'vzy', 'rlt', 'mze', 'oxw', 'iur',
+             'ypi', 'cvk', 'zwb', 'qta', 'wrr', 'zgp', 'rfu', 'ipe', 'fid', 'rkk',
+             'xbi', 'hst', 'dfc', 'wai', 'edf', 'kzn', 'rhx', 'wug', 'wsl', 'aau',
+             'ddy', 'jqh', 'cln', 'okb', 'prd', 'bui', 'lqw', 'ork', 'qad', 'rct',
+             'lje', 'rwu', 'mrw', 'nvj', 'muh', 'tin', 'xmg', 'ddg', 'tgj', 'zlq']
 
-# topics = {}
-# for i in range(100):
-#     topics[i] = {'title':f'topic {i}', 'url':f'https://networkx.org/documentation/stable/index.html'}
-# print(topics)
-# g = GraphFactory.topics_similarity_based_graph('cool_graph', topics, similarities)
-# g.save()
+similarities = {id_: {id_: random.randint(1, 10) for id_ in node_ids} for id_ in node_ids}
+topics = {}
+for i in range(100):
+    id = node_ids[i]
+    topics[id] = {'title':f'topic {id}', 'url':f'https://networkx.org/documentation/stable/index.html'}
+print(topics)
+g = GraphFactory.topics_similarity_based_graph('cool_graph', topics, similarities)
+g.save()

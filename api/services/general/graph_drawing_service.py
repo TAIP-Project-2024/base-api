@@ -52,4 +52,4 @@ class GraphDrawingService:
                     file.write(chunk)
 
 # GraphDrawingService().fetch_drawing_locally('reddit')
-GraphDrawingService().save_graph_drawing(GraphDrawing(None, 'communities_hairball'))
+# GraphDrawingService().save_graph_drawing(GraphDrawing(None, 'communities_hairball'))
