@@ -1,12 +1,10 @@
 from io import StringIO, BytesIO
 
-from dns.rdtypes.IN.IPSECKEY import Gateway
 from dotenv import load_dotenv, find_dotenv
 import os
 from pymongo import MongoClient
 from gridfs import GridFS
 
-from api.models.domain.graph import Graph
 from api.repositories.general.security_aop import logging_and_security
 
 # Load environment variables from a .env file

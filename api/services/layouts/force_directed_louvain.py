@@ -40,9 +40,10 @@ class ForceDirectedLouvain(Layout):
         graph.remove_edges_from(edges_to_remove)
         pos = nx.kamada_kawai_layout(graph)
         nx.set_edge_attributes(graph, self.edge_weight_in_drawing, 'weight')
-        for i, node in enumerate(graph.nodes(data=True)):
-            node[1]["x"] = pos[str(i)][0]*1000
-            node[1]["y"] = pos[str(i)][1]*1000
+
+        for node in graph.nodes(data=True):
+            node[1]["x"] = pos[str(node[0])][0]*self.n
+            node[1]["y"] = pos[str(node[0])][1]*self.n
         try:
             nt.from_nx(graph)
             nt.toggle_physics(False)
@@ -58,5 +59,3 @@ gd.draw_as(ForceDirectedLouvain(8,
                                 height = '100vh',
                                 bgcolor = 'black',
                                 n = 800))
-
-

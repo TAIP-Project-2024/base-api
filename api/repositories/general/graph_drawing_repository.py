@@ -4,11 +4,8 @@ import os
 
 from pymongo import MongoClient
 
-from ...db.MongoDBClient import MongoDBClient
 from gridfs import GridFS
 
-from api.models.domain.graph_drawing import GraphDrawing
-from api.repositories.general.graph_repository import GraphRepository
 from api.repositories.general.security_aop import logging_and_security
 
 load_dotenv('.env')
