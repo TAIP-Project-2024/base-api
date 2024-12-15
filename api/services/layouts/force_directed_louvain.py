@@ -4,19 +4,15 @@ import networkx as nx
 
 from pyvis.network import Network
 
-from api.models.domain.graph import Graph
 from api.models.domain.graph_drawing import GraphDrawing
 from api.models.domain.networkx_graph_impl import NetworkxGraphImpl
-from api.repositories.general.graph_drawing_repository import DrawingRepository
-from api.repositories.general.graph_repository import GraphRepository
-from api.services.general.graph_drawing_service import GraphDrawingService
-from api.services.graph_factory import GraphFactory
 from api.services.layouts.Layout import Layout
 
 
 class ForceDirectedLouvain(Layout):
     def __init__(self, threshold, node_size = 15, height = 1000, width = 1000,
-                 edge_weight_in_drawing = 1, hover_size = 5):
+                 edge_weight_in_drawing = 1, hover_size = 5, n = 1000,
+                 bgcolor = 'white'):
         """
         threshold: similarity threshold for edge pruning
 
@@ -27,10 +23,12 @@ class ForceDirectedLouvain(Layout):
         self.width = width
         self.edge_weight_in_drawing = edge_weight_in_drawing
         self.hover_size = hover_size
+        self.n = n
+        self.bgcolor = bgcolor
 
     def apply(self, graph, html_file):
         graph = graph.graph
-        nt = Network(self.height, self.width)
+        nt = Network(self.height, self.width, bgcolor=self.bgcolor)
         nx.set_node_attributes(graph, self.node_size, 'size')
         edges_to_remove = []
         for edge in graph.edges(data=True):
@@ -40,7 +38,6 @@ class ForceDirectedLouvain(Layout):
                 continue
             edges_to_remove.append(edge)
         graph.remove_edges_from(edges_to_remove)
-        print(graph.nodes(data=True))
         pos = nx.kamada_kawai_layout(graph)
         nx.set_edge_attributes(graph, self.edge_weight_in_drawing, 'weight')
         for i, node in enumerate(graph.nodes(data=True)):
@@ -56,6 +53,10 @@ class ForceDirectedLouvain(Layout):
             print(e)
 
 gd = GraphDrawing(NetworkxGraphImpl('cool_graph'), 'communities_hairball')
-gd.draw_as(ForceDirectedLouvain(8))
+gd.draw_as(ForceDirectedLouvain(8,
+                                width = '100vw',
+                                height = '100vh',
+                                bgcolor = 'black',
+                                n = 800))
 
 

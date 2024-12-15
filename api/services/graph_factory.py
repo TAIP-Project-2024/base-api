@@ -68,9 +68,9 @@ similarities = random_matrix = [
      for _ in range(100)]
     for _ in range(100)]
 
-topics = {}
-for i in range(100):
-    topics[i] = {'title':f'topic {i}', 'url':f'https://networkx.org/documentation/stable/index.html'}
-print(topics)
+# topics = {}
+# for i in range(100):
+#     topics[i] = {'title':f'topic {i}', 'url':f'https://networkx.org/documentation/stable/index.html'}
+# print(topics)
 # g = GraphFactory.topics_similarity_based_graph('cool_graph', topics, similarities)
 # g.save()
