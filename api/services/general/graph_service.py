@@ -40,13 +40,20 @@ class GraphService:
                 id = graph_repo.add(graph.name, file_buffer)
 
         graph.id = id
-        if delete_local:
-            os.remove(graph.graphml_file)
+        try:
+            if delete_local:
+                os.remove(graph.graphml_file)
+        except Exception as e:
+            print(e)
         return id
+
+    def check_exists(self, name):
+        with GraphRepository() as gr:
+            return gr.check_exists(name)
 
     def delete_graph(self, graph):
         with GraphRepository() as graph_repo:
-            return graph_repo.remove(graph.name)
+            return graph_repo.delete(graph.name)
 
     def find_graph_buffer_by_name(self, name):
         with GraphRepository() as graph_repo:

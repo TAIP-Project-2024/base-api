@@ -1,6 +1,6 @@
-from io import StringIO, BytesIO
+from io import BytesIO
 
-from dotenv import load_dotenv, find_dotenv
+from dotenv import load_dotenv
 import os
 from pymongo import MongoClient
 from gridfs import GridFS
@@ -47,6 +47,9 @@ class GraphRepository:
             return buffer
         else:
             return None
+
+    def check_exists(self, name):
+        return self.fs.exists({"filename": name})
 
     @logging_and_security
     def update(self, name, graph_file_buffer):
