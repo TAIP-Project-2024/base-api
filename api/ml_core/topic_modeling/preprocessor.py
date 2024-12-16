@@ -9,7 +9,7 @@ from gensim.models import TfidfModel
 from nltk.corpus import stopwords
 from wordsegment import segment, load
 
-# INITIALIZING NLTK RESOURCES (RUN ONLY FIRST TIME)
+# INITIALIZING NLTK RESOURCES (RUN ONLY THE FIRST TIME)
 # import nltk
 # nltk.download('punkt')
 # nltk.download('stopwords')
