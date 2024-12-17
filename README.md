@@ -20,11 +20,11 @@
 
 ### Services
 
-- there will be the bussiness logic
+- there will be the business logic
 
 ### Repositories
 
-- they communicate with the the database to perform CRUD operations (**NO** bussiness logic there!)
+- they communicate with the database to perform CRUD operations (**NO** business logic there!)
 
 ### Middleware
 
@@ -33,3 +33,52 @@
 ### Models
 
 - classes that describe database tables
+
+
+---
+
+Example of a project structure:
+
+```
+api
+	controllers
+		general
+		ml
+		sentiment
+		topics
+		community
+	db
+	factories
+	middleware
+	migrations
+	ml_core
+		data_preprocessing
+		evaluation
+		models
+		sentiment_analysis
+		topic_modeling
+		community_detection
+		utils
+	visualizations
+		sentiment
+		topics
+		community
+	config
+models
+	domain
+	lib
+	ml
+repositories
+	general
+	sentiment
+	topics
+	community
+services
+	general
+	layouts
+	sentiment
+	topics
+	community
+BaseAPI
+resources
+```
