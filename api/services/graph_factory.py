@@ -1,10 +1,8 @@
 import random
-from pydoc_data.topics import topics
 
 import networkx as nx
-from pyvis.network import Network
+from django.template.context_processors import static
 
-from api.models.domain.graph_drawing import GraphDrawing
 from api.models.domain.networkx_graph_impl import NetworkxDiGraphImpl, NetworkxGraphImpl
 from api.services.general.graph_service import GraphService
 
@@ -37,7 +35,6 @@ class GraphFactory:
             t: similarity threshold
             returns a list of lists of indices representing communities,
         """
-        n = len(posts)
         hairball = nx.Graph()
 
         edges_tuples = []
@@ -66,24 +63,67 @@ class GraphFactory:
         graph = NetworkxGraphImpl(name, hairball)
 
         return graph
+    @staticmethod
+    def create_comments_graph(graph_name, post_text, comments, base_size = 15):
+        """
+        Args
+        : post {text, url}
+        : comments an array of objects that have an id,
+        a body and a sentiment rank
+        {id, title, sentiment, group(0,1,2)}
+        """
+        groups = ["group_negative", "group_neutral", "group_positive"]
+        colors = ["red", "gray", "green"]
+        graph = nx.Graph()
+        graph.add_node("post", title=post_text, url="url", size = 25, color = "yellow")
+        graph.add_node("group_neutral", label="Neutral", color="gray", size = base_size)
+        graph.add_node("group_negative", label="Negative", color="red", size = base_size)
+        graph.add_node("group_positive", label="Positive", color="green", size = base_size)
+        graph.add_edges_from([("post", "group_neutral"), ("post", "group_positive"), ("post", "group_negative")])
+        n = {}
+        print([e["sentiment"] for e in comments])
+        for entry in comments:
+            group = groups[round(entry["sentiment"])]
+            color = colors[entry["sentiment"]]
+            label = "score " + str(entry["score"])
+            print(color)
+            graph.add_node(entry["_id"],
+                           title=entry["text"],
+                           label = label,
+                           color=color,
+                           group=group,
+                           size=base_size,
+                           hidden=True)
+
+            graph.add_edge(group, entry["_id"])
+            try:
+                n[group] += 1
+            except Exception as e:
+                n[group] = 0
+        for group in groups:
+            graph.nodes[group]['size']=n[group]+30
+
+        return NetworkxGraphImpl(graph_name, graph)
 
 
-node_ids = ['mtr', 'hpa', 'vip', 'uem', 'pbf', 'rwc', 'dtk', 'hdw', 'wuw', 'aem',
-             'ecm', 'rhv', 'pbs', 'bwa', 'yel', 'pwf', 'nbm', 'uxd', 'wis', 'zmv',
-             'otw', 'puk', 'sjr', 'lvh', 'vwv', 'jkt', 'flu', 'ghi', 'qui', 'wwn',
-             'tpb', 'irt', 'oge', 'amd', 'vfr', 'txz', 'ahc', 'cyt', 'fwl', 'pkr',
-             'ivk', 'dfj', 'jnk', 'cxw', 'mqm', 'wqr', 'sqp', 'iwb', 'gqz', 'vso',
-             'zyo', 'cao', 'xal', 'kgk', 'mua', 'vzy', 'rlt', 'mze', 'oxw', 'iur',
-             'ypi', 'cvk', 'zwb', 'qta', 'wrr', 'zgp', 'rfu', 'ipe', 'fid', 'rkk',
-             'xbi', 'hst', 'dfc', 'wai', 'edf', 'kzn', 'rhx', 'wug', 'wsl', 'aau',
-             'ddy', 'jqh', 'cln', 'okb', 'prd', 'bui', 'lqw', 'ork', 'qad', 'rct',
-             'lje', 'rwu', 'mrw', 'nvj', 'muh', 'tin', 'xmg', 'ddg', 'tgj', 'zlq']
+# node_ids = ['mtr', 'hpa', 'vip', 'uem', 'pbf', 'rwc', 'dtk', 'hdw', 'wuw', 'aem',
+#              'ecm', 'rhv', 'pbs', 'bwa', 'yel', 'pwf', 'nbm', 'uxd', 'wis', 'zmv',
+#              'otw', 'puk', 'sjr', 'lvh', 'vwv', 'jkt', 'flu', 'ghi', 'qui', 'wwn',
+#              'tpb', 'irt', 'oge', 'amd', 'vfr', 'txz', 'ahc', 'cyt', 'fwl', 'pkr',
+#              'ivk', 'dfj', 'jnk', 'cxw', 'mqm', 'wqr', 'sqp', 'iwb', 'gqz', 'vso',
+#              'zyo', 'cao', 'xal', 'kgk', 'mua', 'vzy', 'rlt', 'mze', 'oxw', 'iur',
+#              'ypi', 'cvk', 'zwb', 'qta', 'wrr', 'zgp', 'rfu', 'ipe', 'fid', 'rkk',
+#              'xbi', 'hst', 'dfc', 'wai', 'edf', 'kzn', 'rhx', 'wug', 'wsl', 'aau',
+#              'ddy', 'jqh', 'cln', 'okb', 'prd', 'bui', 'lqw', 'ork', 'qad', 'rct',
+#              'lje', 'rwu', 'mrw', 'nvj', 'muh', 'tin', 'xmg', 'ddg', 'tgj', 'zlq']
+#
+# similarities = {id_: {id_: random.randint(1, 10) for id_ in node_ids} for id_ in node_ids}
+# topics = {}
+# for i in range(100):
+#     id = node_ids[i]
+#     topics[id] = {'title':f'topic {id}', 'url':f'https://networkx.org/documentation/stable/index.html'}
+# print(topics)
 
-similarities = {id_: {id_: random.randint(1, 10) for id_ in node_ids} for id_ in node_ids}
-topics = {}
-for i in range(100):
-    id = node_ids[i]
-    topics[id] = {'title':f'topic {id}', 'url':f'https://networkx.org/documentation/stable/index.html'}
-print(topics)
-g = GraphFactory.topics_similarity_based_graph('cool_graph', topics, similarities)
-g.save()
+# g = GraphFactory.topics_similarity_based_graph('cool_graph', topics, similarities)
+# g.save()
+# GraphService().save_graph(NetworkxGraphImpl("cool_graph"), False)

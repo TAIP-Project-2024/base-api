@@ -1,6 +1,5 @@
 import os
 from abc import abstractmethod
-import uuid
 
 from BaseAPI.settings import BASE_DIR
 
@@ -38,6 +37,7 @@ class Graph:
     @abstractmethod
     def clear_graph(self):
         pass
+
     @staticmethod
     def resolve_path(name):
         return str(BASE_DIR / os.environ.get('LOCAL_GRAPHS_DIR') / (name + '.graphml'))
