@@ -1,26 +1,61 @@
+import unittest
+from bson import ObjectId
+from mongomock import MongoClient
 from api.models.domain.reddit_post import RedditPost
 from api.repositories.general.posts_repository import PostsRepository
-import unittest
-from mongomock import MongoClient
 
 
-class PostsRepositoryTests(unittest.TestCase):
+class TestPostsRepository(unittest.TestCase):
+
     def setUp(self):
         self.client = MongoClient()
         self.db = self.client["test_db"]
+        self.posts_collection = self.db.posts
         self.posts_repository = PostsRepository(self.db)
-        self.mock_reddit_post = RedditPost("test", "test", "test", "test", "test", "test", "test", "test", "test")
+        self.test_post_1 = {
+            "_id": ObjectId(),
+            "title": "post 1",
+            "content": "Continutul postării 1"
+        }
+        self.test_post_2 = {
+            "_id": ObjectId(),
+            "title": "post 2",
+            "content": "Continutul postării 2"
+        }
+        self.test_post_3 = {
+            "_id": ObjectId(),
+            "title": "post 3",
+            "content": "Continutul postării 3"
+        }
+        self.posts_collection.insert_many([self.test_post_1, self.test_post_2, self.test_post_3])
 
     def test_get_all(self):
-        self.db.posts.insert_one(self.mock_reddit_post.__dict__())
-        self.assertEqual(self.posts_repository.get_all(), [self.mock_reddit_post])
-
-    def test_get_by_id(self):
-        self.db.posts.insert_one(self.mock_reddit_post.__dict__())
-        result = RedditPost.from_dict(self.posts_repository.get_by_id(self.mock_reddit_post._id))
-        self.assertEqual(result, self.mock_reddit_post)
+        posts = self.posts_repository.get_all()
+        self.assertEqual(len(posts), 3)  
+        self.assertEqual(posts[0].title, "post 1")
+        self.assertEqual(posts[1].title, "post 2")
+        self.assertEqual(posts[2].title, "post 3")
 
     def test_get_all_paginated(self):
-        self.db.posts.insert_one(self.mock_reddit_post.__dict__())
-        self.assertEqual(self.posts_repository.get_all_paginated(1, 1), [self.mock_reddit_post])
+        posts_page_1 = self.posts_repository.get_all_paginated(1, 2)
+        self.assertEqual(len(posts_page_1), 2) 
+        self.assertEqual(posts_page_1[0].title, "post 1")
+        self.assertEqual(posts_page_1[1].title, "post 2")
 
+        posts_page_2 = self.posts_repository.get_all_paginated(2, 2)
+        self.assertEqual(len(posts_page_2), 1)  
+        self.assertEqual(posts_page_2[0].title, "post 3")
+
+    def test_get_by_id(self):
+        post_id = self.test_post_1["_id"]
+        post = self.posts_repository.get_by_id(post_id)
+        self.assertIsNotNone(post)
+        self.assertEqual(post["_id"], post_id)
+        self.assertEqual(post["title"], "post 1")
+
+    def tearDown(self):
+        self.client.drop_database("test_db")
+
+
+if __name__ == "__main__":
+    unittest.main()
