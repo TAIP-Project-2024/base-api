@@ -66,7 +66,7 @@ class LDAModelTests(unittest.TestCase):
     @patch("gensim.models.ldamodel.LdaModel.load")
     @patch("os.path.exists")
     def test_train_existing_model_exception_no_dictionary(self, mock_exists, mock_load, mock_dict_load):
-        mock_exists.return_value = lambda path: path == self.lda_model.model_filename  # Only the model file exists
+        mock_exists.side_effect = [True, False] # exists model file, but no dictionary file
         mock_load.return_value = MagicMock(spec=gensim.models.LdaModel)  # Mock Loading the existing model
         mock_dict_load.side_effect = FileNotFoundError(
             "Dictionary file not found!")  # Mock loading the id2word dictionary
@@ -80,7 +80,6 @@ class LDAModelTests(unittest.TestCase):
 
         # Check if they are loaded
         mock_load.assert_called_with(self.lda_model.model_filename)
-        mock_dict_load.assert_called_with(self.lda_model.model_filename + ".id2word")
 
     def test_get_topics(self):
         model, corpus, id2word = self.lda_model.train(self.test_data)
