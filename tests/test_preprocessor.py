@@ -1,5 +1,6 @@
 import unittest
-from api.ml_core.topic_modeling.preprocessor import  Preprocessor
+
+from api.ml_core.topic_modeling.preprocessor import Preprocessor
 
 
 class MyTestCase(unittest.TestCase):
