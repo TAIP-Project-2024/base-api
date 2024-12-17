@@ -15,17 +15,17 @@ class TestPostsRepository(unittest.TestCase):
         self.test_post_1 = {
             "_id": ObjectId(),
             "title": "post 1",
-            "content": "Continutul postării 1"
+            "content": "content post 1"
         }
         self.test_post_2 = {
             "_id": ObjectId(),
             "title": "post 2",
-            "content": "Continutul postării 2"
+            "content": "content post 2"
         }
         self.test_post_3 = {
             "_id": ObjectId(),
             "title": "post 3",
-            "content": "Continutul postării 3"
+            "content": "content post 3"
         }
         self.posts_collection.insert_many([self.test_post_1, self.test_post_2, self.test_post_3])
 
