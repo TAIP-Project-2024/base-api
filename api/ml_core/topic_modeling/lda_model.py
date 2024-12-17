@@ -3,10 +3,12 @@ import os.path
 import gensim
 from gensim.models import LdaModel
 
-from api.ml_core.topic_modeling.preprocessor import Preprocessor
+from api.ml_core.data_preprocess.corpus_processor import CorpusProcessor
+from api.ml_core.data_preprocess.topic_modeling_preprocessor import TopicModelingPreprocessor
+from api.ml_core.topic_modeling.topic_model_interface import TopicModelInterface
 
 
-class LDAModel:
+class LDAModel(TopicModelInterface):
     """
     LDAModel constructs and trains a Latent Dirichlet Allocation model.
     Uses the Builder Pattern for customizable configuration.
@@ -22,8 +24,8 @@ class LDAModel:
         self.dictionary = None
         self.corpus = None
         self.model = None
-        self.preprocessor = Preprocessor()
-        self.model_filename = os.path.join("api/ml_core/topic_modeling/saved_models/lda_model.model")
+        self.preprocessor = TopicModelingPreprocessor()
+        self.model_filename = "saved_models/lda_model.model"
 
     def set_num_topics(self, num_topics):
         """
@@ -72,9 +74,9 @@ class LDAModel:
 
         else:
             print("Training a new model.")
-            tokens = [self.preprocessor.preprocessing_pipeline(d) for d in data]
-            bigram_trigrams = self.preprocessor.bigrams_trigrams(tokens)
-            self.corpus, self.id2word = self.preprocessor.remove_frequent_words(bigram_trigrams)
+            tokens = [self.preprocessor.preprocess(d) for d in data]
+            bigram_trigrams = CorpusProcessor.bigrams_trigrams(tokens)
+            self.corpus, self.id2word = CorpusProcessor.remove_frequent_words(bigram_trigrams)
             self.model = LdaModel(corpus=self.corpus,
                                   id2word=self.id2word,
                                   num_topics=self.num_topics,
@@ -85,7 +87,7 @@ class LDAModel:
         self.model.save(self.model_filename)
         return self.model, self.corpus, self.id2word
 
-    def get_topics(self, model, corpus, id2word):
+    def get_topics(self, model):
         """
         Retrieves the topics from the trained LDA model.
 
@@ -98,13 +100,13 @@ class LDAModel:
 
         return sorted_topics
 
-    def get_document_topics(self, text):
+    def analyze(self, text):
         """
         Get the topic distribution for a single document (text).
 
         :param text: The input text (e.g., a Reddit title)
         :return: List of (topic_id, probability) tuples
         """
-        preprocessed_text = self.preprocessor.preprocessing_pipeline(text)
+        preprocessed_text = self.preprocessor.preprocess(text)
         bow = self.id2word.doc2bow(preprocessed_text)
         return self.model.get_document_topics(bow)

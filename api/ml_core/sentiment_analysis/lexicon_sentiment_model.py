@@ -1,6 +1,6 @@
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
-from sentiment_model_interface import SentimentModelInterface
+from api.ml_core.sentiment_analysis.sentiment_model_interface import SentimentModelInterface
 
 
 class LexiconSentimentModel(SentimentModelInterface):

@@ -1,6 +1,7 @@
 import unittest
 
 from api.ml_core.topic_modeling.preprocessor import Preprocessor
+from api.ml_core.data_preprocess.corpus_processor import CorpusProcessor
 
 
 class MyTestCase(unittest.TestCase):
@@ -91,7 +92,7 @@ class MyTestCase(unittest.TestCase):
                 ["Something", "about", "natural", "language"],
                 ["Another", "list", "with", "natural", "language"],
                 ["natural", "language", "is", "cool"]]
-        result = self.preprocessor.bigrams_trigrams(data, min_count=2, threshold=2)
+        result = CorpusProcessor.bigrams_trigrams(data, min_count=2, threshold=2)
         self.assertIsInstance(result, list)
         self.assertTrue(all(isinstance(doc, list) for doc in result))
 
@@ -100,7 +101,7 @@ class MyTestCase(unittest.TestCase):
     def test_remove_frequent_words(self):
         data_trigram = [["data", "analysis", "is", "useful"], ["data", "is", "important"]]
 
-        corpus, id2word = self.preprocessor.remove_frequent_words(data_trigram)
+        corpus, id2word = CorpusProcessor.remove_frequent_words(data_trigram)
 
         self.assertIsNotNone(corpus)
         self.assertIsNotNone(id2word)

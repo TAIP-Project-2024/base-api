@@ -3,8 +3,8 @@ from scipy.special import softmax
 from transformers import AutoModelForSequenceClassification
 from transformers import AutoTokenizer, AutoConfig
 
-from sentiment_model_interface import SentimentModelInterface
-from preprocess import Preprocess
+from api.ml_core.data_preprocess.bert_preprocessor import BertPreprocessor
+from api.ml_core.sentiment_analysis.sentiment_model_interface import SentimentModelInterface
 
 
 class BertSentimentModel(SentimentModelInterface):
@@ -30,7 +30,9 @@ class BertSentimentModel(SentimentModelInterface):
         :param text: Input text to analyze
         :return: Sentiment score derived from deep learning analysis
         """
-        text = Preprocess.preprocess_bert(text)
+        preprocessor = BertPreprocessor()
+        text = preprocessor.preprocess(text)
+
         encoded_input = self.tokenizer(text, return_tensors='pt')
         output = self.model(**encoded_input)
         scores = output[0][0].detach().numpy()
