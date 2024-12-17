@@ -101,8 +101,8 @@ class CommunityStars(Layout):
 #     topic = "TOPIC PLACEHOLDER",
 #     width = '100vw',
 #     height = '100vh',
-#     bgcolor = 'black',
+#     bgcolor = 'ECEFF1',
 #     n = 800
 # )
-# gd = GraphDrawing(NetworkxGraphImpl('cool_graph'), 'communities_stars')
+# gd = GraphDrawing(NetworkxGraphImpl('40_random_posts'), '40_communities_stars')
 # gd.draw_as(cs)
