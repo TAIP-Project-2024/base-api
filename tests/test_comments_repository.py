@@ -8,7 +8,10 @@ class CommentsRepositoryTests(unittest.TestCase):
     def setUp(self):
         self.client = MongoClient() 
         self.db = self.client["test_db"]  
-        self.comments_repository = CommentsRepository(self.db) 
+        self.comments_repository = CommentsRepository()
+        self.comments_repository.client = self.client
+        self.comments_repository.db = self.db
+        self.comments_repository.collection = self.db["reddit_comments"]
         
         self.mock_posts = [
             RedditPost(
@@ -30,7 +33,7 @@ class CommentsRepositoryTests(unittest.TestCase):
         ]
     
     def test_get_comments_for_post(self):
-        self.db.reddit_posts.insert_many([post.__dict() for post in self.mock_posts])
+        self.db.reddit_posts.insert_many([post.__dict__() for post in self.mock_posts])
         self.db.reddit_comments.insert_many(self.mock_comments)
 
         result = self.comments_repository.get_comments_for_post("123")

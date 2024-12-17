@@ -30,6 +30,7 @@ class DrawingsController(APIView):
             return HttpResponse("Name parameter is required.", status=400)
 
         # Call your service to find the drawing by name
+
         html_file = GraphDrawingService().find_drawing_by_name(name)
         # html = GraphDrawing(None, name).html_file
         # html_file = ""

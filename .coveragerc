@@ -3,11 +3,11 @@ source = .
 omit =
     */migrations/*
     manage.py
-    */settings/*
+    */settings.py
     */tests/*
     */venv/*
-    */admin/*
-    */apps/*
+    */admin.py
+    */apps.py
     */__init__.py
     */urls.py
     */wsgi.py

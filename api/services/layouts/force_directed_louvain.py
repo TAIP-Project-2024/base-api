@@ -52,6 +52,7 @@ class ForceDirectedLouvain(Layout):
                 out.write(nt.html)
         except Exception as e:
             print(e)
+
 #
 # gd = GraphDrawing(NetworkxGraphImpl('40_random_posts'), '40_communities_hairball')
 # gd.draw_as(ForceDirectedLouvain(0,

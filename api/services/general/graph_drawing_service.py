@@ -94,3 +94,10 @@ class GraphDrawingService:
                 pass
             with open(gd.html_file, "rb") as f:
                 return BytesIO(f.read())
+
+#
+#
+# buffer  = GraphDrawingService().create_or_retrieve_comments_drawing("1hfkiuh", "some_post")
+# print(type(buffer))
+
+
