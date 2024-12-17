@@ -5,7 +5,6 @@ from django.test import TestCase
 from api.models.domain.graph import Graph
 from api.services.general.graph_drawing_service import GraphDrawingService
 from api.services.general.graph_service import GraphService
-from api.services.general.metadata_service import MetadataService
 
 
 class GraphServiceTests(TestCase):
@@ -21,8 +20,6 @@ class GraphServiceTests(TestCase):
                      {"user": "user6", "comment": "I don't like it!", "sentiment": 0.2},
                      {"user": "user7", "comment": "I'm against!", "sentiment": 0.1},
                      {"user": "user8", "comment": "I hate it!", "sentiment": 0.0}]
-        self.metadata = MetadataService.generate_metadata_for_post(
-            "mr author", "Bananas are tasty", self.reactions)
 
     def test_generate_graph(self):
         graph = self.graph_service.generate_nxgraph_from_metadata(self.metadata)

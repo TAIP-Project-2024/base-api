@@ -8,6 +8,9 @@ from keras.api.preprocessing.sequence import pad_sequences
 from preprocess import Preprocess
 from sentiment_model_interface import SentimentModelInterface
 
+import nltk
+nltk.download('punkt_tab')
+
 
 def load_lstm_model(filepath, model_class, *args, **kwargs):
     model = model_class(*args, **kwargs)
