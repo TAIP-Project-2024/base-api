@@ -1,4 +1,5 @@
 import os
+from io import BytesIO
 
 from torch.cuda import graph
 
@@ -66,8 +67,11 @@ class GraphDrawingService:
     def create_or_retrieve_comments_drawing(self, post_id, post_text):
         drawing_name = f"{post_id}CommentsGraphDrawing"
         if self.check_exists(drawing_name):
-            return self.find_drawing_by_name(drawing_name)
+            res = self.find_drawing_by_name(drawing_name)
+            print("new graph")
+            return res
         else:
+            print("existing_graph")
             graph_name=f"{post_id}CommentsGraph"
             gs = GraphService()
             if gs.check_exists(graph_name):
@@ -83,15 +87,15 @@ class GraphDrawingService:
             gd.draw_as(CommentsDrawing(width = '100vw',
                                         height = '100vh',
                                         n = 800))
-            self.save_graph_drawing(GraphDrawing(None, drawing_name), True)
+            self.save_graph_drawing(GraphDrawing(None, drawing_name), False)
             try:
                 os.remove(graph.graphml_file)
             except:
                 pass
-            with open(gd.html_file, "w") as f:
-                return f
-
-
-buffer  = GraphDrawingService().create_or_retrieve_comments_drawing("1het1r1", "some_post")
-print(buffer)
+            with open(gd.html_file, "rb") as f:
+                return BytesIO(f.read())
+#
+#
+# buffer  = GraphDrawingService().create_or_retrieve_comments_drawing("1hfkiuh", "some_post")
+# print(type(buffer))
 
