@@ -47,6 +47,8 @@ class DrawingRepository:
             return buffer
         else:
             return None
+    def check_exists(self, name):
+        return self.fs.exists({"filename": name})
 
     @logging_and_security
     def update(self, name, graph_drawing_file_buffer):
