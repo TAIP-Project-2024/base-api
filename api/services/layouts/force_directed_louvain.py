@@ -53,9 +53,10 @@ class ForceDirectedLouvain(Layout):
         except Exception as e:
             print(e)
 
-# gd = GraphDrawing(NetworkxGraphImpl('cool_graph'), 'communities_hairball')
-# gd.draw_as(ForceDirectedLouvain(8,
+#
+# gd = GraphDrawing(NetworkxGraphImpl('40_random_posts'), '40_communities_hairball')
+# gd.draw_as(ForceDirectedLouvain(0,
 #                                 width = '100vw',
 #                                 height = '100vh',
-#                                 bgcolor = 'black',
+#                                 bgcolor = '#ECEFF1',
 #                                 n = 800))
