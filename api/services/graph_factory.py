@@ -81,6 +81,10 @@ class GraphFactory:
         graph.add_node("group_positive", label="Positive", color="green", size = base_size)
         graph.add_edges_from([("post", "group_neutral"), ("post", "group_positive"), ("post", "group_negative")])
         n = {}
+
+        for group in groups:
+            n[group] = 0
+
         print([e["sentiment"] for e in comments])
         for entry in comments:
             group = groups[round(entry["sentiment"])]
@@ -96,10 +100,8 @@ class GraphFactory:
                            hidden=True)
 
             graph.add_edge(group, entry["_id"])
-            try:
-                n[group] += 1
-            except Exception as e:
-                n[group] = 0
+            n[group] += 1
+
         for group in groups:
             graph.nodes[group]['size']=n[group]+30
 

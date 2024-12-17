@@ -1,143 +1,132 @@
 import unittest
-import os
 from io import BytesIO
-from unittest.mock import patch
 from mongomock import MongoClient
+from unittest.mock import MagicMock, patch
 from api.repositories.general.graph_repository import GraphRepository
-from dotenv import load_dotenv
 import logging
 
-# Încarcă variabilele de mediu din fișierul .env
-load_dotenv('.env')
-
-# Obținem variabilele de mediu
-MONGO_URI = os.getenv("MONGO_URI")
-MONGO_DB_NAME = os.getenv("MONGO_DB_NAME")
-LOCAL_GRAPHS_DIR = os.getenv("LOCAL_GRAPHS_DIR")
-
 logging.basicConfig(level=logging.DEBUG)
+
 
 class GraphRepositoryTests(unittest.TestCase):
     def setUp(self):
         """
-        Configurarea inițială a testelor.
-        Folosim MongoDB simulată și configurăm repository-ul pentru teste.
+        Set up a mock MongoDB instance and GraphRepository for testing.
         """
-        if not MONGO_DB_NAME:
-            raise ValueError("MONGO_DB_NAME nu este setat corespunzător!")
-
-        # Simulăm MongoDB cu mongomock
+        # Mock MongoDB setup
         self.client = MongoClient()
-        self.db = self.client[MONGO_DB_NAME]
-        self.fs = self.db["Graphs"]
+        self.db = self.client["test_database"]
+
+        # Patch GridFS to avoid incompatibilities
+        self.gridfs_mock = MagicMock()
+        self.fs_patch = patch("gridfs.GridFS", return_value=self.gridfs_mock)
+        self.fs_patch.start()
+
+        # Mock the repository
         self.graph_repository = GraphRepository()
+        self.graph_repository.client = self.client
+        self.graph_repository.db = self.db
+        self.graph_repository.fs = self.gridfs_mock
 
-        # Creăm fișier mock pentru teste
-        self.mock_graph_file = BytesIO(b"This is a mock graph file.")
+        # Test graph file setup
         self.mock_graph_name = "test_graph"
-        self.mock_graph_path = os.path.join(LOCAL_GRAPHS_DIR, self.mock_graph_name)
+        self.mock_graph_file = BytesIO(b"This is a mock graph file.")
 
-        # Asigurăm existența directorului local pentru grafuri
-        os.makedirs(os.path.dirname(self.mock_graph_path), exist_ok=True)
+    def test_add_graph(self):
+        """
+        Test the add method of GraphRepository.
+        """
+        file_id = self.graph_repository.add(self.mock_graph_name, self.mock_graph_file)
+        self.assertIsNotNone(file_id)
 
-        # Salvăm fișierul local
-        with open(self.mock_graph_path, "wb") as f:
-            f.write(self.mock_graph_file.getvalue())
-
-    # def test_add_graph(self):
-    #     """
-    #     Testează adăugarea unui fișier grafic în MongoDB.
-    #     """
-    #     file_id = self.graph_repository.add(self.mock_graph_name, self.mock_graph_file)
-    #     self.assertIsNotNone(file_id)
-
-    #     file = self.db.fs.files.find_one({"filename": self.mock_graph_name})
-    #     self.assertIsNotNone(file)
-    #     self.assertEqual(file["filename"], self.mock_graph_name)
-
-    #     logging.debug("Graph added with ID: %s", file_id)
+        # Assert that the put method was called
+        self.gridfs_mock.put.assert_called_once_with(self.mock_graph_file, filename=self.mock_graph_name)
+        logging.debug("Graph added successfully.")
 
     def test_get_graph(self):
         """
-        Testează obținerea unui grafic stocat în MongoDB.
+        Test the get method of GraphRepository.
         """
-        self.graph_repository.add(self.mock_graph_name, self.mock_graph_file)
+        # Mock the return value for the find_one method
+        mock_file = MagicMock()
+        mock_file.read.return_value = b"This is a mock graph file."
+        self.gridfs_mock.find_one.return_value = mock_file
 
         file_buffer = self.graph_repository.get(self.mock_graph_name)
         self.assertIsNotNone(file_buffer)
-
         file_buffer.seek(0)
         self.assertEqual(file_buffer.read(), b"This is a mock graph file.")
-
-        logging.debug("Graph retrieved successfully: %s", self.mock_graph_name)
+        logging.debug("Graph retrieved successfully.")
 
     def test_get_graph_not_found(self):
         """
-        Testează cazul când un grafic nu este găsit.
+        Test get method for a non-existing graph.
         """
-        result = self.graph_repository.get("nonexistent_graph")
-        self.assertIsNone(result)
-        logging.debug("Graph not found as expected: nonexistent_graph")
+        self.gridfs_mock.find_one.return_value = None
+        file_buffer = self.graph_repository.get("nonexistent_graph")
+        self.assertIsNone(file_buffer)
+        logging.debug("Nonexistent graph retrieval returned None as expected.")
 
     def test_check_graph_exists(self):
         """
-        Testează verificarea existenței unui fișier grafic.
+        Test the check_exists method of GraphRepository.
         """
-        self.graph_repository.add(self.mock_graph_name, self.mock_graph_file)
+        # Mock the return value for exists
+        self.gridfs_mock.exists.side_effect = lambda query: query.get("filename") == self.mock_graph_name
 
         exists = self.graph_repository.check_exists(self.mock_graph_name)
         self.assertTrue(exists)
 
-        exists = self.graph_repository.check_exists("nonexistent_graph")
-        self.assertFalse(exists)
+        nonexistent = self.graph_repository.check_exists("nonexistent_graph")
+        self.assertFalse(nonexistent)
+        logging.debug("Graph existence checks completed.")
 
-        logging.debug("Graph existence check completed.")
+    def test_update_graph(self):
+        """
+        Test the update method of GraphRepository.
+        """
+        # Mock the existing file to simulate replacement
+        mock_file = MagicMock()
+        mock_file._id = "mock_file_id"
+        self.gridfs_mock.find_one.return_value = mock_file
 
-    # def test_update_graph(self):
-    #     """
-    #     Testează actualizarea unui fișier grafic.
-    #     """
-    #     self.graph_repository.add(self.mock_graph_name, self.mock_graph_file)
+        updated_file = BytesIO(b"This is an updated mock graph file.")
+        file_id = self.graph_repository.update(self.mock_graph_name, updated_file)
+        self.assertIsNotNone(file_id)
 
-    #     updated_graph_file = BytesIO(b"This is an updated mock graph file.")
-    #     updated_file_id = self.graph_repository.update(self.mock_graph_name, updated_graph_file)
-
-    #     self.assertIsNotNone(updated_file_id)
-
-    #     file_buffer = self.graph_repository.get(self.mock_graph_name)
-    #     self.assertIsNotNone(file_buffer)
-    #     file_buffer.seek(0)
-    #     self.assertEqual(file_buffer.read(), b"This is an updated mock graph file.")
-
-    #     logging.debug("Graph updated successfully: %s", self.mock_graph_name)
+        # Assert the delete and put methods were called
+        self.gridfs_mock.delete.assert_called_once_with("mock_file_id")
+        self.gridfs_mock.put.assert_called_once_with(updated_file, filename=self.mock_graph_name)
+        logging.debug("Graph updated successfully.")
 
     def test_delete_graph(self):
         """
-        Testează ștergerea unui fișier grafic.
+        Test the delete method of GraphRepository.
         """
-        self.graph_repository.add(self.mock_graph_name, self.mock_graph_file)
+        # Mock the existing file to simulate deletion
+        mock_file = MagicMock()
+        mock_file._id = "mock_file_id"
+        self.gridfs_mock.find_one.return_value = mock_file
 
-        result = self.graph_repository.delete(self.mock_graph_name)
-        self.assertTrue(result)
+        deleted = self.graph_repository.delete(self.mock_graph_name)
+        self.assertTrue(deleted)
 
-        file = self.db.fs.files.find_one({"filename": self.mock_graph_name})
-        self.assertIsNone(file)
+        # Assert that delete was called
+        self.gridfs_mock.delete.assert_called_once_with("mock_file_id")
 
-        result = self.graph_repository.delete("nonexistent_graph")
-        self.assertFalse(result)
-
-        logging.debug("Graph deletion completed.")
+        # Test deletion of nonexistent file
+        self.gridfs_mock.find_one.return_value = None
+        deleted_nonexistent = self.graph_repository.delete("nonexistent_graph")
+        self.assertFalse(deleted_nonexistent)
+        logging.debug("Graph deletion tests completed.")
 
     def tearDown(self):
         """
-        Eliberăm resursele după fiecare test.
+        Clean up resources after each test.
         """
-        self.client.drop_database(MONGO_DB_NAME)
-
-        # Ștergem fișierul local dacă există
-        if os.path.exists(self.mock_graph_path):
-            os.remove(self.mock_graph_path)
-            logging.debug("Local graph file removed: %s", self.mock_graph_path)
+        self.fs_patch.stop()
+        self.client.drop_database("test_database")
+        logging.debug("Mock database cleaned up.")
 
 
 if __name__ == "__main__":

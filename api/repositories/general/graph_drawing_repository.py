@@ -24,13 +24,24 @@ class DrawingRepository:
     """
     def __init__(self):
         # Initialize MongoDB client and set up database, collection, and GridFS
+        self._closed = False
         self.client = MongoClient(MONGO_URI)
         self.db = self.client[DATABASE_NAME]
         self.fs = GridFS(self.db, collection=COLLECTION_NAME)
 
+    def close(self):
+        """Explicitly close the MongoDB client."""
+        if not self._closed:
+            self.client.close()
+            self._closed = True
+
     def __del__(self):
-        # Close the MongoDB client connection
-        self.client.close()
+        """Destructor to ensure resources are released if close() is not called."""
+        try:
+            self.close()
+        except Exception:
+            # Suppress any exception during interpreter shutdown
+            pass
 
     @logging_and_security
     def add(self, name, graph_drawing_file_buffer):
