@@ -48,7 +48,7 @@ class TopicModelingPreprocessor(TextPreprocessor):
         return data.translate(str.maketrans('', '', string.punctuation))
 
     @staticmethod
-    def gen_words(data):
+    def tokenize(data):
         """
         Tokenizes the input text into lowercase words using Gensim's tokenizer.
 
@@ -74,7 +74,7 @@ class TopicModelingPreprocessor(TextPreprocessor):
         text = self.expand_contractions(text)
 
         text = self.lemmatize_text(text, allowed_postags = ['NOUN', 'ADJ', 'VERB', 'ADV'])
-        tokens = self.gen_words(text)
+        tokens = self.tokenize(text)
 
         return tokens
 
@@ -84,7 +84,7 @@ if __name__ == "__main__":
     sentiment_preprocessor = SentimentAnalysisPreprocessor()
     topic_preprocessor = TopicModelingPreprocessor()
 
-    sample_text = "Here's an example text! Visit https://example.com for more info. #exampleforhashtags"
+    sample_text = "Here's an example text 😍! Visit https://example.com for more info. #exampleforhashtags"
 
     print("Sentiment Analysis Preprocessed Text:")
     print(sentiment_preprocessor.preprocess(sample_text, remove_stopwords=False, lemmatize=False))
