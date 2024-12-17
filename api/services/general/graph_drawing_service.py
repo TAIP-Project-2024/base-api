@@ -1,19 +1,27 @@
 import os
 
+from torch.cuda import graph
+
 from api.models.domain.graph_drawing import GraphDrawing
+from api.models.domain.networkx_graph_impl import NetworkxGraphImpl
+from api.repositories.general.comments_repository import CommentsRepository
 from api.repositories.general.graph_drawing_repository import DrawingRepository
+from api.repositories.general.graph_repository import GraphRepository
+from api.services.general.graph_service import GraphService
+from api.services.graph_factory import GraphFactory
+from api.services.layouts.comments_drawing import CommentsDrawing
 
 
 class GraphDrawingService:
     def __init__(self):
         pass
 
-    def generate_drawing(self, layout, graph):
+    def generate_drawing(self, layout, graph, name):
         """
         Will try to apply the layout algorithm for the graph
         Will return false if it fails.
         """
-        graph_drawing = GraphDrawing(graph)
+        graph_drawing = GraphDrawing(graph, name)
         return graph_drawing.draw_as(layout)
 
     def save_graph_drawing(self, graph_drawing, delete_local=False):
@@ -51,5 +59,39 @@ class GraphDrawingService:
                         break
                     file.write(chunk)
 
-# GraphDrawingService().fetch_drawing_locally('reddit')
-# GraphDrawingService().save_graph_drawing(GraphDrawing(None, 'communities_hairball'))
+    def check_exists(self, name):
+        with DrawingRepository() as dr:
+            return dr.check_exists(name)
+
+    def create_or_retrieve_comments_drawing(self, post_id, post_text):
+        drawing_name = f"{post_id}CommentsGraphDrawing"
+        if self.check_exists(drawing_name):
+            return self.find_drawing_by_name(drawing_name)
+        else:
+            graph_name=f"{post_id}CommentsGraph"
+            gs = GraphService()
+            if gs.check_exists(graph_name):
+                gs.fetch_graph_locally(graph_name)
+                graph = NetworkxGraphImpl(graph_name)
+            else:
+                #build the graph
+                with CommentsRepository() as c:
+                    comments = c.get_comments_for_post(post_id)
+                graph = GraphFactory.create_comments_graph(graph_name, post_text, comments)
+                gs.save_graph(graph, False)
+            gd = GraphDrawing(graph, drawing_name)
+            gd.draw_as(CommentsDrawing(width = '100vw',
+                                        height = '100vh',
+                                        n = 800))
+            self.save_graph_drawing(GraphDrawing(None, drawing_name), True)
+            try:
+                os.remove(graph.graphml_file)
+            except:
+                pass
+            with open(gd.html_file, "w") as f:
+                return f
+
+
+buffer  = GraphDrawingService().create_or_retrieve_comments_drawing("1het1r1", "some_post")
+print(buffer)
+
