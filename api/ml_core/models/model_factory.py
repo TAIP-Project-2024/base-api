@@ -1,7 +1,7 @@
 from api.ml_core.sentiment_analysis.lexicon_sentiment_model import LexiconSentimentModel
 from api.ml_core.sentiment_analysis.bert_sentiment_model import BertSentimentModel
 from api.ml_core.sentiment_analysis.lstm_sentiment_model import LSTMSentimentModel
-#, LDATopicModel, BERTopicModel
+from api.ml_core.topic_modeling.lda_model import LDAModel
 
 
 class ModelFactory:
@@ -16,7 +16,7 @@ class ModelFactory:
             'lstm': lambda: LSTMSentimentModel()
         },
         'topic': {
-            'lda': 0,#lambda: LDATopicModel(),
+            'lda': lambda: LDAModel(),
             'bert': 0#lambda: BERTopicModel()
         }
     }

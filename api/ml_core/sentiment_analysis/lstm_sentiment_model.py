@@ -5,8 +5,8 @@ import torch
 import torch.nn as nn
 from keras.api.preprocessing.sequence import pad_sequences
 
-from preprocess import Preprocess
-from sentiment_model_interface import SentimentModelInterface
+from api.ml_core.data_preprocess.sentiment_analysis_preprocessor import SentimentAnalysisPreprocessor
+from api.ml_core.sentiment_analysis.sentiment_model_interface import SentimentModelInterface
 
 import nltk
 nltk.download('punkt_tab')
@@ -50,7 +50,7 @@ class LSTMSentimentModel(SentimentModelInterface):
         """
 
         # Preprocess the texts
-        preprocessor = Preprocess()
+        preprocessor = SentimentAnalysisPreprocessor()
         preprocessed_texts = [preprocessor.preprocess(text, False, False) for text in texts]
 
         # Tokenize and pad sequences
