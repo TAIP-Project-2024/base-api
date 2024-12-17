@@ -41,13 +41,19 @@ class Layout:
             if (params.nodes.length > 0) {{
                 const nodeId = params.nodes[0]; // Get the clicked node's ID
                 const node = data.nodes.get(nodeId); 
-                if (node.url) {{
-                    window.open(node.url, "_blank");
-                }}
+                const message = {{
+                    type: "nodeClick",  
+                    nodeId: nodeId,      
+                    url: node.url || "",  
+                    title: node.title
+                }};
+                window.parent.postMessage(message, "*");
             }}
         }});
         </script>
         """
+
         nt.html = nt.generate_html()
         nt.html = nt.html.replace(anchor, anchor + '\n' + ops + '\n')
         nt.html = nt.html.replace("</body>", script + '\n' + "</body>")
+

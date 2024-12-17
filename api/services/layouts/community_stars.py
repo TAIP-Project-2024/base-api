@@ -97,12 +97,12 @@ class CommunityStars(Layout):
             print(e)
 
 
-cs = CommunityStars(
-    topic = "TOPIC PLACEHOLDER",
-    width = '100vw',
-    height = '100vh',
-    bgcolor = 'black',
-    n = 800
-)
-gd = GraphDrawing(NetworkxGraphImpl('cool_graph'), 'communities_stars')
-gd.draw_as(cs)
+# cs = CommunityStars(
+#     topic = "TOPIC PLACEHOLDER",
+#     width = '100vw',
+#     height = '100vh',
+#     bgcolor = 'black',
+#     n = 800
+# )
+# gd = GraphDrawing(NetworkxGraphImpl('cool_graph'), 'communities_stars')
+# gd.draw_as(cs)

@@ -6,4 +6,6 @@ from api.controllers.general.test_controller import TestController
 urlpatterns = [
     path("test/", TestController.as_view(), name="test"),
     path("drawings/", DrawingsController.as_view(), name="drawings"),
+    path("drawings/posts/", DrawingsController.as_view(), name="posts"),
+
 ]

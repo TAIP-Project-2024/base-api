@@ -103,8 +103,10 @@ class GraphFactory:
             n[group] += 1
 
         for group in groups:
-            graph.nodes[group]['size']=n[group]+30
-
+            try:
+                graph.nodes[group]['size']=n[group]+30
+            except:
+                pass # means no such members
         return NetworkxGraphImpl(graph_name, graph)
 
 
