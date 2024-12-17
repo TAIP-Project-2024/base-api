@@ -1,5 +1,6 @@
 from api.ml_core.sentiment_analysis.lexicon_sentiment_model import LexiconSentimentModel
 from api.ml_core.sentiment_analysis.bert_sentiment_model import BertSentimentModel
+from api.ml_core.sentiment_analysis.lstm_sentiment_model import LSTMSentimentModel
 #, LDATopicModel, BERTopicModel
 
 
@@ -11,7 +12,8 @@ class ModelFactory:
     _registry = {
         'sentiment': {
             'lexicon': lambda: LexiconSentimentModel(),
-            'bert': lambda: BertSentimentModel()
+            'bert': lambda: BertSentimentModel(),
+            'lstm': lambda: LSTMSentimentModel()
         },
         'topic': {
             'lda': 0,#lambda: LDATopicModel(),

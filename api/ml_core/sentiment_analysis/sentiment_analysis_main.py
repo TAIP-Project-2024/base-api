@@ -12,10 +12,26 @@ if __name__ == '__main__':
              "I am going outside."]
 
     # Lexicon-based analysis
+    print("Lexicon-based analysis:")
     lexicon_model = ModelFactory.create_model('sentiment', 'lexicon')
-    print(lexicon_model.analyze(texts[0])) # compound provides an overall sentiment score from -1 (most negative) to +1 (most positive).
+    for text in texts:
+        # compound provides an overall sentiment score from -1 (most negative) to +1 (most positive).
+        print(f"Text: {text}")
+        print(f"Prediction: {lexicon_model.analyze(text)}")
 
-    # Deep learning analysis
+    # BERT analysis
+    print("\nBERT analysis:")
     bert_model = ModelFactory.create_model('sentiment', 'bert')
     for text in texts:
-        print(bert_model.analyze(text))
+        print(f"Text: {text}")
+        prediction = bert_model.analyze(text)
+        print(f"Prediction: {prediction}")
+
+    # LSTM analysis
+    print("\nLSTM analysis:")
+    lstm_model = ModelFactory.create_model('sentiment', 'lstm')
+    predictions = lstm_model.analyze(texts)
+    for i, text in enumerate(texts):
+        print(f"Text: {text}")
+        print(f"Prediction: {predictions[i]}")
+        print()
