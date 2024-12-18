@@ -3,9 +3,28 @@ source = .
 omit =
     */migrations/*
     manage.py
+    */settings.py
+    */tests/*
+    */venv/*
+    */admin.py
+    */apps.py
+    */__init__.py
+    */urls.py
+    */wsgi.py
+    */asgi.py
+    */settings.py
+    */tests.py
+    api/models.py
+    api/views.py
+
 
 
     */sentiment_analysis_main.py
+    */lsa_model.py
+    */topic_model.py
+    */topic_modeler.py
+    */topic_modeling_main.py
+    */topic_visualizer.py
     */config_loader.py
     */logger.py
     */performance_tracker.py

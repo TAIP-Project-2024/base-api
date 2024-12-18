@@ -42,17 +42,18 @@ class ForceDirectedLouvain(Layout):
         nx.set_edge_attributes(graph, self.edge_weight_in_drawing, 'weight')
 
         for node in graph.nodes(data=True):
-            node[1]["x"] = pos[str(node[0])][0]*self.n
-            node[1]["y"] = pos[str(node[0])][1]*self.n
+            node[1]["x"] = pos[node[0]][0] * self.n
+            node[1]["y"] = pos[node[0]][1] * self.n
         try:
             nt.from_nx(graph)
             nt.toggle_physics(False)
             self.load_interactions(nt)
             with open(html_file, "w+") as out:
                 out.write(nt.html)
-        except Exception as e:
-            print(e)
 
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            raise
 #
 # gd = GraphDrawing(NetworkxGraphImpl('40_random_posts'), '40_communities_hairball')
 # gd.draw_as(ForceDirectedLouvain(0,
