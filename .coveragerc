@@ -3,17 +3,6 @@ source = .
 omit =
     */migrations/*
     manage.py
-    */settings.py
-    */tests/*
-    */venv/*
-    */admin.py
-    */apps.py
-    */__init__.py
-    */urls.py
-    */wsgi.py
-    */asgi.py
-    */settings.py
-    */tests.py
 
 [report]
 exclude_lines =

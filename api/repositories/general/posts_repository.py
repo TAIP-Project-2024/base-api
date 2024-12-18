@@ -5,7 +5,7 @@ from api.models.domain.reddit_post import RedditPost
 
 class PostsRepository:
     def __init__(self, db):
-        self.collection = db.posts
+        self.collection = db.reddit_posts
 
     def get_all(self):
         posts_data = self.collection.find()
