@@ -22,6 +22,7 @@ class Graph:
         """
         self.name = name
         self.graphml_file = self.resolve_path(self.name)
+        self.saved_locally = False
 
     @abstractmethod
     def save(self):
