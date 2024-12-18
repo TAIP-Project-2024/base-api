@@ -11,4 +11,4 @@ class SentimentModelInterface:
         :param text: Text to analyze
         :return: Sentiment score derived from the analysis
         """
-        pass
+        raise NotImplementedError("analyze method is not implemented")
