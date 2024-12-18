@@ -64,3 +64,6 @@ class RedditPost:
             return False
 
         return self.__dict__() == other.__dict__()
+
+    def id (self):
+        return self._id

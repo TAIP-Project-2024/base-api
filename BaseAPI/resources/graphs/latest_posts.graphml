@@ -1,0 +1,275 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"><key id="d4" for="edge" attr.name="weight" attr.type="double"/>
+<key id="d3" for="node" attr.name="community" attr.type="long"/>
+<key id="d2" for="node" attr.name="color" attr.type="string"/>
+<key id="d1" for="node" attr.name="url" attr.type="string"/>
+<key id="d0" for="node" attr.name="title" attr.type="string"/>
+<graph edgedefault="undirected"><node id="0">
+  <data key="d0">Saturday Morning Political Cartoon Thread</data>
+  <data key="d1">reddit.com/r/politics</data>
+  <data key="d2">#3C3ABF</data>
+  <data key="d3">0</data>
+</node>
+<node id="1">
+  <data key="d0">ABC Faces Anger After $15M Trump Settlement: 'Democracy Dies'</data>
+  <data key="d1">reddit.com/r/politics</data>
+  <data key="d2">#3C3ABF</data>
+  <data key="d3">0</data>
+</node>
+<node id="2">
+  <data key="d0">Bernie Sanders Warns U.S. Is Becoming an Oligarchy</data>
+  <data key="d1">reddit.com/r/politics</data>
+  <data key="d2">#86159A</data>
+  <data key="d3">1</data>
+</node>
+<node id="3">
+  <data key="d0">Sen. Bernie Sanders says Biden should 'very seriously' consider preemptive pardons</data>
+  <data key="d1">reddit.com/r/politics</data>
+  <data key="d2">#86159A</data>
+  <data key="d3">1</data>
+</node>
+<node id="4">
+  <data key="d0">As he leaves office, Romney says GOP policies don’t always align with the working class</data>
+  <data key="d1">reddit.com/r/politics</data>
+  <data key="d2">#86159A</data>
+  <data key="d3">1</data>
+</node>
+<node id="5">
+  <data key="d0">Universities warn international students to return before Trump inauguration</data>
+  <data key="d1">reddit.com/r/politics</data>
+  <data key="d2">#86159A</data>
+  <data key="d3">1</data>
+</node>
+<node id="6">
+  <data key="d0">'No Way' We Let Trump Privatize Postal Service, Say Progressives  |  
+Instead of privatization, said one Democratic lawmaker, "Fire his former pick for postmaster, DeJoy, and let a real professional run it like it should be run. The first priority is delivering mail. Cut the Pentagon's bloat</data>
+  <data key="d1">reddit.com/r/politics</data>
+  <data key="d2">#86159A</data>
+  <data key="d3">1</data>
+</node>
+<node id="7">
+  <data key="d0">Kimberly Guilfoyle: Latest Trump nominee accused of sexual misconduct</data>
+  <data key="d1">reddit.com/r/politics</data>
+  <data key="d2">#3C3ABF</data>
+  <data key="d3">0</data>
+</node>
+<node id="8">
+  <data key="d0">Trump was prosecuted under the Espionage Act — now he'll turn it against his "enemies"</data>
+  <data key="d1">reddit.com/r/politics</data>
+  <data key="d2">#86159A</data>
+  <data key="d3">1</data>
+</node>
+<node id="9">
+  <data key="d0">Judge upholds guilty plea of Trump co-defendant Kenneth Chesebro in Georgia election case</data>
+  <data key="d1">reddit.com/r/politics</data>
+  <data key="d2">#3C3ABF</data>
+  <data key="d3">0</data>
+</node>
+<node id="10">
+  <data key="d0">Trump vows to ‘hire American.’ His businesses keep hiring foreign guest workers</data>
+  <data key="d1">reddit.com/r/politics</data>
+  <data key="d2">#86159A</data>
+  <data key="d3">1</data>
+</node>
+<node id="11">
+  <data key="d0">Romney: ‘You can’t complain’ if Trump does what he said he would do</data>
+  <data key="d1">reddit.com/r/politics</data>
+  <data key="d2">#86159A</data>
+  <data key="d3">1</data>
+</node>
+<edge source="0" target="1">
+  <data key="d4">2.3209357261657715</data>
+</edge>
+<edge source="0" target="2">
+  <data key="d4">2.2716186940670013</data>
+</edge>
+<edge source="0" target="3">
+  <data key="d4">1.4088378846645355</data>
+</edge>
+<edge source="0" target="4">
+  <data key="d4">2.325426936149597</data>
+</edge>
+<edge source="0" target="5">
+  <data key="d4">1.0254552960395813</data>
+</edge>
+<edge source="0" target="6">
+  <data key="d4">1.6657644510269165</data>
+</edge>
+<edge source="0" target="7">
+  <data key="d4">1.7385755479335785</data>
+</edge>
+<edge source="0" target="8">
+  <data key="d4">1.574748158454895</data>
+</edge>
+<edge source="0" target="9">
+  <data key="d4">0.9297968447208405</data>
+</edge>
+<edge source="0" target="10">
+  <data key="d4">1.4905913174152374</data>
+</edge>
+<edge source="0" target="11">
+  <data key="d4">1.5493068099021912</data>
+</edge>
+<edge source="1" target="2">
+  <data key="d4">1.621558964252472</data>
+</edge>
+<edge source="1" target="3">
+  <data key="d4">1.0033351182937622</data>
+</edge>
+<edge source="1" target="4">
+  <data key="d4">0.6446019560098648</data>
+</edge>
+<edge source="1" target="5">
+  <data key="d4">0.526830293238163</data>
+</edge>
+<edge source="1" target="6">
+  <data key="d4">1.9629588723182678</data>
+</edge>
+<edge source="1" target="7">
+  <data key="d4">1.8284563720226288</data>
+</edge>
+<edge source="1" target="8">
+  <data key="d4">1.6902334988117218</data>
+</edge>
+<edge source="1" target="9">
+  <data key="d4">2.23630353808403</data>
+</edge>
+<edge source="1" target="10">
+  <data key="d4">1.585371494293213</data>
+</edge>
+<edge source="1" target="11">
+  <data key="d4">1.111239343881607</data>
+</edge>
+<edge source="2" target="3">
+  <data key="d4">2.859838604927063</data>
+</edge>
+<edge source="2" target="4">
+  <data key="d4">3.10599684715271</data>
+</edge>
+<edge source="2" target="5">
+  <data key="d4">1.6183322668075562</data>
+</edge>
+<edge source="2" target="6">
+  <data key="d4">1.632506251335144</data>
+</edge>
+<edge source="2" target="7">
+  <data key="d4">0.18848225474357605</data>
+</edge>
+<edge source="2" target="8">
+  <data key="d4">2.8059643507003784</data>
+</edge>
+<edge source="2" target="9">
+  <data key="d4">0.21685507148504257</data>
+</edge>
+<edge source="2" target="10">
+  <data key="d4">1.757338047027588</data>
+</edge>
+<edge source="2" target="11">
+  <data key="d4">1.7129364609718323</data>
+</edge>
+<edge source="3" target="4">
+  <data key="d4">1.7066395282745361</data>
+</edge>
+<edge source="3" target="5">
+  <data key="d4">1.2213096022605896</data>
+</edge>
+<edge source="3" target="6">
+  <data key="d4">2.559714913368225</data>
+</edge>
+<edge source="3" target="7">
+  <data key="d4">1.7682527005672455</data>
+</edge>
+<edge source="3" target="8">
+  <data key="d4">3.1177565455436707</data>
+</edge>
+<edge source="3" target="9">
+  <data key="d4">2.081270217895508</data>
+</edge>
+<edge source="3" target="10">
+  <data key="d4">1.7532198131084442</data>
+</edge>
+<edge source="3" target="11">
+  <data key="d4">1.2814909219741821</data>
+</edge>
+<edge source="4" target="5">
+  <data key="d4">1.7992347478866577</data>
+</edge>
+<edge source="4" target="6">
+  <data key="d4">1.9880776107311249</data>
+</edge>
+<edge source="4" target="7">
+  <data key="d4">0.8614423871040344</data>
+</edge>
+<edge source="4" target="8">
+  <data key="d4">2.599756121635437</data>
+</edge>
+<edge source="4" target="9">
+  <data key="d4">1.2007839977741241</data>
+</edge>
+<edge source="4" target="10">
+  <data key="d4">3.570127487182617</data>
+</edge>
+<edge source="4" target="11">
+  <data key="d4">5.325627326965332</data>
+</edge>
+<edge source="5" target="6">
+  <data key="d4">1.2317346036434174</data>
+</edge>
+<edge source="5" target="7">
+  <data key="d4">0.5297113582491875</data>
+</edge>
+<edge source="5" target="8">
+  <data key="d4">2.0568865537643433</data>
+</edge>
+<edge source="5" target="10">
+  <data key="d4">3.445710241794586</data>
+</edge>
+<edge source="5" target="11">
+  <data key="d4">2.146447002887726</data>
+</edge>
+<edge source="6" target="7">
+  <data key="d4">1.0377109050750732</data>
+</edge>
+<edge source="6" target="8">
+  <data key="d4">1.985008418560028</data>
+</edge>
+<edge source="6" target="9">
+  <data key="d4">0.12037327513098717</data>
+</edge>
+<edge source="6" target="10">
+  <data key="d4">2.6096224784851074</data>
+</edge>
+<edge source="6" target="11">
+  <data key="d4">2.182145416736603</data>
+</edge>
+<edge source="7" target="8">
+  <data key="d4">2.4715323746204376</data>
+</edge>
+<edge source="7" target="9">
+  <data key="d4">3.5831019282341003</data>
+</edge>
+<edge source="7" target="10">
+  <data key="d4">1.8101045489311218</data>
+</edge>
+<edge source="7" target="11">
+  <data key="d4">1.0733329504728317</data>
+</edge>
+<edge source="8" target="9">
+  <data key="d4">2.1409475803375244</data>
+</edge>
+<edge source="8" target="10">
+  <data key="d4">3.2719260454177856</data>
+</edge>
+<edge source="8" target="11">
+  <data key="d4">2.0905566215515137</data>
+</edge>
+<edge source="9" target="10">
+  <data key="d4">0.9145282208919525</data>
+</edge>
+<edge source="9" target="11">
+  <data key="d4">1.4475785195827484</data>
+</edge>
+<edge source="10" target="11">
+  <data key="d4">3.075212240219116</data>
+</edge>
+</graph></graphml>
