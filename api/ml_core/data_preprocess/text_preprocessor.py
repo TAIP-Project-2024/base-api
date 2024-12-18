@@ -25,7 +25,7 @@ class TextPreprocessor(ABC):
         :param kwargs: Additional keyword arguments for preprocessing
         :return: Processed text
         """
-        pass
+        raise NotImplementedError("Subclasses must implement this method.") # pragma: no cover
 
     @staticmethod
     def lowercase(text):
