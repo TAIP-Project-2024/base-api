@@ -1,18 +1,32 @@
 import unittest
 
 from api.ml_core.data_preprocess.sentiment_analysis_preprocessor import SentimentAnalysisPreprocessor
+from api.ml_core.data_preprocess.text_preprocessor import TextPreprocessor
 
 
 class TopicModelingPreprocessorTest(unittest.TestCase):
     def setUp(self):
         self.preprocessor = SentimentAnalysisPreprocessor()
 
-    def text_lowercase_equal(self):
+    def test_init(self):
+        self.assertIsNotNone(self.preprocessor)
+
+    def test_text_preprocess(self):
+        with self.assertRaises(TypeError):
+            preprocess = TextPreprocessor()
+            preprocess.preprocess("This is a test")
+
+    def test_preprocess(self):
+        input_text = "This is a test"
+        output_text = ['this', 'is', 'a', 'test']
+        self.assertEqual(self.preprocessor.preprocess(input_text), output_text)
+
+    def test_lowercase_equal(self):
         input_text = "This is a TEST"
         output_text = "this is a test"
         self.assertEqual(self.preprocessor.lowercase(input_text), output_text)
 
-    def text_lowercase_not_equal(self):
+    def test_lowercase_not_equal(self):
         input_text = "This is a TEST"
         output_text = "This is a TEST"
         self.assertNotEqual(self.preprocessor.lowercase(input_text), output_text)
