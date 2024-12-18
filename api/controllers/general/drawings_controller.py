@@ -13,14 +13,12 @@ class DrawingsController(APIView):
 
     @xframe_options_exempt
     def get(self, request):
-        # Check the path to decide functionality
-        print("here sss")
         if request.path.endswith("/drawings/"):
             return self.retrieve_drawing(request)
         elif request.path.endswith("/posts/"):
             return self.retrieve_comments_drawing(request)
         else:
-            return HttpResponse("Invalid endpoint.", status=404)
+            return HttpResponse("Invalid endpoint.", status=404, content_type="text/plain")
 
     def retrieve_drawing(self, request):
         # Retrieve the 'name' query parameter
