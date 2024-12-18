@@ -3,13 +3,23 @@ source = .
 omit =
     */migrations/*
     manage.py
+    */settings.py
+    */tests/*
+    */venv/*
+    */admin.py
+    */apps.py
+    */__init__.py
+    */urls.py
+    */wsgi.py
+    */asgi.py
+    */settings.py
+    */tests.py
 
 
     */sentiment_analysis_main.py
     */config_loader.py
     */logger.py
     */performance_tracker.py
-
 [report]
 exclude_lines =
     pragma: no cover
