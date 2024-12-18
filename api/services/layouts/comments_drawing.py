@@ -59,4 +59,5 @@ class CommentsDrawing(Layout):
             with open(html_file, "w+") as out:
                 out.write(nt.html)
         except Exception as e:
-            print(e)
+            print(f"An error occurred: {e}")
+            raise
