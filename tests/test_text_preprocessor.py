@@ -80,3 +80,20 @@ class TopicModelingPreprocessorTest(unittest.TestCase):
         input_text = "This is a test"
         output_text = "This is a test"
         self.assertNotEqual(self.preprocessor.lemmatize_text(input_text), output_text)
+
+    def test_lemmatize_with_allowed_postags(self):
+        input_text = "This is a test"
+        output_text = "test"
+        allowed_postags = ["VERB", "NOUN"]
+        self.assertEqual(
+            self.preprocessor.lemmatize_text(input_text, allowed_postags=allowed_postags),
+            output_text
+        )
+
+    def test_empty_input(self):
+        self.assertEqual(self.preprocessor.lowercase(""), "")
+        self.assertEqual(self.preprocessor.remove_urls(""), "")
+        self.assertEqual(self.preprocessor.remove_mentions(""), "")
+        self.assertEqual(self.preprocessor.hashtag_extraction(""), "")
+        self.assertEqual(self.preprocessor.expand_contractions(""), "")
+        self.assertEqual(self.preprocessor.lemmatize_text(""), "")
