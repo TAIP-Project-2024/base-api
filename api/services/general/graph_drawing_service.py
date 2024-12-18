@@ -11,6 +11,7 @@ from api.repositories.general.graph_repository import GraphRepository
 from api.services.general.graph_service import GraphService
 from api.services.graph_factory import GraphFactory
 from api.services.layouts.comments_drawing import CommentsDrawing
+from api.services.layouts.community_stars import CommunityStars
 
 
 class GraphDrawingService:
@@ -99,5 +100,10 @@ class GraphDrawingService:
 #
 # buffer  = GraphDrawingService().create_or_retrieve_comments_drawing("1hfkiuh", "some_post")
 # print(type(buffer))
+
+# GraphDrawingService().generate_drawing(CommunityStars("Politics"), NetworkxGraphImpl('latest_posts3'), 'LatestPosts')
+# GraphDrawingService().save_graph_drawing(GraphDrawing(NetworkxGraphImpl('latest_posts3'), name="LatestPosts"), False)
+
+
 
 
