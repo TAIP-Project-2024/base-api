@@ -10,7 +10,7 @@ class TestPostsRepository(unittest.TestCase):
     def setUp(self):
         self.client = MongoClient()
         self.db = self.client["test_db"]
-        self.posts_collection = self.db.posts
+        self.posts_collection = self.db.reddit_posts
         self.posts_repository = PostsRepository(self.db)
         self.test_post_1 = {
             "_id": ObjectId(),

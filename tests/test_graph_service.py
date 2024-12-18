@@ -11,7 +11,7 @@ class GraphServiceTests(TestCase):
     def setUp(self):
         self.graph_service = GraphService()
         self.graph = Graph("../resources/graphs/marvel2.graphml")
-        self.graph_service.save_graph(self.graph)
+        self.graph_service.save_graph(self.graph, delete_local=True)
         self.reactions = [{"user": "user1", "comment": "I like it!", "sentiment": 0.7},
                      {"user": "user2", "comment": "I like it a bit!", "sentiment": 0.6},
                      {"user": "user3", "comment": "I used to like it", "sentiment": 0.5},

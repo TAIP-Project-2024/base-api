@@ -28,7 +28,6 @@ omit =
     */config_loader.py
     */logger.py
     */performance_tracker.py
-
 [report]
 exclude_lines =
     pragma: no cover

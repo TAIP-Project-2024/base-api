@@ -170,8 +170,4 @@ class GraphFactory:
 # g = GraphFactory.topics_similarity_based_graph('latest_posts3', posts, similarities)
 # g.save()
 # GraphService().save_graph(NetworkxGraphImpl('latest_posts3'), False)
-#
-# GraphDrawingService().save_graph_drawing('latest_posts', GraphDrawingService().generate_drawing(CommunityStars(), NetworkxGraphImpl('latest_posts'), 'lates_posts.html'), False)
-#
-
 
