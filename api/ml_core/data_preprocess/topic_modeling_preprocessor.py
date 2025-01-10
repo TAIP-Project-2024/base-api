@@ -3,7 +3,6 @@ import string
 
 import gensim
 
-from api.ml_core.data_preprocess.sentiment_analysis_preprocessor import SentimentAnalysisPreprocessor
 from api.ml_core.data_preprocess.text_preprocessor import TextPreprocessor
 
 class TopicModelingPreprocessor(TextPreprocessor):
@@ -68,12 +67,8 @@ class TopicModelingPreprocessor(TextPreprocessor):
         text = self.remove_mentions(text)
         text = self.remove_urls(text)
         text = self.hashtag_extraction(text)
-        text = self.emoji_elimination(text)
-        text = self.lowercase(text)
-        text = self.remove_punctuation(text)
         text = self.expand_contractions(text)
-
-        text = self.lemmatize_text(text, allowed_postags = ['NOUN', 'ADJ', 'VERB', 'ADV'])
+        text = self.lemmatize_text(text, allowed_postags=['NOUN', 'ADJ', 'VERB', 'ADV'])
         tokens = self.gen_words(text)
 
         return tokens
@@ -81,13 +76,9 @@ class TopicModelingPreprocessor(TextPreprocessor):
 
 # Example usage
 if __name__ == "__main__":
-    sentiment_preprocessor = SentimentAnalysisPreprocessor()
     topic_preprocessor = TopicModelingPreprocessor()
 
-    sample_text = "Here's an example text! Visit https://example.com for more info. #exampleforhashtags"
-
-    print("Sentiment Analysis Preprocessed Text:")
-    print(sentiment_preprocessor.preprocess(sample_text, remove_stopwords=False, lemmatize=False))
+    sample_text = "Here's an you're stupid examples text! Visit https://example.com for more info 👍. #exampleforhashtags"
 
     print("\nTopic Modeling Preprocessed Text:")
     print(topic_preprocessor.preprocess(sample_text))
