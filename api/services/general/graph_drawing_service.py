@@ -98,6 +98,10 @@ class GraphDrawingService:
                 if name not in keep_set:
                     dr.delete(name)
 
+    def get_all_drawing_names(self):
+        with DrawingRepository() as dr:
+            return dr.get_all_names()
+
     def create_or_retrieve_comments_drawing(self, topic, post_id, post_text):
         """
         Given a post id,
@@ -143,7 +147,7 @@ class GraphDrawingService:
         post_ids = []
         for p in reddit_posts:
             post_ids.append(p["_id"])
-            posts[p["_id"]] = {'title': p['title'], 'url': p['url']}
+            posts[p["_id"]] = {'title': p['title'], 'url': p['url'], 'label': " "}
             post_texts.append(p['title'])
 
         model = SentenceTransformer('all-MiniLM-L6-v2')
@@ -190,5 +194,4 @@ class GraphDrawingService:
             graph_service.clear_comments_graphs_for_topic(topic)
 
 
-GraphDrawingService().process_topic('politics', clear_all = True)
 
