@@ -9,4 +9,3 @@ class PostsService:
         with PostsRepository() as pr:
             return pr.get_by_topic(topic)
 
-res = PostsService().get_topic_posts('politics')

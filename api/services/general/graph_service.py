@@ -8,29 +8,6 @@ from api.repositories.general.graph_repository import GraphRepository
 
 class GraphService:
 
-    def generate_nxgraph_from_metadata(self, metadata):
-        """
-        Will generate a graph connecting all reactions
-        to the original post.
-        Will have n+1 nodes, n - #reactions.
-        todo rethink the metadata structure
-        todo change nx.DiGrpah with a NetworkxDiGraphImpl own object
-        """
-        nodes = metadata['reactions']
-        G = nx.DiGraph()
-        G.add_node(0,
-                                label = metadata['post'],
-                                color = "blue",
-                                title = metadata['author'])
-        for i, node in enumerate(nodes):
-            i = i + 1
-            G.add_node(i, label = node["user"],
-                       title = node["comment"],
-                       color = self.compute_color(node["sentiment"]))
-            G.add_edge(i, 0)
-        nx.write_graphml(G, "resources/graphs/example.graphml")
-        return G
-
     def save_graph(self, graph, delete_local):
         if not graph.saved_locally:
             graph.save()
@@ -59,13 +36,25 @@ class GraphService:
         with GraphRepository() as graph_repo:
             return graph_repo.get(name)
 
-    def clear_comments_graphs(self):
-        regex_pattern = '^post#[a-z0-9]{7}CommentsGraph$'
+    def clear_comments_graphs_for_topic(self, topic):
+        regex_pattern = '^post#[a-z0-9]{7}CommentsGraph'+f'\\[{topic}\\]'+'$'
+
         with GraphRepository() as gr:
             comments_graphs = gr.find_by_regex(regex_pattern)
             ids = [g._id for g in comments_graphs]
             if (len(ids) > 0):
                 gr.delete_from_list(ids)
+
+    def delete_all_except(self, keep):
+        """
+        deletes all graphs except those in the keep list
+        """
+        keep_set = set(keep)
+        with GraphRepository() as gr:
+            all_graphs = gr.get_all_names()
+            for name in all_graphs:
+                if name not in keep_set:
+                    gr.delete(name)
 
     def fetch_graph_locally(self, name):
         with GraphRepository() as graph_repo:
@@ -98,4 +87,3 @@ class GraphService:
 # marvel_graph = NetworkxDiGraphImpl('marvel')
 # GraphService().save_graph(marvel_graph, False)
 # GraphService().clear_comments_graphs()
-

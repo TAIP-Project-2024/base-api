@@ -19,8 +19,11 @@ class Layout:
         """
         return None
 
-    def load_interactions(self, nt):
-
+    def load_interactions(self, nt, topic):
+        """
+        This event listener sends the information about a node
+        being pressed to the parent window, to propagate information
+        """
         ops = """        "hover": true,"""
         anchor = """ "dragNodes": true,"""
         script = \
@@ -45,7 +48,8 @@ class Layout:
                     type: "nodeClick",  
                     nodeId: nodeId,      
                     url: node.url || "",  
-                    title: node.title
+                    title: node.title,
+                    topic: "{topic}"
                 }};
                 window.parent.postMessage(message, "*");
             }}

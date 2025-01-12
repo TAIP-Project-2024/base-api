@@ -5,7 +5,7 @@ from api.services.layouts.Layout import Layout
 
 
 class CommunityStars(Layout):
-    def __init__(self, topic, physics = False, height = 1000, width = 1000, community_weight = 1,
+    def __init__(self, topic, physics = False, height = '100vh', width = '100vw', community_weight = 1,
                  node_size = 10, hub_node_size = 10, topic_node_size = 30, topic_hub_weight = 3, n = 1000,
                  bgcolor = 'white'):
         """
@@ -85,7 +85,7 @@ class CommunityStars(Layout):
             nt.from_nx(graph)
             if not self.physics:
                 nt.toggle_physics(False)
-            self.load_interactions(nt)
+            self.load_interactions(nt, self.topic)
             # process hover feature
             with open(html_file, "w+") as out:
                 out.write(nt.html)
@@ -96,10 +96,7 @@ class CommunityStars(Layout):
 
 # cs = CommunityStars(
 #     topic = "TOPIC PLACEHOLDER",
-#     width = '100vw',
-#     height = '100vh',
 #     bgcolor = 'ECEFF1',
-#     n = 800
-# )
+#     n = 800)
 # gd = GraphDrawing(NetworkxGraphImpl('40_random_posts'), '40_communities_stars')
 # gd.draw_as(cs)
