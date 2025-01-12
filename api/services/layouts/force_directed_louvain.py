@@ -4,13 +4,12 @@ import networkx as nx
 
 from pyvis.network import Network
 
-from api.models.domain.graph_drawing import GraphDrawing
-from api.models.domain.networkx_graph_impl import NetworkxGraphImpl
 from api.services.layouts.Layout import Layout
+from api.services.layouts.design_config import ForceDirectedLouvain_kwargs
 
 
 class ForceDirectedLouvain(Layout):
-    def __init__(self, threshold, node_size = 15, height = 1000, width = 1000,
+    def __init__(self, topic, threshold, node_size = 15, height = '100vh', width = '100vw',
                  edge_weight_in_drawing = 1, hover_size = 5, n = 1000,
                  bgcolor = 'white'):
         """
@@ -18,6 +17,7 @@ class ForceDirectedLouvain(Layout):
 
         """
         self.threshold = threshold
+        self.topic = topic
         self.node_size = node_size
         self.height = height
         self.width = width
@@ -47,17 +47,16 @@ class ForceDirectedLouvain(Layout):
         try:
             nt.from_nx(graph)
             nt.toggle_physics(False)
-            self.load_interactions(nt)
+            self.load_interactions(nt, self.topic)
             with open(html_file, "w+") as out:
                 out.write(nt.html)
 
         except Exception as e:
             print(f"An error occurred: {e}")
             raise
+
 #
 # gd = GraphDrawing(NetworkxGraphImpl('40_random_posts'), '40_communities_hairball')
 # gd.draw_as(ForceDirectedLouvain(0,
-#                                 width = '100vw',
-#                                 height = '100vh',
-#                                 bgcolor = '#ECEFF1',
+# #                                 bgcolor = '#ECEFF1',
 #                                 n = 800))
