@@ -47,7 +47,7 @@ class TopicModelingPreprocessor(TextPreprocessor):
         return data.translate(str.maketrans('', '', string.punctuation))
 
     @staticmethod
-    def gen_words(data):
+    def tokenize(data):
         """
         Tokenizes the input text into lowercase words using Gensim's tokenizer.
 

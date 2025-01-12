@@ -11,6 +11,7 @@ from api.repositories.general.graph_repository import GraphRepository
 from api.services.general.graph_service import GraphService
 from api.services.graph_factory import GraphFactory
 from api.services.layouts.comments_drawing import CommentsDrawing
+from api.services.layouts.community_stars import CommunityStars
 
 
 class GraphDrawingService:
@@ -64,15 +65,31 @@ class GraphDrawingService:
         with DrawingRepository() as dr:
             return dr.check_exists(name)
 
+    def clear_comments_drawings(self):
+        regex_pattern = '^post#[a-z0-9]{7}CommentsGraphDrawing$'
+        with DrawingRepository() as dr:
+            comments_drawings = dr.find_by_regex(regex_pattern)
+            ids = [d._id for d in comments_drawings]
+            if (len(ids) > 0):
+                dr.delete_from_list(ids)
+
+
     def create_or_retrieve_comments_drawing(self, post_id, post_text):
-        drawing_name = f"{post_id}CommentsGraphDrawing"
+        """
+        Given a post id,
+            if a graph drawing representing the comments for the post exists in the db, returns it
+            if such a drawing does not exist, creates it. If the underlying graph structure does not
+            exist as well, creates it first. Else, retrieves it from te db.
+
+        """
+        drawing_name = f"post#{post_id}CommentsGraphDrawing"
         if self.check_exists(drawing_name):
             res = self.find_drawing_by_name(drawing_name)
-            print("new graph")
+            print("[SERVER LOG] existing comments graph drawing")
             return res
         else:
-            print("existing_graph")
-            graph_name=f"{post_id}CommentsGraph"
+            print("[SERVER LOG] new comments graph")
+            graph_name=f"post#{post_id}CommentsGraph"
             gs = GraphService()
             if gs.check_exists(graph_name):
                 gs.fetch_graph_locally(graph_name)
@@ -95,9 +112,14 @@ class GraphDrawingService:
             with open(gd.html_file, "rb") as f:
                 return BytesIO(f.read())
 
-#
-#
+
 # buffer  = GraphDrawingService().create_or_retrieve_comments_drawing("1hfkiuh", "some_post")
 # print(type(buffer))
+
+# GraphDrawingService().generate_drawing(CommunityStars("Politics"), NetworkxGraphImpl('latest_posts3'), 'LatestPosts')
+# GraphDrawingService().save_graph_drawing(GraphDrawing(NetworkxGraphImpl('latest_posts3'), name="LatestPosts"), False)
+
+# GraphDrawingService().clear_comments_drawings()
+
 
 

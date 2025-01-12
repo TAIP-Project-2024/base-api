@@ -1,6 +1,5 @@
 
 from dotenv import load_dotenv
-from BaseAPI.settings import BASE_DIR
 
 import os
 from pymongo import MongoClient
@@ -10,8 +9,6 @@ load_dotenv('.env')
 DATABASE_NAME = os.environ.get("MONGO_DB_NAME")
 MONGO_URI = os.environ.get("MONGO_URI")
 COLLECTION_NAME = "reddit_comments"
-print(DATABASE_NAME)
-print(MONGO_URI)
 # Define database and collection names
 
 class CommentsRepository:

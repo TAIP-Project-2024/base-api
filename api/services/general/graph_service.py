@@ -59,6 +59,14 @@ class GraphService:
         with GraphRepository() as graph_repo:
             return graph_repo.get(name)
 
+    def clear_comments_graphs(self):
+        regex_pattern = '^post#[a-z0-9]{7}CommentsGraph$'
+        with GraphRepository() as gr:
+            comments_graphs = gr.find_by_regex(regex_pattern)
+            ids = [g._id for g in comments_graphs]
+            if (len(ids) > 0):
+                gr.delete_from_list(ids)
+
     def fetch_graph_locally(self, name):
         with GraphRepository() as graph_repo:
             file_buffer = graph_repo.get(name)
@@ -89,5 +97,5 @@ class GraphService:
 #
 # marvel_graph = NetworkxDiGraphImpl('marvel')
 # GraphService().save_graph(marvel_graph, False)
-# GraphService().fetch_graph_locally('marvel')
+# GraphService().clear_comments_graphs()
 

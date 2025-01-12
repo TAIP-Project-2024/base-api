@@ -37,8 +37,9 @@ class LSTMSentimentModel(SentimentModelInterface):
         """
         super().__init__()
 
-        self.tokenizer = load_tokenizer("models/tokenizer.pkl")
-        self.model = load_lstm_model("models/lstm_model.pth", LSTMModel, np.zeros((258666, 300)), 256)
+        self.tokenizer = load_tokenizer("api/ml_core/sentiment_analysis/models/tokenizer.pkl")
+        self.model = load_lstm_model("api/ml_core/sentiment_analysis/models/lstm_model.pth",
+                                     LSTMModel, np.zeros((258666, 300)), 256)
         self.max_seq_len = 72
 
     def analyze(self, texts):

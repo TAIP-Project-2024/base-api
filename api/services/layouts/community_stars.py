@@ -1,11 +1,6 @@
-import os
-
 import networkx as nx
-
 from pyvis.network import Network
 
-from api.models.domain.graph_drawing import GraphDrawing
-from api.models.domain.networkx_graph_impl import NetworkxGraphImpl, NetworkxDiGraphImpl
 from api.services.layouts.Layout import Layout
 
 
@@ -34,7 +29,8 @@ class CommunityStars(Layout):
         self.n = n
         self.bgcolor = bgcolor
 
-    def describe_communities(self, graph):
+    @staticmethod
+    def describe_communities(graph):
         graph = graph.graph
         communities = {}
 
@@ -94,7 +90,8 @@ class CommunityStars(Layout):
             with open(html_file, "w+") as out:
                 out.write(nt.html)
         except Exception as e:
-            print(e)
+            print(f"An error occurred: {e}")
+            raise
 
 
 # cs = CommunityStars(

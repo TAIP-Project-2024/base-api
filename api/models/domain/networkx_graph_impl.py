@@ -51,7 +51,3 @@ class NetworkxGraphImpl(Graph):
 
     def clear_graph(self):
         self.graph = nx.Graph()
-
-# g = NetworkxDiGraphImpl('marvel')
-# print(g.saved_locally)
-# print(g.graphml_file)

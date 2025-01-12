@@ -69,6 +69,17 @@ class GraphRepository:
             return True
         return False
 
+    def delete_from_list(self, list):
+        """
+        Deletes from a list of drawing id's
+        """
+        for id in list:
+            self.fs.delete(id)
+
+    def find_by_regex(self, regex):
+        query = {"filename" : {"$regex" : regex}}
+        return list(self.fs.find(query))
+
     def __enter__(self):
         return self
 
