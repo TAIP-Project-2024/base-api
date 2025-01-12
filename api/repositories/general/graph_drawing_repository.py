@@ -11,9 +11,6 @@ from api.repositories.general.file_repository import FileRepository
 from api.repositories.general.security_aop import logging_and_security
 
 load_dotenv('.env')
-DATABASE_NAME = os.environ.get("MONGO_DB_NAME")
-MONGO_URI = os.environ.get("MONGO_URI")
-COLLECTION_NAME = "Drawings"
 
 
 class DrawingRepository(FileRepository):
