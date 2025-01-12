@@ -69,7 +69,7 @@ class TopicModelingPreprocessor(TextPreprocessor):
         text = self.hashtag_extraction(text)
         text = self.expand_contractions(text)
         text = self.lemmatize_text(text, allowed_postags=['NOUN', 'ADJ', 'VERB', 'ADV'])
-        tokens = self.gen_words(text)
+        tokens = self.tokenize(text)
 
         return tokens
 
