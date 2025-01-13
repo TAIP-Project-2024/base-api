@@ -1,7 +1,12 @@
 import networkx as nx
 from pyvis.network import Network
 
+from BaseAPI.settings import BASE_DIR
+from api.ml_core.topic_modeling.lda_model import LDAModel
+from api.models.domain.graph_drawing import GraphDrawing
+from api.models.domain.networkx_graph_impl import NetworkxGraphImpl
 from api.services.layouts.Layout import Layout
+from api.services.layouts.design_config import topic_list
 
 
 class CommunityStars(Layout):
@@ -31,20 +36,34 @@ class CommunityStars(Layout):
 
     @staticmethod
     def describe_communities(graph):
+        lda_model = LDAModel()
+        lda_model.load_model()
+
         graph = graph.graph
-        communities = {}
+        communities = {
+            "posts": {},
+            "description_indices": {}
+        }
 
         for node in graph.nodes(data = True):
             node = node[1]
             com = node['community']
-            if com in communities:
-                communities[com].append(node['title'])
+            if com in communities['posts']:
+                communities['posts'][com].append(node['title'])
             else:
-                communities[com] = []
-        # todo apply ML methods to describe many posts in a phrase
-        # todo use an external api and store it in summaries
-        # dummy:
-        return {i : f'description of the community {i}' for i in communities.keys()}
+                communities['posts'][com] = []
+        for (com, posts) in communities['posts'].items():
+            topics_freq = {}
+            for post in posts:
+                probability_distro = lda_model.analyze(post)
+                topic = max(probability_distro, key = lambda x: x[1])
+                if topic in topics_freq:
+                    topics_freq[topic] += 1
+                else:
+                    topics_freq[topic] = 0
+            communities['description_indices'][com] = max(topics_freq, key=topics_freq.get)[0]
+
+        return {i : topic_list[communities['description_indices'][i]] for i in communities['description_indices'].keys()}
 
     def apply(self, graph, html_file):
         community_summaries = self.describe_communities(graph)
@@ -95,8 +114,9 @@ class CommunityStars(Layout):
 
 
 # cs = CommunityStars(
-#     topic = "TOPIC PLACEHOLDER",
+#     topic = "politics",
 #     bgcolor = 'ECEFF1',
 #     n = 800)
-# gd = GraphDrawing(NetworkxGraphImpl('40_random_posts'), '40_communities_stars')
+# gd = GraphDrawing(NetworkxGraphImpl('politics_posts_sim_graph_13-01-2025-23-16-27'), 'test')
 # gd.draw_as(cs)
+#

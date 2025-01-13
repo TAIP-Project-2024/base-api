@@ -2,13 +2,16 @@ import os.path
 
 import gensim
 from gensim.corpora import MmCorpus
-from gensim.models import LdaModel
+
 
 import langid
+from gensim.models import LdaModel
 
+from BaseAPI.settings import BASE_DIR
 from api.ml_core.data_preprocess.corpus_processor import CorpusProcessor
 from api.ml_core.data_preprocess.topic_modeling_preprocessor import TopicModelingPreprocessor
 from api.ml_core.topic_modeling.topic_model_interface import TopicModelInterface
+from api.services.layouts.design_config import model_filename_cfg, mmcorpus_filename_cfg
 
 
 class LDAModel(TopicModelInterface):
@@ -28,7 +31,7 @@ class LDAModel(TopicModelInterface):
         self.corpus = None
         self.model = None
         self.preprocessor = TopicModelingPreprocessor()
-        self.model_filename = "saved_models/lda_model.model"
+        self.model_filename = model_filename_cfg
 
     def set_num_topics(self, num_topics):
         """
@@ -74,7 +77,7 @@ class LDAModel(TopicModelInterface):
         if self.model is None:
             print("Training LDA model...")
             self.id2word = id2word
-            self.corpus = MmCorpus.serialize("saved_models/temp_corpus.mm", batch_corpus)
+            self.corpus = MmCorpus.serialize(mmcorpus_filename_cfg, batch_corpus)
             self.model = LdaModel(corpus=batch_corpus,
                                   id2word=id2word,
                                   num_topics=self.num_topics,
@@ -122,8 +125,8 @@ class LDAModel(TopicModelInterface):
                 self.id2word = gensim.corpora.Dictionary.load(self.model_filename + ".id2word")
             else:
                 raise FileNotFoundError("Dictionary file not found!")
-            if os.path.exists("saved_models/temp_corpus.mm"):
-                self.corpus = MmCorpus("saved_models/temp_corpus.mm")
+            if os.path.exists(mmcorpus_filename_cfg):
+                self.corpus = MmCorpus(mmcorpus_filename_cfg)
             else:
                 raise FileNotFoundError("Corpus file not found!")
             print("Loaded LDA model!")

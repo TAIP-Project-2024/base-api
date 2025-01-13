@@ -75,6 +75,7 @@ class GraphFactory:
             n[group] = 0
 
         for entry in comments:
+            print(entry)
             sentiment = round(entry["sentiment"])
             group = groups[sentiment]
             label = "score " + str(entry["score"])

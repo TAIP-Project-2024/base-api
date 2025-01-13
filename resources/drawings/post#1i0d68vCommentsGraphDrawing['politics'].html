@@ -1,0 +1,178 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100vh;
+                 height: 100vw;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "yellow", "id": "post", "label": "post", "shape": "dot", "size": 25, "title": "post_text", "url": "url", "x": 96.29172791657855, "y": 228.06027024054427}, {"color": "gray", "id": "group_neutral", "label": "Neutral", "shape": "dot", "size": 40, "x": 399.027205636514, "y": 421.41852007982027}, {"color": "green", "id": "group_positive", "label": "Positive", "shape": "dot", "size": 31, "x": -153.16933201191065, "y": 547.8700286585346}, {"color": "red", "id": "group_negative", "label": "Negative", "shape": "dot", "size": 69, "x": -116.93414043829291, "y": -160.2858604174391}, {"group": "group_neutral", "hidden": true, "id": "m6wuiwe", "label": "score 1", "shape": "dot", "size": 15, "title": "\nAs a reminder, this subreddit [is for civil discussion.](/r/politics/wiki/index#wiki_be_civil)\n\nIn general, be courteous to others. Debate/discuss/argue the merits of ideas, don\u0027t attack people. Personal insults, shill or troll accusations, hate speech, any suggestion or support of harm, violence, or death, and other rule violations can result in a permanent ban. \n\nIf you see comments in violation of our rules, please report them.\n\n For those who have questions regarding any media outlets being posted on this subreddit, please click [here](https://www.reddit.com/r/politics/wiki/approveddomainslist) to review our details as to our approved domains list and outlet criteria.\n \n We are actively looking for new moderators.  If you have any interest in helping to make this subreddit a place for quality discussion, please fill out [this form](https://docs.google.com/forms/d/1y2swHD0KXFhStGFjW6k54r9iuMjzcFqDIVwuvdLBjSA).\n \n\n***\n\n\n*I am a bot, and this action was performed automatically. Please [contact the moderators of this subreddit](/message/compose/?to=/r/politics) if you have any questions or concerns.*", "x": 676.9499961198621, "y": 469.77512580691644}, {"group": "group_neutral", "hidden": true, "id": "m6wuuvy", "label": "score 4421", "shape": "dot", "size": 15, "title": "She has herself convinced LA celebrities can control Florida hurricanes, and is confused why they would not control the weather to protect their houses in LA!", "x": 666.5727103462036, "y": 589.3544260887601}, {"group": "group_neutral", "hidden": true, "id": "m6wwrfr", "label": "score 100", "shape": "dot", "size": 15, "title": "Maybe the Jewish Space Lasers could be rented for the job.", "x": 558.3167697066087, "y": 652.150458911791}, {"group": "group_neutral", "hidden": true, "id": "m6wv3hf", "label": "score 379", "shape": "dot", "size": 15, "title": "The wise are instructed by reason, average minds by experience, the stupid by necessity and the brute by instinct. \n\n- Marcus Tullius Cicero", "x": 469.9837201323056, "y": 747.0280610952942}, {"group": "group_neutral", "hidden": true, "id": "m6wvzk7", "label": "score 50", "shape": "dot", "size": 15, "title": "So super powerful elite who lives in the palisades that can use weather manipulation is somehow not using it on themselves? Interesting\u00a0", "x": 293.2957093889707, "y": 789.0237687863091}, {"group": "group_neutral", "hidden": true, "id": "m6wxu59", "label": "score 8", "shape": "dot", "size": 15, "title": "Missing!\u00a0\n\n\nOne brain\n\n\nReward 1 doll hair", "x": 351.151623167556, "y": 682.1987956326284}, {"group": "group_neutral", "hidden": true, "id": "m6x2v5o", "label": "score 6", "shape": "dot", "size": 15, "title": "Woman yells at cloud.", "x": 185.42534919584278, "y": 741.4338196816684}, {"group": "group_neutral", "hidden": true, "id": "m6x00sm", "label": "score 3", "shape": "dot", "size": 15, "title": "Can we manipulate her brain to the reboot command, restore from factory settings", "x": 751.0539412030079, "y": 206.98803787896867}, {"group": "group_neutral", "hidden": true, "id": "m6xhla6", "label": "score 3", "shape": "dot", "size": 15, "title": "https://www.reddit.com/r/trumptweets/s/mQeNo5meUN\n\nI saw this one coming a few days ago.", "x": 680.7568260585382, "y": 294.57050654018985}, {"group": "group_neutral", "hidden": true, "id": "m6xopag", "label": "score 1", "shape": "dot", "size": 15, "title": "I\u2019m not sure why Biden hasn\u2019t just immediately appointed her Wildfire Czar and asked her to make it happen and save LA.", "x": 770.4920768832272, "y": 379.27016601779775}, {"group": "group_negative", "hidden": true, "id": "m6wxlgt", "label": "score 1813", "shape": "dot", "size": 15, "title": "How does she keep getting elected?", "x": 113.95885529987702, "y": -361.7253104678323}, {"group": "group_negative", "hidden": true, "id": "m6wxq95", "label": "score 1261", "shape": "dot", "size": 15, "title": "She then proceeded to lumber around in a circle and chuck  her feces at onlookers\u2026", "x": 178.49479170055287, "y": -12.82155039044848}, {"group": "group_negative", "hidden": true, "id": "m6wvame", "label": "score 1528", "shape": "dot", "size": 15, "title": "MTG is the future of the GOP. A few election cycles from now and she won\u2019t even stand out.", "x": 101.92495399776331, "y": 50.23721215834481}, {"group": "group_negative", "hidden": true, "id": "m6x05fm", "label": "score 256", "shape": "dot", "size": 15, "title": "All those whackos consider these scenarios more plausible than climate change, can tell you what you need to know about the levels of stupidity of them and their supporters.", "x": 96.41638157299276, "y": -111.71772869099247}, {"group": "group_negative", "hidden": true, "id": "m6wzxvv", "label": "score 147", "shape": "dot", "size": 15, "title": "Ok, Marge. I\u0027ll bite the insanity cookie.\n\nYou call for officials to manipulate weather. Aren\u0027t you an official too? Who exactly controls the weather? Start naming names or shut the fuck up.", "x": 0.24931296121194738, "y": -15.347347911787338}, {"group": "group_negative", "hidden": true, "id": "m6wx0s2", "label": "score 214", "shape": "dot", "size": 15, "title": "Stop regurgitating what these idiots say. All they do is spout bullshit. The press needs to grey rock these asshats.", "x": -7.418586580697243, "y": 108.3530801069432}, {"group": "group_negative", "hidden": true, "id": "m6wwwnu", "label": "score 28", "shape": "dot", "size": 15, "title": "She should pound wet sand up her ass", "x": -94.27198266468955, "y": 166.11467078337674}, {"group": "group_negative", "hidden": true, "id": "m6wxrbr", "label": "score 29", "shape": "dot", "size": 15, "title": "She makes me wonder whether mental asylums should be on the menu again.", "x": -136.46390079030363, "y": 41.86478806318577}, {"group": "group_negative", "hidden": true, "id": "m6x5ou3", "label": "score 30", "shape": "dot", "size": 15, "title": "The democrats are so ineffective we can not trust them to administer simple government but also so powerful they can manipulate the weather.", "x": -184.06131214956548, "y": 184.61749377009644}, {"group": "group_negative", "hidden": true, "id": "m6x00mq", "label": "score 26", "shape": "dot", "size": 15, "title": "Isn\u0027t this from the Party that believes humans can\u0027t change the atmosphere?", "x": -276.33989268248433, "y": 180.10032998672017}, {"group": "group_negative", "hidden": true, "id": "m6xbzlu", "label": "score 11", "shape": "dot", "size": 15, "title": "Everyone who says, \u201cOnce Trump passes, the movement will continue, there are people lined up to take over MAGA\u2026\u201d\n\nThis is what\u2019s lined up. It\u2019s conspiratorial, glue sniffing, unabashedly greedy, diaper wearing morons in a line a mile long.", "x": -360.60080999628707, "y": 138.9007339529554}, {"group": "group_negative", "hidden": true, "id": "m6wzzml", "label": "score 9", "shape": "dot", "size": 15, "title": "This chick is dumb as rocks\u2026What an embarrassment!", "x": -261.35661351046315, "y": 66.17495551115778}, {"group": "group_negative", "hidden": true, "id": "m6x0fin", "label": "score 7", "shape": "dot", "size": 15, "title": "Just wait until it rains and the landslides start. That will be the \"deep state\" or Jews, or whomever controlling the weather to cause further tragedy. Could have sent rain during the fires, but sent it when the ground was vulnerable to slides.", "x": -274.2415118992433, "y": -86.87941719014553}, {"group": "group_negative", "hidden": true, "id": "m6wv1rn", "label": "score 27", "shape": "dot", "size": 15, "title": "MAGA = My Anger Goes Awry\n\nThese people are dumber than a bag of hammers.", "x": -431.13834619793704, "y": 80.43144231530087}, {"group": "group_negative", "hidden": true, "id": "m6wv7us", "label": "score 15", "shape": "dot", "size": 15, "title": "Forget about cloud seeding. How about seeding minerals and nutrients that are often linked to improved cognitive function and brain health to these idiots", "x": -482.49657028672254, "y": -10.035815907878355}, {"group": "group_negative", "hidden": true, "id": "m6x09y2", "label": "score 4", "shape": "dot", "size": 15, "title": "Well damn, Marjorie! I can\u0027t control the weather!", "x": -500.7700110522475, "y": -101.05754601067945}, {"group": "group_negative", "hidden": true, "id": "m6x0tb9", "label": "score 7", "shape": "dot", "size": 15, "title": "My God did her and RFK Jr touch craniums? \n\nShe has to have a brain worm to be this stupid.", "x": -378.8000078649184, "y": -10.011387538630713}, {"group": "group_negative", "hidden": true, "id": "m6xez54", "label": "score 5", "shape": "dot", "size": 15, "title": "\u003eIf there even were an opportunity to attempt cloud seeding at a scale that would impact the wildfires, it would require storms or cloud systems to seed. There are currently no significant storms or cloud systems in the area.\n\nEssentially, MTG is asking to seed non-existing clouds.  What an idiot.", "x": -401.25071565531823, "y": -157.77490402680667}, {"group": "group_negative", "hidden": true, "id": "m6xkqno", "label": "score 1", "shape": "dot", "size": 15, "title": "Isn\u2019t it kind of repetitious to say her name and unhinged in same sentence?", "x": -502.03498347482264, "y": -199.55665573126032}, {"group": "group_negative", "hidden": true, "id": "m6xo5o0", "label": "score 1", "shape": "dot", "size": 15, "title": "\u003eMarjorie Taylor Greene Launches Unhinged Call for Officials to Manipulate the Weather to Stop L.A. Wildfires\n\nAlthough I could make an argument against this level of ignorance in an elected government official, I won\u0027t because so many have made the same argument.\n\nBut, I cannot...after the sinking pit of horror has passed...keep from giggling.  I must admit to amused astonishment that some folks so willingly--***and publicly***--declare their profound ignorance.\n\nSome things are so pathetically bad, you just have to laugh...\n\nFor those who argue that Homo sapiens is an intelligent species, I nominate MTG as a counter argument.", "x": -469.66723798344276, "y": -283.24432650801805}, {"group": "group_negative", "hidden": true, "id": "m6yfth4", "label": "score 1", "shape": "dot", "size": 15, "title": "Wait\u2026 I always thought her saying the weather was controlled by democrats was just a political hit/lie for the election. Does this stupid bitch really think democrats legitimately control the weather??? Does she sometimes forget how to breathe???", "x": -161.98986325593415, "y": -329.31779757780527}, {"group": "group_negative", "hidden": true, "id": "m6yiutz", "label": "score 1", "shape": "dot", "size": 15, "title": "America is made up of people across the entire spectrum of intelligence. So she does represent some of those out there. They too believe what she believes and it\u0027s nuts.\n\n# \u201cThink of how stupid the average person is, and realize half of them are stupider than that.\u201d\n\n\u2015\u00a0George Carlin", "x": -319.044151688794, "y": -252.14392101850441}, {"group": "group_negative", "hidden": true, "id": "m6yxu4c", "label": "score 1", "shape": "dot", "size": 15, "title": "The Republicans really scraped the bottom of the barrel with Greene.", "x": -431.2937567444596, "y": -356.91518315312265}, {"group": "group_negative", "hidden": true, "id": "m6x1dm5", "label": "score 5", "shape": "dot", "size": 15, "title": "My brain rejects the premise that she truly believes this, it\u0027s too insane that I just can\u0027t accept it.\n\n  \nPart of me thinks she\u0027s some kind of conspiracy theory Cyrano de Bergerac where she\u0027s got some even more insane conspiracy theorist telling her what to say.", "x": -380.437189030268, "y": -432.88557321391244}, {"group": "group_negative", "hidden": true, "id": "m6x5ji3", "label": "score 5", "shape": "dot", "size": 15, "title": "Used to be Republicans would whisper and laugh at the village idiot, now they elect them.", "x": -291.6091858704394, "y": -375.143320305594}, {"group": "group_negative", "hidden": true, "id": "m6x9m7a", "label": "score 4", "shape": "dot", "size": 15, "title": "This is what happens when you gut public education for decades", "x": -296.089310301289, "y": -488.73033370766547}, {"group": "group_negative", "hidden": true, "id": "m6xbuzw", "label": "score 5", "shape": "dot", "size": 15, "title": "What a fucking national embarrassment that this person is in a position of authority.\u00a0", "x": -211.1887339961943, "y": -529.6297422625721}, {"group": "group_negative", "hidden": true, "id": "m6xc30w", "label": "score 4", "shape": "dot", "size": 15, "title": "I thought she said humans can\u0027t control the weather and that\u0027s why climate change is a hoax.", "x": -100.68157389991082, "y": -544.7772956277553}, {"group": "group_negative", "hidden": true, "id": "m6xc6ij", "label": "score 4", "shape": "dot", "size": 15, "title": "MTG is begging the Democrats for help.\n\nMust be getting chilly in hell.", "x": -8.148922414276685, "y": -528.9495464670586}, {"group": "group_negative", "hidden": true, "id": "m6x68gl", "label": "score 3", "shape": "dot", "size": 15, "title": "Insert the \u003cIf those kids could read\u003e meme. \n\nFacts doesn\u0027t matter anymore. Weaponizing stupidity is the new Brawndo", "x": -147.64442704040235, "y": -453.9400314861977}, {"group": "group_negative", "hidden": true, "id": "m6xc5kr", "label": "score 3", "shape": "dot", "size": 15, "title": "Just stop living, building, or rebuilding in government designated Very High Fire Hazard Severity Zones. These areas are identified as high-risk for a reason, they are inherently prone to wildfires due to their natural conditions. Fires in these zones aren\u2019t rare or unpredictable, they are an inevitability. When people choose to live there, they are knowingly putting themselves in harm\u2019s way and creating a financial burden for everyone else. Public infrastructure like roads, water systems, and utilities isn\u2019t likely to be covered by insurance, and taxpayers are left to pick up the tab. In 2022, the gap between total disaster costs and what insurance covered was $145 billion, much of which was for rebuilding public resources in high-risk areas. This cycle of destruction and rebuilding is irresponsible, unsustainable, and unfair to those who make safer, more logical choices about where to live.\n\nI\u0027m not saying people can\u2019t take risks or live wherever they choose, but they need to take responsibility for those decisions. If someone wants to live in a Very High Fire Hazard Zone, they should do so at their own risk, without expecting government subsidies or taxpayer-funded bailouts when the inevitable happens. The same goes for new developments. These zones shouldn\u2019t be expanded or further built upon, and local planning boards should prioritize safety by restricting development in these areas. There are plenty of safer places to live that don\u2019t require massive public expenditures every time disaster strikes. It\u2019s time to prioritize long-term safety, sustainability, and financial responsibility instead of enabling short-sighted, risky decisions.", "x": -18.59507792722562, "y": -409.528333691292}, {"group": "group_negative", "hidden": true, "id": "m6xe04j", "label": "score 3", "shape": "dot", "size": 15, "title": "\u003eRep.\u00a0Marjorie Taylor Greene\u00a0(R-GA) has made it abundantly clear that she didn\u2019t study atmospheric sciences in college, launching an unhinged suggestion that officials could end the\u00a0Los Angeles\u00a0wildfires by manipulating the weather.\n\n\u003e\u201cWhy don\u2019t they use geoengineering like cloud seeding to bring rain down on the wildfires in\u00a0California?\" the\u00a0Republican\u00a0asked Sunday in a post on X. \u201cThey know how to do it.\u201d", "x": 76.64747136025241, "y": -496.15054114127554}, {"group": "group_negative", "hidden": true, "id": "m6xggbe", "label": "score 3", "shape": "dot", "size": 15, "title": "How this woman has not died yet from swallowing her own tongue is a mystery that may never be solved.", "x": 158.72117327129288, "y": -449.1302183511247}, {"group": "group_negative", "hidden": true, "id": "m6xhjhl", "label": "score 3", "shape": "dot", "size": 15, "title": "Has anybody really looked into if her parents were brother and sister ? Or cousins ? Nobody can be this fucked in the head with out help ..", "x": 222.17054556063937, "y": -365.36211767447304}, {"group": "group_negative", "hidden": true, "id": "m6xizlw", "label": "score 1", "shape": "dot", "size": 15, "title": "In the future, historians will look back at this time and their analyses will essentially boil down to \"Seriously.... What the fuck?\"", "x": 23.686595702219872, "y": -266.7145276985497}, {"group": "group_negative", "hidden": true, "id": "m6xjg2n", "label": "score 1", "shape": "dot", "size": 15, "title": "Why we dont have mental fitness tests for elected officials I will never know.", "x": 255.97185359296358, "y": -279.2394139789036}, {"group": "group_negative", "hidden": true, "id": "m6xjp6r", "label": "score 1", "shape": "dot", "size": 15, "title": "Oh that\u2019s right, this deranged person is still in office. \n\nSo it IS still 2016-2020. \ud83d\ude2c", "x": 260.79334279355623, "y": -179.7170379023343}, {"group": "group_negative", "hidden": true, "id": "m6xlm7b", "label": "score 1", "shape": "dot", "size": 15, "title": "Pretty sure this lady is just doing what Steve Bannon said they want to do, overload the news with BS.\u00a0", "x": 160.83452634970277, "y": -224.9427860344538}, {"group": "group_negative", "hidden": true, "id": "m6xpeqn", "label": "score 1", "shape": "dot", "size": 15, "title": "Real question, backed by ignorance (and a repulsion to MTG, not to be confused with Magic the Gathering)\n\nI\u2019ve seen videos on the front page of cloud seeding to produce rain in Dubai. \n\nSo is that not something that\u2019s actually possible?\n\nI\u2019m assuming it\u2019s not something that\u2019s reliable or instantaneous", "x": 229.00087252610643, "y": -92.2611199827904}, {"group": "group_positive", "hidden": true, "id": "m6x6fvc", "label": "score 14", "shape": "dot", "size": 15, "title": "She is a shining example of how intelligent the GOP is overall.\nCongratulations, republicans, the best of you are in office.", "x": -380.45018503580553, "y": 800.0}]);
+                  edges = new vis.DataSet([{"from": "post", "to": "group_neutral", "width": 1}, {"from": "post", "to": "group_positive", "width": 1}, {"from": "post", "to": "group_negative", "width": 1}, {"from": "group_neutral", "to": "m6wuiwe", "width": 1}, {"from": "group_neutral", "to": "m6wuuvy", "width": 1}, {"from": "group_neutral", "to": "m6wwrfr", "width": 1}, {"from": "group_neutral", "to": "m6wv3hf", "width": 1}, {"from": "group_neutral", "to": "m6wvzk7", "width": 1}, {"from": "group_neutral", "to": "m6wxu59", "width": 1}, {"from": "group_neutral", "to": "m6x2v5o", "width": 1}, {"from": "group_neutral", "to": "m6x00sm", "width": 1}, {"from": "group_neutral", "to": "m6xhla6", "width": 1}, {"from": "group_neutral", "to": "m6xopag", "width": 1}, {"from": "group_negative", "to": "m6wxlgt", "width": 1}, {"from": "group_negative", "to": "m6wxq95", "width": 1}, {"from": "group_negative", "to": "m6wvame", "width": 1}, {"from": "group_negative", "to": "m6x05fm", "width": 1}, {"from": "group_negative", "to": "m6wzxvv", "width": 1}, {"from": "group_negative", "to": "m6wx0s2", "width": 1}, {"from": "group_negative", "to": "m6wwwnu", "width": 1}, {"from": "group_negative", "to": "m6wxrbr", "width": 1}, {"from": "group_negative", "to": "m6x5ou3", "width": 1}, {"from": "group_negative", "to": "m6x00mq", "width": 1}, {"from": "group_negative", "to": "m6xbzlu", "width": 1}, {"from": "group_negative", "to": "m6wzzml", "width": 1}, {"from": "group_negative", "to": "m6x0fin", "width": 1}, {"from": "group_negative", "to": "m6wv1rn", "width": 1}, {"from": "group_negative", "to": "m6wv7us", "width": 1}, {"from": "group_negative", "to": "m6x09y2", "width": 1}, {"from": "group_negative", "to": "m6x0tb9", "width": 1}, {"from": "group_negative", "to": "m6xez54", "width": 1}, {"from": "group_negative", "to": "m6xkqno", "width": 1}, {"from": "group_negative", "to": "m6xo5o0", "width": 1}, {"from": "group_negative", "to": "m6yfth4", "width": 1}, {"from": "group_negative", "to": "m6yiutz", "width": 1}, {"from": "group_negative", "to": "m6yxu4c", "width": 1}, {"from": "group_negative", "to": "m6x1dm5", "width": 1}, {"from": "group_negative", "to": "m6x5ji3", "width": 1}, {"from": "group_negative", "to": "m6x9m7a", "width": 1}, {"from": "group_negative", "to": "m6xbuzw", "width": 1}, {"from": "group_negative", "to": "m6xc30w", "width": 1}, {"from": "group_negative", "to": "m6xc6ij", "width": 1}, {"from": "group_negative", "to": "m6x68gl", "width": 1}, {"from": "group_negative", "to": "m6xc5kr", "width": 1}, {"from": "group_negative", "to": "m6xe04j", "width": 1}, {"from": "group_negative", "to": "m6xggbe", "width": 1}, {"from": "group_negative", "to": "m6xhjhl", "width": 1}, {"from": "group_negative", "to": "m6xizlw", "width": 1}, {"from": "group_negative", "to": "m6xjg2n", "width": 1}, {"from": "group_negative", "to": "m6xjp6r", "width": 1}, {"from": "group_negative", "to": "m6xlm7b", "width": 1}, {"from": "group_negative", "to": "m6xpeqn", "width": 1}, {"from": "group_positive", "to": "m6x6fvc", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": false,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    
+        <script type="text/javascript">
+        var groupVisibility = {};
+        network.on('click', function (event) {
+          if (event.nodes.length > 0) {
+            var clickedNodeGroup = event.nodes[0];
+
+            var isVisible = groupVisibility[clickedNodeGroup] !== false;
+
+            nodes.forEach(function (node) {
+              if (node.group === clickedNodeGroup) {
+                var newVisibility = isVisible ? false : true;
+                nodes.update({ id: node.id, hidden: newVisibility });
+              }
+            });
+
+            // Update the visibility state for the group
+            groupVisibility[clickedNodeGroup] = !isVisible;
+          }
+        });
+        </script>
+            
+            
+</body>
+</html>

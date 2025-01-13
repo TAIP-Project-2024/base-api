@@ -1,3 +1,4 @@
+from BaseAPI.settings import BASE_DIR
 from api.services.layouts.comments_drawing import CommentsDrawing
 
 COMMUNITY_COLORS = [
@@ -87,3 +88,29 @@ def hairball_drawing_name_format(topic, timestamp):
 
 def community_drawing_name_format(topic, timestamp):
     return f'{topic}_community_drawing_{timestamp}'
+
+#===========================
+# TOPICS
+#===========================
+topic_list = [
+    "Political Controversy",
+    "Social Commentary",
+    "Election Law and Politics",
+    "Political Campaign Strategy",
+    "Political Charges",
+    "Israel-Palestine Conflict",
+    "Political Support and Threats",
+    "Legal Case",
+    "Political Controversy",
+    "Election Case Controversy",
+    "Donald Trump",
+    "Legal Case/Lawsuit",
+    "Abortion Access Plan"
+]
+
+#===============================
+# TOPIC MODELING
+#===============================
+model_filename_cfg = str(BASE_DIR / "api/ml_core/topic_modeling/saved_models/lda_model.model")
+mmcorpus_filename_cfg = str(BASE_DIR / "api/ml_core/topic_modeling/saved_models/temp_corpus.mm")
+

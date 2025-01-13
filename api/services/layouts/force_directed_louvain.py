@@ -34,7 +34,7 @@ class ForceDirectedLouvain(Layout):
         for edge in graph.edges(data=True):
             if edge[2]['weight'] >= self.threshold:
                 edge[2]['hoverWidth'] = self.hover_size
-                edge[2]['title'] = f'Similarity between node {edge[0]} and node {edge[1]} - {edge[2]["weight"]}'
+                edge[2]['title'] = f'{edge[2]["weight"]}'
                 continue
             edges_to_remove.append(edge)
         graph.remove_edges_from(edges_to_remove)
