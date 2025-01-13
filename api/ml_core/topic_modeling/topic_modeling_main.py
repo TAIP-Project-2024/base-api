@@ -1,17 +1,30 @@
 from api.ml_core.models.model_factory import ModelFactory
-
+from api.ml_core.topic_modeling.lda_model import LDAModel
 
 if __name__ == "__main__":
-    lda_model = ModelFactory.create_model("topic", "lda")
-    model, corpus, id2word = lda_model.train(None)
-    topic_distribution = lda_model.analyze("Trump is a republican and I like pizza")
-    topic_distribution = sorted(topic_distribution, key=lambda x: x[1], reverse=True)
+    lda_model = LDAModel()
+    lda_model.load_model()
 
-    topic_list = ["Political Commentary/Games", "Gaming Technology and Services", "Mobile Phone Filmmaking",
-              "Software and Technology", "Cybersecurity"]
+    topic_list = [
+        "Political Controversy",
+        "Social Commentary",
+        "Election Law and Politics",
+        "Political Campaign Strategy",
+        "Political Charges",
+        "Israel-Palestine Conflict",
+        "Political Support and Threats",
+        "Legal Case",
+        "Political Controversy",
+        "Election Case Controversy",
+        "Donald Trump",
+        "Legal Case/Lawsuit",
+        "Abortion Access Plan"
+    ]
 
-    topics = lda_model.get_topics(model)
+    text = "Trump is friend with Musk!"
 
-    print(topics)
-    print(topic_distribution)
-    print([topic_list[topic[0]] for topic in topic_distribution])
+    results = lda_model.analyze(text)
+
+    print("Results:")
+    for i, topic in enumerate(topic_list):
+        print(f"{topic}: {results[i]}")

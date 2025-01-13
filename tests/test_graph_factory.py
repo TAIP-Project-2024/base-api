@@ -42,7 +42,7 @@ class GraphFactoryTests(unittest.TestCase):
         mock_graph.return_value = mock_graph_instance
 
         # Call the method
-        graph = GraphFactory.topics_similarity_based_graph(name, posts, similarities)
+        graph = GraphFactory.posts_similarity_based_graph(name, posts, similarities)
 
         # Assertions
         mock_louvain_communities.assert_called_once()
