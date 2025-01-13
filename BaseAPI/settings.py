@@ -30,7 +30,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'accounts',
     'drf_yasg',
-    'corsheaders'
+    'corsheaders',
+    'django_celery_beat'
 ]
 
 MIDDLEWARE = [
@@ -154,4 +155,24 @@ CORS_ALLOW_METHODS = [
     "PATCH",
     "OPTIONS",
 ]
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+
+CELERY_IMPORTS = [
+    'api.tasks.graphs_tasks',
+]
+
+from celery.schedules import crontab
+
+CELERY_BEAT_SCHEDULE = {
+    'build_new_graphs': {
+        'task': 'api.tasks.graphs_tasks.build_new_graphs',
+        'schedule': crontab(minute='*')
+    },
+}
 
