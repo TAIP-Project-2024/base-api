@@ -1,6 +1,7 @@
-from api.ml_core.models.model_factory import ModelFactory
 from api.ml_core.topic_modeling.lda_model import LDAModel
-
+# import nltk
+# nltk.download('stopwords')
+# nltk.download('wordnet')
 if __name__ == "__main__":
     lda_model = LDAModel()
     lda_model.load_model()
@@ -25,6 +26,4 @@ if __name__ == "__main__":
 
     results = lda_model.analyze(text)
 
-    print("Results:")
-    for i, topic in enumerate(topic_list):
-        print(f"{topic}: {results[i]}")
+    print(results)
