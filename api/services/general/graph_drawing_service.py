@@ -108,7 +108,6 @@ class GraphDrawingService:
             if a graph drawing representing the comments for the post exists in the db, returns it
             if such a drawing does not exist, creates it. If the underlying graph structure does not
             exist as well, creates it first. Else, retrieves it from te db.
-
         """
         drawing_name = comments_graph_drawing_name_format(post_id, topic)
         if self.check_exists(drawing_name):
@@ -192,6 +191,3 @@ class GraphDrawingService:
         elif clear_comments:
             self.clear_comments_drawings_for_topic(topic)
             graph_service.clear_comments_graphs_for_topic(topic)
-
-
-
