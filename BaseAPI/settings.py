@@ -9,7 +9,6 @@ load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = getenv("SECRET_KEY", "django-insecure-default-secret-key")
 
@@ -56,6 +55,7 @@ TEMPLATES = [
                 BASE_DIR / 'BaseAPI' / 'propath',
                 BASE_DIR / 'BaseAPI/',
                 BASE_DIR / 'BaseAPI/resources/',
+                BASE_DIR / 'api/ml_core/topic_modeling'
             ],
         'APP_DIRS': True,
         'OPTIONS': {

@@ -191,3 +191,4 @@ class GraphDrawingService:
         elif clear_comments:
             self.clear_comments_drawings_for_topic(topic)
             graph_service.clear_comments_graphs_for_topic(topic)
+
